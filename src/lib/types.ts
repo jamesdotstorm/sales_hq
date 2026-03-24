@@ -18,6 +18,7 @@ export interface Task {
   title: string;
   createdAt: string;
   filed: boolean;
+  done: boolean;
 
   // Attributes
   timing: Timing | null;

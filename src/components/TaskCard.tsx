@@ -34,7 +34,18 @@ export default function TaskCard({ task, onUpdate, onFile, onDelete, dark }: Pro
         <button onClick={() => setExpanded(!expanded)} className={`text-sm ${dark ? 'text-white/30 hover:text-white/60' : 'text-gray-400 hover:text-gray-600'}`}>
           {expanded ? '▼' : '▶'}
         </button>
-        <span className={`flex-1 font-medium ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</span>
+        <button
+          onClick={() => update({ done: !task.done, kanbanStatus: !task.done ? 'finished' : 'not-started' })}
+          title={task.done ? 'Mark incomplete' : 'Mark done'}
+          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${
+            task.done
+              ? 'bg-green-500 border-green-500 text-white'
+              : dark ? 'border-white/20 hover:border-green-400' : 'border-gray-300 hover:border-green-400'
+          }`}
+        >
+          {task.done && <span className="text-xs leading-none">✓</span>}
+        </button>
+        <span className={`flex-1 font-medium ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</span>
         {task.importance && <span className="text-yellow-400 text-sm">{'⭐'.repeat(task.importance)}</span>}
         {task.delegate && (
           <span className="bg-blue-500/20 text-blue-400 text-xs px-2 py-0.5 rounded-full">{task.delegate}</span>

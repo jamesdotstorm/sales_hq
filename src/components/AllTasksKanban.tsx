@@ -72,7 +72,13 @@ export default function AllTasksKanban({ tasks, onUpdate, dark }: Props) {
                                 }`}
                               >
                                 <div className="flex items-start justify-between gap-1 mb-1">
-                                  <p className={`text-sm font-medium flex-1 ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</p>
+                                  <button
+                                    onClick={() => onUpdate({ ...task, done: !task.done, kanbanStatus: !task.done ? 'finished' : task.kanbanStatus })}
+                                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all ${task.done ? 'bg-green-500 border-green-500 text-white' : dark ? 'border-white/20 hover:border-green-400' : 'border-gray-300 hover:border-green-400'}`}
+                                  >
+                                    {task.done && <span className="text-[10px] leading-none">✓</span>}
+                                  </button>
+                                  <p className={`text-sm font-medium flex-1 ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</p>
                                   {task.isCollaborative && <span className="text-xs">🤝</span>}
                                 </div>
                                 <div className="flex items-center gap-1.5 flex-wrap">
