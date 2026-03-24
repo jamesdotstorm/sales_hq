@@ -10,8 +10,9 @@ import DelegatedView from '@/components/DelegatedView';
 import TodayView from '@/components/TodayView';
 import AllTasksKanban from '@/components/AllTasksKanban';
 import TaskModal from '@/components/TaskModal';
+import DoneView from '@/components/DoneView';
 
-type View = 'inbox' | 'today' | 'scheduled' | 'delegated' | 'all' | 'kanban';
+type View = 'inbox' | 'today' | 'scheduled' | 'delegated' | 'all' | 'kanban' | 'done';
 
 const NAV: { id: View; label: string; icon: string }[] = [
   { id: 'inbox', label: 'Inbox', icon: '📥' },
@@ -20,6 +21,7 @@ const NAV: { id: View; label: string; icon: string }[] = [
   { id: 'delegated', label: 'Delegated', icon: '👥' },
   { id: 'all', label: 'All Tasks', icon: '📋' },
   { id: 'kanban', label: "Torti's Board", icon: '🐢' },
+  { id: 'done', label: 'Done', icon: '✅' },
 ];
 
 export default function Home() {
@@ -73,6 +75,7 @@ export default function Home() {
 
   const today = new Date().toISOString().slice(0, 10);
   const todayCount = tasks.filter(t => t.filed && (t.timing === 'do-now' || t.scheduledDate === today)).length;
+  const doneCount = tasks.filter(t => t.done).length;
 
   if (!mounted) return null;
 
@@ -102,6 +105,7 @@ export default function Home() {
             const badge = id === 'inbox' ? inboxCount
               : id === 'kanban' ? (stuckCount > 0 ? stuckCount : 0)
               : id === 'today' ? todayCount
+              : id === 'done' ? doneCount
               : 0;
             const isStuck = id === 'kanban' && stuckCount > 0;
 
@@ -144,6 +148,7 @@ export default function Home() {
         {view === 'delegated' && <DelegatedView tasks={tasks} dark={dark} onOpen={setModalTask} />}
         {view === 'all' && <AllTasksKanban tasks={tasks} onUpdate={updateTask} dark={dark} onOpen={setModalTask} />}
         {view === 'kanban' && <KanbanBoard tasks={tasks} onUpdate={updateTask} dark={dark} onOpen={setModalTask} />}
+        {view === 'done' && <DoneView tasks={tasks} dark={dark} onOpen={setModalTask} onUpdate={updateTask} />}
       </div>
 
       {modalTask && (
