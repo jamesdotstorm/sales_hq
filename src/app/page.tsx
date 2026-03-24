@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Task } from '@/lib/types';
 import { loadTasks, saveTasks } from '@/lib/storage';
+import { loadFromGist, saveToGist } from '@/lib/gist';
 import InboxView from '@/components/InboxView';
 import KanbanBoard from '@/components/KanbanBoard';
 import ScheduledView from '@/components/ScheduledView';
@@ -30,17 +31,35 @@ export default function Home() {
   const [dark, setDark] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [modalTask, setModalTask] = useState<Task | null>(null);
+  const [syncing, setSyncing] = useState(false);
 
   useEffect(() => {
-    setTasks(loadTasks());
     const saved = localStorage.getItem('dark-mode');
     if (saved !== null) setDark(saved === 'true');
-    setMounted(true);
+
+    // Load from Gist first, fall back to localStorage
+    setSyncing(true);
+    loadFromGist().then(gistTasks => {
+      if (gistTasks && gistTasks.length > 0) {
+        const merged = gistTasks as Task[];
+        setTasks(merged);
+        saveTasks(merged);
+      } else {
+        setTasks(loadTasks());
+      }
+      setSyncing(false);
+      setMounted(true);
+    }).catch(() => {
+      setTasks(loadTasks());
+      setSyncing(false);
+      setMounted(true);
+    });
   }, []);
 
   const updateTasks = (updated: Task[]) => {
     setTasks(updated);
     saveTasks(updated);
+    saveToGist(updated); // async, fire and forget
   };
 
   const addTask = (title: string) => {
@@ -136,7 +155,10 @@ export default function Home() {
         </nav>
 
         <div className={`px-5 py-4 border-t ${dark ? 'border-white/5' : 'border-gray-100'}`}>
-          <p className={`text-xs ${dark ? 'text-white/20' : 'text-gray-300'}`}>Powered by Torti 🐢</p>
+          <div className="flex items-center gap-2">
+            <span className={`w-1.5 h-1.5 rounded-full ${syncing ? 'bg-yellow-400 animate-pulse' : 'bg-green-400'}`} />
+            <p className={`text-xs ${dark ? 'text-white/20' : 'text-gray-300'}`}>{syncing ? 'Syncing...' : 'Synced'}</p>
+          </div>
         </div>
       </div>
 
