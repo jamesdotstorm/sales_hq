@@ -164,6 +164,18 @@ export default function TaskModal({ task, dark, onUpdate, onClose, onDelete }: P
             </div>
           </div>
 
+          {/* Notes */}
+          <div>
+            <label className={`text-xs font-medium uppercase tracking-wider mb-2 block ${dark ? 'text-white/40' : 'text-gray-500'}`}>Notes</label>
+            <textarea
+              value={task.notes || ''}
+              onChange={e => update({ notes: e.target.value })}
+              placeholder="Add notes..."
+              rows={3}
+              className={`w-full text-sm border rounded-lg px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 ${dark ? 'bg-[#222] border-white/10 text-white placeholder-white/20' : 'bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-400'}`}
+            />
+          </div>
+
           {/* Subtasks */}
           {task.taskType === 'project' && (
             <div>

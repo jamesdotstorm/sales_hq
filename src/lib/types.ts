@@ -29,6 +29,8 @@ export interface Task {
   delegate: string | null;
   subtasks: Subtask[];
 
+  notes: string;
+
   // Kanban
   kanbanStatus: KanbanStatus;
   isCollaborative: boolean;

@@ -57,6 +57,7 @@ export default function Home() {
       kanbanStatus: 'not-started',
       isCollaborative: false,
       done: false,
+      notes: '',
     };
     updateTasks([task, ...tasks]);
   };
