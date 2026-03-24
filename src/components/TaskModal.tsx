@@ -41,9 +41,11 @@ export default function TaskModal({ task, dark, onUpdate, onClose, onDelete }: P
           >
             {task.done && <span className="text-xs leading-none">✓</span>}
           </button>
-          <h2 className={`flex-1 text-lg font-semibold ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white' : 'text-gray-800'}`}>
-            {task.title}
-          </h2>
+          <input
+            value={task.title}
+            onChange={e => update({ title: e.target.value })}
+            className={`flex-1 text-lg font-semibold bg-transparent border-b-2 focus:outline-none transition-colors ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white border-white/10 focus:border-indigo-500' : 'text-gray-800 border-gray-200 focus:border-indigo-500'}`}
+          />
           <button onClick={onClose} className={`text-xl leading-none hover:text-red-400 ${dark ? 'text-white/30' : 'text-gray-400'}`}>×</button>
         </div>
 
