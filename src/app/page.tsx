@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Task } from '@/lib/types';
 import { loadTasks, saveTasks } from '@/lib/storage';
-import { loadFromGist, saveToGist } from '@/lib/gist';
+import { loadFromSupabase, saveToSupabase } from '@/lib/supabase';
 import InboxView from '@/components/InboxView';
 import KanbanBoard from '@/components/KanbanBoard';
 import ScheduledView from '@/components/ScheduledView';
@@ -40,9 +40,9 @@ export default function Home() {
 
     // Load from Gist first, fall back to localStorage
     setSyncing(true);
-    loadFromGist().then(gistTasks => {
-      if (gistTasks && gistTasks.length > 0) {
-        const merged = gistTasks as Task[];
+    loadFromSupabase().then(remoteTasks => {
+      if (remoteTasks && (remoteTasks as Task[]).length > 0) {
+        const merged = remoteTasks as Task[];
         setTasks(merged);
         saveTasks(merged);
       } else {
@@ -60,7 +60,7 @@ export default function Home() {
   const updateTasks = (updated: Task[]) => {
     setTasks(updated);
     saveTasks(updated);
-    saveToGist(updated); // async, fire and forget
+    saveToSupabase(updated); // async, fire and forget
   };
 
   const addTask = (title: string) => {
