@@ -5,9 +5,10 @@ import { Task } from '@/lib/types';
 interface Props {
   tasks: Task[];
   dark: boolean;
+  onOpen: (task: Task) => void;
 }
 
-export default function ScheduledView({ tasks, dark }: Props) {
+export default function ScheduledView({ tasks, dark, onOpen }: Props) {
   const scheduled = tasks
     .filter(t => t.filed && t.timing === 'schedule' && t.scheduledDate)
     .sort((a, b) => (a.scheduledDate! > b.scheduledDate! ? 1 : -1));
@@ -53,7 +54,7 @@ export default function ScheduledView({ tasks, dark }: Props) {
             </div>
             <div className="space-y-2">
               {dateTasks.map(task => (
-                <TaskRow key={task.id} task={task} dark={dark} />
+                <TaskRow key={task.id} task={task} dark={dark} onOpen={onOpen} />
               ))}
             </div>
           </div>
@@ -63,13 +64,13 @@ export default function ScheduledView({ tasks, dark }: Props) {
   );
 }
 
-function TaskRow({ task, dark }: { task: Task; dark: boolean }) {
+function TaskRow({ task, dark, onOpen }: { task: Task; dark: boolean; onOpen: (t: Task) => void }) {
   return (
-    <div className={`border rounded-xl px-4 py-3 flex items-center justify-between ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-100 shadow-sm'}`}>
+    <div className={`border rounded-xl px-4 py-3 flex items-center justify-between cursor-pointer hover:border-indigo-500/40 transition-colors ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-100 shadow-sm'}`} onClick={() => onOpen(task)}>
       <div className="flex items-center gap-3">
         <span className="text-indigo-400 text-sm">📅</span>
         <div>
-          <p className={`text-sm font-medium ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</p>
+          <p className={`text-sm font-medium ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</p>
           {task.taskType === 'project' && task.subtasks.length > 0 && (
             <p className={`text-xs mt-0.5 ${dark ? 'text-white/30' : 'text-gray-400'}`}>
               {task.subtasks.filter(s => s.done).length}/{task.subtasks.length} subtasks

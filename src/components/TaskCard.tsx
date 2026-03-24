@@ -9,11 +9,12 @@ interface Props {
   onFile: (task: Task) => void;
   onDelete: (id: string) => void;
   dark: boolean;
+  onOpen: (task: Task) => void;
 }
 
 const stars = [1, 2, 3, 4, 5] as Importance[];
 
-export default function TaskCard({ task, onUpdate, onFile, onDelete, dark }: Props) {
+export default function TaskCard({ task, onUpdate, onFile, onDelete, dark, onOpen }: Props) {
   const [expanded, setExpanded] = useState(true);
   const [newSubtask, setNewSubtask] = useState('');
 
@@ -45,7 +46,7 @@ export default function TaskCard({ task, onUpdate, onFile, onDelete, dark }: Pro
         >
           {task.done && <span className="text-xs leading-none">✓</span>}
         </button>
-        <span className={`flex-1 font-medium ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</span>
+        <button onClick={() => onOpen(task)} className={`flex-1 text-left font-medium hover:underline decoration-dotted ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</button>
         {task.importance && <span className="text-yellow-400 text-sm">{'⭐'.repeat(task.importance)}</span>}
         {task.delegate && (
           <span className="bg-blue-500/20 text-blue-400 text-xs px-2 py-0.5 rounded-full">{task.delegate}</span>

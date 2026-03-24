@@ -5,9 +5,10 @@ import { Task } from '@/lib/types';
 interface Props {
   tasks: Task[];
   dark: boolean;
+  onOpen: (task: Task) => void;
 }
 
-export default function DelegatedView({ tasks, dark }: Props) {
+export default function DelegatedView({ tasks, dark, onOpen }: Props) {
   const delegated = tasks.filter(t => t.filed && t.delegate);
 
   const grouped = delegated.reduce<Record<string, Task[]>>((acc, t) => {
@@ -48,10 +49,10 @@ export default function DelegatedView({ tasks, dark }: Props) {
               </div>
               <div className="space-y-2">
                 {personTasks.map(task => (
-                  <div key={task.id} className={`border rounded-xl px-4 py-3 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-100 shadow-sm'}`}>
+                  <div key={task.id} onClick={() => onOpen(task)} className={`border rounded-xl px-4 py-3 cursor-pointer hover:border-indigo-500/40 transition-colors ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-100 shadow-sm'}`}>
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className={`text-sm font-medium ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</p>
+                        <p className={`text-sm font-medium ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</p>
                         {task.scheduledDate && (
                           <p className={`text-xs mt-0.5 ${dark ? 'text-white/30' : 'text-gray-400'}`}>📅 {task.scheduledDate}</p>
                         )}

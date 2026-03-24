@@ -9,6 +9,7 @@ import ScheduledView from '@/components/ScheduledView';
 import DelegatedView from '@/components/DelegatedView';
 import TodayView from '@/components/TodayView';
 import AllTasksKanban from '@/components/AllTasksKanban';
+import TaskModal from '@/components/TaskModal';
 
 type View = 'inbox' | 'today' | 'scheduled' | 'delegated' | 'all' | 'kanban';
 
@@ -26,6 +27,7 @@ export default function Home() {
   const [view, setView] = useState<View>('inbox');
   const [dark, setDark] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const [modalTask, setModalTask] = useState<Task | null>(null);
 
   useEffect(() => {
     setTasks(loadTasks());
@@ -135,13 +137,23 @@ export default function Home() {
 
       {/* Main content */}
       <div className={`flex-1 overflow-auto ${dark ? 'bg-[#0f0f0f]' : 'bg-gray-50'}`}>
-        {view === 'inbox' && <InboxView tasks={tasks} onUpdate={updateTask} onFile={fileTask} onDelete={deleteTask} onAdd={addTask} dark={dark} />}
-        {view === 'today' && <TodayView tasks={tasks} dark={dark} />}
-        {view === 'scheduled' && <ScheduledView tasks={tasks} dark={dark} />}
-        {view === 'delegated' && <DelegatedView tasks={tasks} dark={dark} />}
-        {view === 'all' && <AllTasksKanban tasks={tasks} onUpdate={updateTask} dark={dark} />}
-        {view === 'kanban' && <KanbanBoard tasks={tasks} onUpdate={updateTask} dark={dark} />}
+        {view === 'inbox' && <InboxView tasks={tasks} onUpdate={updateTask} onFile={fileTask} onDelete={deleteTask} onAdd={addTask} dark={dark} onOpen={setModalTask} />}
+        {view === 'today' && <TodayView tasks={tasks} dark={dark} onOpen={setModalTask} />}
+        {view === 'scheduled' && <ScheduledView tasks={tasks} dark={dark} onOpen={setModalTask} />}
+        {view === 'delegated' && <DelegatedView tasks={tasks} dark={dark} onOpen={setModalTask} />}
+        {view === 'all' && <AllTasksKanban tasks={tasks} onUpdate={updateTask} dark={dark} onOpen={setModalTask} />}
+        {view === 'kanban' && <KanbanBoard tasks={tasks} onUpdate={updateTask} dark={dark} onOpen={setModalTask} />}
       </div>
+
+      {modalTask && (
+        <TaskModal
+          task={tasks.find(t => t.id === modalTask.id) || modalTask}
+          dark={dark}
+          onUpdate={t => { updateTask(t); setModalTask(t); }}
+          onClose={() => setModalTask(null)}
+          onDelete={deleteTask}
+        />
+      )}
     </div>
   );
 }

@@ -5,9 +5,10 @@ import { Task } from '@/lib/types';
 interface Props {
   tasks: Task[];
   dark: boolean;
+  onOpen: (task: Task) => void;
 }
 
-function Section({ title, icon, tasks, dark, empty }: { title: string; icon: string; tasks: Task[]; dark: boolean; empty: string }) {
+function Section({ title, icon, tasks, dark, empty, onOpen }: { title: string; icon: string; tasks: Task[]; dark: boolean; empty: string; onOpen: (t: Task) => void }) {
   return (
     <div className="mb-8">
       <div className="flex items-center gap-2 mb-3">
@@ -22,10 +23,10 @@ function Section({ title, icon, tasks, dark, empty }: { title: string; icon: str
       ) : (
         <div className="space-y-2">
           {tasks.map(task => (
-            <div key={task.id} className={`border rounded-xl px-4 py-3 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-100 shadow-sm'}`}>
+            <div key={task.id} onClick={() => onOpen(task)} className={`border rounded-xl px-4 py-3 cursor-pointer hover:border-indigo-500/40 transition-colors ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-100 shadow-sm'}`}>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className={`text-sm font-medium ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</p>
+                  <p className={`text-sm font-medium ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</p>
                   {task.taskType === 'project' && task.subtasks.length > 0 && (
                     <p className={`text-xs mt-0.5 ${dark ? 'text-white/30' : 'text-gray-400'}`}>
                       {task.subtasks.filter(s => s.done).length}/{task.subtasks.length} subtasks
@@ -50,7 +51,7 @@ function Section({ title, icon, tasks, dark, empty }: { title: string; icon: str
   );
 }
 
-export default function TodayView({ tasks, dark }: Props) {
+export default function TodayView({ tasks, dark, onOpen }: Props) {
   const today = new Date().toISOString().slice(0, 10);
   const filed = tasks.filter(t => t.filed);
 
@@ -77,10 +78,10 @@ export default function TodayView({ tasks, dark }: Props) {
         </div>
       ) : (
         <>
-          <Section title="Quick Tasks" icon="⚡" tasks={doNow} dark={dark} empty="No quick tasks for today" />
-          <Section title="Projects" icon="🗂" tasks={projects} dark={dark} empty="No projects for today" />
-          <Section title="Scheduled Today" icon="📅" tasks={scheduledToday} dark={dark} empty="Nothing scheduled for today" />
-          <Section title="Delegated Today" icon="👥" tasks={delegatedToday} dark={dark} empty="No delegated tasks for today" />
+          <Section title="Quick Tasks" icon="⚡" tasks={doNow} dark={dark} empty="No quick tasks for today" onOpen={onOpen} />
+          <Section title="Projects" icon="🗂" tasks={projects} dark={dark} empty="No projects for today" onOpen={onOpen} />
+          <Section title="Scheduled Today" icon="📅" tasks={scheduledToday} dark={dark} empty="Nothing scheduled for today" onOpen={onOpen} />
+          <Section title="Delegated Today" icon="👥" tasks={delegatedToday} dark={dark} empty="No delegated tasks for today" onOpen={onOpen} />
         </>
       )}
     </div>

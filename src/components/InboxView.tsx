@@ -11,9 +11,10 @@ interface Props {
   onDelete: (id: string) => void;
   onAdd: (title: string) => void;
   dark: boolean;
+  onOpen: (task: Task) => void;
 }
 
-export default function InboxView({ tasks, onUpdate, onFile, onDelete, onAdd, dark }: Props) {
+export default function InboxView({ tasks, onUpdate, onFile, onDelete, onAdd, dark, onOpen }: Props) {
   const [input, setInput] = useState('');
 
   const inboxTasks = tasks.filter(t => !t.filed);
@@ -60,7 +61,7 @@ export default function InboxView({ tasks, onUpdate, onFile, onDelete, onAdd, da
             </span>
           </div>
           {inboxTasks.map(task => (
-            <TaskCard key={task.id} task={task} onUpdate={onUpdate} onFile={onFile} onDelete={onDelete} dark={dark} />
+            <TaskCard key={task.id} task={task} onUpdate={onUpdate} onFile={onFile} onDelete={onDelete} dark={dark} onOpen={onOpen} />
           ))}
         </div>
       )}

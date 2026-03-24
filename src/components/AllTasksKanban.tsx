@@ -7,6 +7,7 @@ interface Props {
   tasks: Task[];
   onUpdate: (task: Task) => void;
   dark: boolean;
+  onOpen: (task: Task) => void;
 }
 
 const COLUMNS: { id: KanbanStatus; label: string; accent: string; bg: string }[] = [
@@ -16,7 +17,7 @@ const COLUMNS: { id: KanbanStatus; label: string; accent: string; bg: string }[]
   { id: 'finished', label: 'Completed', accent: 'text-green-400', bg: 'bg-green-500/5' },
 ];
 
-export default function AllTasksKanban({ tasks, onUpdate, dark }: Props) {
+export default function AllTasksKanban({ tasks, onUpdate, dark, onOpen }: Props) {
   const allFiled = tasks.filter(t => t.filed);
 
   const onDragEnd = (result: DropResult) => {
@@ -78,7 +79,7 @@ export default function AllTasksKanban({ tasks, onUpdate, dark }: Props) {
                                   >
                                     {task.done && <span className="text-[10px] leading-none">✓</span>}
                                   </button>
-                                  <p className={`text-sm font-medium flex-1 ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</p>
+                                  <button onClick={() => onOpen(task)} className={`text-sm font-medium flex-1 text-left hover:underline decoration-dotted ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</button>
                                   {task.isCollaborative && <span className="text-xs">🤝</span>}
                                 </div>
                                 <div className="flex items-center gap-1.5 flex-wrap">
