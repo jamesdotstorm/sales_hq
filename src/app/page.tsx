@@ -5,8 +5,21 @@ import { Task } from '@/lib/types';
 import { loadTasks, saveTasks } from '@/lib/storage';
 import InboxView from '@/components/InboxView';
 import KanbanBoard from '@/components/KanbanBoard';
+import ScheduledView from '@/components/ScheduledView';
+import DelegatedView from '@/components/DelegatedView';
+import TodayView from '@/components/TodayView';
+import AllTasksKanban from '@/components/AllTasksKanban';
 
-type View = 'inbox' | 'kanban';
+type View = 'inbox' | 'today' | 'scheduled' | 'delegated' | 'all' | 'kanban';
+
+const NAV: { id: View; label: string; icon: string }[] = [
+  { id: 'inbox', label: 'Inbox', icon: '📥' },
+  { id: 'today', label: "Today's Mission", icon: '🎯' },
+  { id: 'scheduled', label: 'Scheduled', icon: '📅' },
+  { id: 'delegated', label: 'Delegated', icon: '👥' },
+  { id: 'all', label: 'All Tasks', icon: '📋' },
+  { id: 'kanban', label: "Torti's Board", icon: '🐢' },
+];
 
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -20,13 +33,6 @@ export default function Home() {
     if (saved !== null) setDark(saved === 'true');
     setMounted(true);
   }, []);
-
-  const toggleDark = () => {
-    setDark(d => {
-      localStorage.setItem('dark-mode', String(!d));
-      return !d;
-    });
-  };
 
   const updateTasks = (updated: Task[]) => {
     setTasks(updated);
@@ -52,107 +58,88 @@ export default function Home() {
     updateTasks([task, ...tasks]);
   };
 
-  const updateTask = (updated: Task) => {
-    updateTasks(tasks.map(t => t.id === updated.id ? updated : t));
-  };
+  const updateTask = (updated: Task) => updateTasks(tasks.map(t => t.id === updated.id ? updated : t));
+  const fileTask = (task: Task) => updateTasks(tasks.map(t => t.id === task.id ? { ...task, filed: true } : t));
+  const deleteTask = (id: string) => updateTasks(tasks.filter(t => t.id !== id));
 
-  const fileTask = (task: Task) => {
-    updateTasks(tasks.map(t => t.id === task.id ? { ...task, filed: true } : t));
-  };
-
-  const deleteTask = (id: string) => {
-    updateTasks(tasks.filter(t => t.id !== id));
-  };
+  const toggleDark = () => setDark(d => { localStorage.setItem('dark-mode', String(!d)); return !d; });
 
   const inboxCount = tasks.filter(t => !t.filed).length;
-  const kanbanCount = tasks.filter(t => t.filed && t.delegate === 'Torti').length;
   const stuckCount = tasks.filter(t => t.filed && t.delegate === 'Torti' && t.kanbanStatus === 'stuck').length;
+
+  const today = new Date().toISOString().slice(0, 10);
+  const todayCount = tasks.filter(t => t.filed && (t.timing === 'do-now' || t.scheduledDate === today)).length;
 
   if (!mounted) return null;
 
   return (
     <div className={`flex h-screen font-sans ${dark ? 'bg-[#0f0f0f]' : 'bg-gray-50'}`}>
       {/* Sidebar */}
-      <div className={`w-56 border-r flex flex-col ${dark ? 'bg-[#161616] border-white/5' : 'bg-white border-gray-200'}`}>
-        <div className={`px-5 py-6 border-b ${dark ? 'border-white/5' : 'border-gray-200'}`}>
+      <div className={`w-60 border-r flex flex-col flex-shrink-0 ${dark ? 'bg-[#161616] border-white/5' : 'bg-white border-gray-200'}`}>
+        {/* Logo */}
+        <div className={`px-5 py-5 border-b ${dark ? 'border-white/5' : 'border-gray-100'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🐢</span>
+              <span className="text-xl">🐢</span>
               <div>
                 <p className={`font-bold text-sm ${dark ? 'text-white' : 'text-gray-800'}`}>Task Inbox</p>
                 <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Jamie & Torti</p>
               </div>
             </div>
-            <button onClick={toggleDark} className={`text-lg transition-opacity opacity-60 hover:opacity-100`} title="Toggle dark mode">
+            <button onClick={toggleDark} className="text-lg opacity-50 hover:opacity-100 transition-opacity" title="Toggle dark mode">
               {dark ? '☀️' : '🌙'}
             </button>
           </div>
         </div>
 
-        <nav className="flex-1 px-3 py-4 space-y-1">
-          <button
-            onClick={() => setView('inbox')}
-            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-              view === 'inbox'
-                ? 'bg-indigo-600 text-white'
-                : dark ? 'text-white/50 hover:bg-white/5 hover:text-white' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <span>📥</span>
-              <span>Inbox</span>
-            </div>
-            {inboxCount > 0 && (
-              <span className={`text-xs px-2 py-0.5 rounded-full ${view === 'inbox' ? 'bg-indigo-500' : 'bg-white/10'}`}>
-                {inboxCount}
-              </span>
-            )}
-          </button>
+        {/* Nav */}
+        <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+          {NAV.map(({ id, label, icon }) => {
+            const badge = id === 'inbox' ? inboxCount
+              : id === 'kanban' ? (stuckCount > 0 ? stuckCount : 0)
+              : id === 'today' ? todayCount
+              : 0;
+            const isStuck = id === 'kanban' && stuckCount > 0;
 
-          <button
-            onClick={() => setView('kanban')}
-            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-              view === 'kanban'
-                ? 'bg-indigo-600 text-white'
-                : dark ? 'text-white/50 hover:bg-white/5 hover:text-white' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <span>🐢</span>
-              <span>Torti&apos;s Board</span>
-            </div>
-            <div className="flex gap-1">
-              {stuckCount > 0 && (
-                <span className="text-xs px-1.5 py-0.5 rounded-full bg-red-500 text-white">{stuckCount}</span>
-              )}
-              {kanbanCount > 0 && (
-                <span className={`text-xs px-2 py-0.5 rounded-full ${view === 'kanban' ? 'bg-indigo-500' : 'bg-white/10'}`}>
-                  {kanbanCount}
-                </span>
-              )}
-            </div>
-          </button>
+            return (
+              <button
+                key={id}
+                onClick={() => setView(id)}
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  view === id
+                    ? 'bg-indigo-600 text-white'
+                    : dark ? 'text-white/50 hover:bg-white/5 hover:text-white' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="text-base">{icon}</span>
+                  <span>{label}</span>
+                </div>
+                {badge > 0 && (
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    isStuck ? 'bg-red-500 text-white' : view === id ? 'bg-indigo-500' : dark ? 'bg-white/10' : 'bg-gray-200 text-gray-600'
+                  }`}>
+                    {badge}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </nav>
 
-        <div className={`px-5 py-4 border-t ${dark ? 'border-white/5' : 'border-gray-200'}`}>
+        <div className={`px-5 py-4 border-t ${dark ? 'border-white/5' : 'border-gray-100'}`}>
           <p className={`text-xs ${dark ? 'text-white/20' : 'text-gray-300'}`}>Powered by Torti 🐢</p>
         </div>
       </div>
 
       {/* Main content */}
       <div className={`flex-1 overflow-auto ${dark ? 'bg-[#0f0f0f]' : 'bg-gray-50'}`}>
-        {view === 'inbox' ? (
-          <InboxView
-            tasks={tasks}
-            onUpdate={updateTask}
-            onFile={fileTask}
-            onDelete={deleteTask}
-            onAdd={addTask}
-            dark={dark}
-          />
-        ) : (
-          <KanbanBoard tasks={tasks} onUpdate={updateTask} dark={dark} />
-        )}
+        {view === 'inbox' && <InboxView tasks={tasks} onUpdate={updateTask} onFile={fileTask} onDelete={deleteTask} onAdd={addTask} dark={dark} />}
+        {view === 'today' && <TodayView tasks={tasks} dark={dark} />}
+        {view === 'scheduled' && <ScheduledView tasks={tasks} dark={dark} />}
+        {view === 'delegated' && <DelegatedView tasks={tasks} dark={dark} />}
+        {view === 'all' && <AllTasksKanban tasks={tasks} onUpdate={updateTask} dark={dark} />}
+        {view === 'kanban' && <KanbanBoard tasks={tasks} onUpdate={updateTask} dark={dark} />}
       </div>
     </div>
   );
