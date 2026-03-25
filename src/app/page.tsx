@@ -96,6 +96,7 @@ export default function Home() {
       isCollaborative: false,
       done: false,
       notes: '',
+      tags: [],
     };
     updateTasks([task, ...tasks]);
   };

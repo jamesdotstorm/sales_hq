@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Task, CATEGORIES, DELEGATES, Importance, Category, Timing, TaskType } from '@/lib/types';
+import { Task, CATEGORIES, DELEGATES, TAGS, Importance, Category, Timing, TaskType } from '@/lib/types';
 
 function getNextMonday(): string {
   const d = new Date();
@@ -56,6 +56,13 @@ export default function TaskCard({ task, onUpdate, onFile, onDelete, dark, onOpe
         </button>
         <button onClick={() => onOpen(task)} className={`flex-1 text-left font-medium hover:underline decoration-dotted ${task.done ? 'line-through opacity-40' : ''} ${dark ? 'text-white' : 'text-gray-800'}`}>{task.title}</button>
         {task.notes && <span title={task.notes} className={`text-xs ${dark ? 'text-white/25' : 'text-gray-400'}`}>📝</span>}
+        {(task.tags || []).map(tag => (
+          <span key={tag} className={`text-xs px-2 py-0.5 rounded-full ${
+            tag === 'Bill to pay' ? 'bg-red-500/20 text-red-400'
+            : tag === 'Fun' ? 'bg-green-500/20 text-green-400'
+            : 'bg-indigo-500/20 text-indigo-400'
+          }`}>{tag}</span>
+        ))}
         {task.importance && <span className="text-yellow-400 text-sm">{'⭐'.repeat(task.importance)}</span>}
         {task.delegate && (
           <span className="bg-blue-500/20 text-blue-400 text-xs px-2 py-0.5 rounded-full">{task.delegate}</span>
@@ -167,6 +174,31 @@ export default function TaskCard({ task, onUpdate, onFile, onDelete, dark, onOpe
                 <option value="">Select...</option>
                 {DELEGATES.map(d => <option key={d} value={d}>{d}</option>)}
               </select>
+            </div>
+          </div>
+
+          {/* Tags */}
+          <div>
+            <label className={`text-xs mb-1 block ${dark ? 'text-white/40' : 'text-gray-500'}`}>Tags</label>
+            <div className="flex flex-wrap gap-1.5">
+              {TAGS.map(tag => {
+                const active = (task.tags || []).includes(tag);
+                return (
+                  <button
+                    key={tag}
+                    onClick={() => update({ tags: active ? (task.tags || []).filter(t => t !== tag) : [...(task.tags || []), tag] })}
+                    className={`text-xs px-2.5 py-1 rounded-full border transition-all ${
+                      active
+                        ? tag === 'Bill to pay' ? 'bg-red-500/20 text-red-400 border-red-500/40'
+                        : tag === 'Fun' ? 'bg-green-500/20 text-green-400 border-green-500/40'
+                        : 'bg-indigo-500/20 text-indigo-400 border-indigo-500/40'
+                        : dark ? 'bg-transparent text-white/30 border-white/10 hover:border-white/30' : 'bg-white text-gray-400 border-gray-200 hover:border-gray-400'
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
