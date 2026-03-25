@@ -52,16 +52,19 @@ export async function GET() {
   let wonARR = 0;
   let wonCount = 0;
   let activeARR = 0;
+  let activeDeals = 0;
   const dealsByStage: Record<string, { count: number; arr: number }> = {};
   for (const deal of deals) {
     const vals = deal.values || {};
     const arr = vals.arr?.[0]?.value || 0;
-    totalARR += arr;
     const stage = vals.stage?.[0]?.status?.title || 'Unknown';
+    // Won deals become customers — exclude from active deal counts
+    if (stage === 'Won 🎉') { wonARR += arr; wonCount++; continue; }
+    totalARR += arr;
+    activeDeals++;
     if (!dealsByStage[stage]) dealsByStage[stage] = { count: 0, arr: 0 };
     dealsByStage[stage].count++;
     dealsByStage[stage].arr += arr;
-    if (stage === 'Won 🎉') { wonARR += arr; wonCount++; }
     if (['Hunting', 'Hot Lead', 'Onboarding', 'Activation'].includes(stage)) activeARR += arr;
   }
 
@@ -84,7 +87,7 @@ export async function GET() {
         .map(([stage, data]) => ({ stage, ...data })),
     },
     deals: {
-      total: deals.length,
+      total: activeDeals,
       totalARR,
       wonARR,
       wonCount,
