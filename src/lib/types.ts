@@ -6,7 +6,7 @@ export type KanbanStatus = 'not-started' | 'working' | 'stuck' | 'finished';
 
 export const CATEGORIES: Category[] = ['Turnstay', 'Bunker Hills', 'Life Admin', 'Turnstay Admin'];
 export const DELEGATES = ['Torti', 'Alon', 'Victory', 'Tarn', 'Morag', 'Adam', 'Mommy'];
-export const TAGS = ['Bill to pay', 'Fun', 'Urgent', 'Waiting', 'Research', 'Call', 'Buy'];
+export const TAGS = ['Bill to pay', 'Fun', 'Urgent', 'Waiting', 'Research', 'Call', 'Buy', 'Alon chat points'];
 
 export interface Subtask {
   id: string;
