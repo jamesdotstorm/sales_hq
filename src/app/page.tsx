@@ -44,8 +44,8 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <span className="text-xl">📊</span>
               <div>
-                <p className={`font-bold text-sm ${dark ? 'text-white' : 'text-gray-800'}`}>Sales HQ</p>
-                <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>TurnStay</p>
+                <p className={`font-bold text-sm ${dark ? 'text-white' : 'text-gray-800'}`}>TurnStay</p>
+                <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Sales HQ</p>
               </div>
             </div>
             <button onClick={toggleDark} className="text-lg opacity-50 hover:opacity-100 transition-opacity">
