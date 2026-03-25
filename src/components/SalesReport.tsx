@@ -116,15 +116,9 @@ export default function SalesReport({ dark }: Props) {
                 <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>Total Deals in the CRM</p>
                 <p className={`text-3xl font-bold mt-1 ${dark ? 'text-white' : 'text-gray-900'}`}>{data.deals.total.toLocaleString()}</p>
               </div>
-              <div className="flex gap-3 flex-shrink-0">
-                <div className={`text-right rounded-xl px-5 py-3 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
-                  <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Won ARR</p>
-                  <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-green-400' : 'text-green-600'}`}>{fmt(data.deals.wonARR)}</p>
-                </div>
-                <div className={`text-right rounded-xl px-5 py-3 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
-                  <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Pipeline</p>
-                  <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-orange-400' : 'text-orange-600'}`}>{fmt(data.deals.activeARR)}</p>
-                </div>
+              <div className={`text-right rounded-xl px-5 py-3 flex-shrink-0 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
+                <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Pipeline ARR</p>
+                <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-orange-400' : 'text-orange-600'}`}>{fmt(data.deals.activeARR)}</p>
               </div>
             </div>
 
