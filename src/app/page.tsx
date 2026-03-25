@@ -14,12 +14,14 @@ import TaskModal from '@/components/TaskModal';
 import DoneView from '@/components/DoneView';
 import DailyQuote from '@/components/DailyQuote';
 import ReviewView from '@/components/ReviewView';
+import BillsView from '@/components/BillsView';
 
-type View = 'inbox' | 'today' | 'scheduled' | 'delegated' | 'all' | 'kanban' | 'done' | 'review';
+type View = 'inbox' | 'today' | 'scheduled' | 'delegated' | 'all' | 'kanban' | 'done' | 'review' | 'bills';
 
 const NAV: { id: View; label: string; icon: string }[] = [
   { id: 'inbox', label: 'Inbox', icon: '📥' },
   { id: 'today', label: "Today's Mission", icon: '🎯' },
+  { id: 'bills', label: 'Bills to Pay', icon: '💸' },
   { id: 'scheduled', label: 'Scheduled', icon: '📅' },
   { id: 'review', label: 'Tasks to Review', icon: '🔁' },
   { id: 'delegated', label: 'Delegated', icon: '👥' },
@@ -114,6 +116,7 @@ export default function Home() {
   const todayCount = tasks.filter(t => t.filed && (t.timing === 'do-now' || t.scheduledDate === today)).length;
   const doneCount = tasks.filter(t => t.done).length;
   const reviewCount = tasks.filter(t => t.timing === 'review-next-week' && !t.done).length;
+  const billsCount = tasks.filter(t => (t.tags || []).includes('Bill to pay') && !t.done).length;
 
   if (!mounted) return null;
 
@@ -148,6 +151,7 @@ export default function Home() {
               : id === 'today' ? todayCount
               : id === 'done' ? doneCount
               : id === 'review' ? reviewCount
+              : id === 'bills' ? billsCount
               : 0;
             const isStuck = id === 'kanban' && stuckCount > 0;
 
@@ -206,6 +210,7 @@ export default function Home() {
         {view === 'kanban' && <KanbanBoard tasks={tasks} onUpdate={updateTask} dark={dark} onOpen={setModalTask} />}
         {view === 'done' && <DoneView tasks={tasks} dark={dark} onOpen={setModalTask} onUpdate={updateTask} />}
         {view === 'review' && <ReviewView tasks={tasks} dark={dark} onOpen={setModalTask} onUpdate={updateTask} />}
+        {view === 'bills' && <BillsView tasks={tasks} dark={dark} onOpen={setModalTask} onUpdate={updateTask} />}
       </div>
 
       {/* Bottom nav — mobile only */}
