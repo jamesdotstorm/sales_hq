@@ -15,8 +15,9 @@ import DoneView from '@/components/DoneView';
 import DailyQuote from '@/components/DailyQuote';
 import ReviewView from '@/components/ReviewView';
 import BillsView from '@/components/BillsView';
+import SalesReport from '@/components/SalesReport';
 
-type View = 'inbox' | 'today' | 'scheduled' | 'delegated' | 'all' | 'kanban' | 'done' | 'review' | 'bills';
+type View = 'inbox' | 'today' | 'scheduled' | 'delegated' | 'all' | 'kanban' | 'done' | 'review' | 'bills' | 'sales';
 
 const NAV: { id: View; label: string; icon: string }[] = [
   { id: 'inbox', label: 'Inbox', icon: '📥' },
@@ -27,6 +28,7 @@ const NAV: { id: View; label: string; icon: string }[] = [
   { id: 'delegated', label: 'Delegated', icon: '👥' },
   { id: 'all', label: 'All Tasks', icon: '📋' },
   { id: 'kanban', label: "Torti's Board", icon: '🐢' },
+  { id: 'sales', label: 'Sales Report', icon: '📊' },
   { id: 'done', label: 'Done', icon: '✅' },
 ];
 
@@ -211,6 +213,7 @@ export default function Home() {
         {view === 'done' && <DoneView tasks={tasks} dark={dark} onOpen={setModalTask} onUpdate={updateTask} />}
         {view === 'review' && <ReviewView tasks={tasks} dark={dark} onOpen={setModalTask} onUpdate={updateTask} />}
         {view === 'bills' && <BillsView tasks={tasks} dark={dark} onOpen={setModalTask} onUpdate={updateTask} />}
+        {view === 'sales' && <SalesReport dark={dark} />}
       </div>
 
       {/* Bottom nav — mobile only */}
