@@ -96,19 +96,28 @@ export default function SalesReport({ dark }: Props) {
 
       {data && (
         <div className="space-y-8">
-          {/* Top stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCard label="Total Targets" value={data.leads.total.toLocaleString()} sub="in CRM" dark={dark} color="border-indigo-500/20" />
-            <StatCard label="Est. Lead TPV" value={fmt(data.leads.totalTPV)} sub="annual USD" dark={dark} color="border-purple-500/20" />
-            <StatCard label="Total Deals" value={data.deals.total.toLocaleString()} sub="in pipeline" dark={dark} color="border-orange-500/20" />
-            <StatCard label="Customers" value={data.customers.total.toLocaleString()} sub="live clients" dark={dark} color="border-green-500/20" />
-          </div>
+          {/* Summary — 3 clean sections */}
+          <div className={`rounded-2xl border divide-y ${dark ? 'bg-[#1a1a1a] border-white/8 divide-white/5' : 'bg-white border-gray-100 divide-gray-100 shadow-sm'}`}>
+            {/* Targets */}
+            <div className="px-6 py-5">
+              <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>Total Targets in CRM</p>
+              <p className={`text-3xl font-bold mt-1 ${dark ? 'text-white' : 'text-gray-900'}`}>{data.leads.total.toLocaleString()}</p>
+              <p className={`text-sm mt-1 ${dark ? 'text-white/30' : 'text-gray-400'}`}>Total Value of Leads (Est. Annual TPV) <span className={`font-semibold ${dark ? 'text-white/60' : 'text-gray-600'}`}>{fmt(data.leads.totalTPV)}</span></p>
+            </div>
 
-          {/* Revenue highlights */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <StatCard label="Won ARR" value={fmt(data.deals.wonARR)} sub={`${data.deals.wonCount} closed deals`} dark={dark} color="border-green-500/30" />
-            <StatCard label="Active Pipeline ARR" value={fmt(data.deals.activeARR)} sub="hunting + hot + onboarding" dark={dark} color="border-indigo-500/30" />
-            <StatCard label="Total Pipeline ARR" value={fmt(data.deals.totalARR)} sub="all deals" dark={dark} color="border-white/10" />
+            {/* Deals */}
+            <div className="px-6 py-5">
+              <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>Total Deals in the CRM</p>
+              <p className={`text-3xl font-bold mt-1 ${dark ? 'text-white' : 'text-gray-900'}`}>{data.deals.total.toLocaleString()}</p>
+              <p className={`text-sm mt-1 ${dark ? 'text-white/30' : 'text-gray-400'}`}>Total Value of Deals (Verified ARR) <span className={`font-semibold ${dark ? 'text-white/60' : 'text-gray-600'}`}>{fmt(data.deals.wonARR)}</span> · Pipeline <span className={`font-semibold ${dark ? 'text-white/60' : 'text-gray-600'}`}>{fmt(data.deals.activeARR)}</span></p>
+            </div>
+
+            {/* Customers */}
+            <div className="px-6 py-5">
+              <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>Total Customers in CRM</p>
+              <p className={`text-3xl font-bold mt-1 ${dark ? 'text-white' : 'text-gray-900'}`}>{data.customers.total.toLocaleString()}</p>
+              <p className={`text-sm mt-1 ${dark ? 'text-white/30' : 'text-gray-400'}`}>Total Value of Customers (Cumulative TPV) <span className={`font-semibold ${dark ? 'text-white/60' : 'text-gray-600'}`}>—</span></p>
+            </div>
           </div>
 
           {/* Deals by stage */}
