@@ -147,7 +147,7 @@ export default function SalesReport({ dark }: Props) {
               </div>
               <div className={`text-right rounded-xl px-5 py-3 flex-shrink-0 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
                 <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Cumulative TPV</p>
-                <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-white/40' : 'text-gray-400'}`}>—</p>
+                <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-green-400' : 'text-green-600'}`}>$120M</p>
               </div>
             </div>
           </div>
