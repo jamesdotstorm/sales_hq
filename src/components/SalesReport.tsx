@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
 interface SalesData {
   leads: {
@@ -229,6 +230,65 @@ export default function SalesReport({ dark }: Props) {
               </div>
             ))}
           </div>
+
+          {/* 12-Month TPV Projection */}
+          {(() => {
+            const targetRate = parseFloat(rates.targetToCustomer) / 100 || 0;
+            const dealRate = parseFloat(rates.dealToCustomer) / 100 || 0;
+            const targetTPV = 3_800_000_000; // $3.8B total target TPV
+            const monthlyGrowth = (targetTPV * targetRate) + (data.deals.activeARR * dealRate);
+            const points = [];
+            let tpv = 10_000_000;
+            for (let m = 0; m <= 12; m++) {
+              points.push({ month: m === 0 ? 'Now' : `M${m}`, tpv: Math.round(tpv / 1_000_000 * 10) / 10 });
+              tpv += monthlyGrowth;
+            }
+            const finalTPV = points[12].tpv;
+            const reachTarget = finalTPV >= 100;
+
+            return (
+              <div className={`rounded-2xl border px-6 py-5 ${dark ? 'bg-[#1a1a1a] border-white/8' : 'bg-white border-gray-100 shadow-sm'}`}>
+                <div className="flex items-start justify-between mb-5">
+                  <div>
+                    <p className={`text-xs font-semibold uppercase tracking-wider mb-1 ${dark ? 'text-white/40' : 'text-gray-400'}`}>12-Month TPV Projection</p>
+                    <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>
+                      Starting $10M · +{fmt(monthlyGrowth)}/mo growth
+                    </p>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <p className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>Month 12</p>
+                    <p className={`text-2xl font-bold mt-0.5 ${reachTarget ? (dark ? 'text-green-400' : 'text-green-600') : (dark ? 'text-orange-400' : 'text-orange-600')}`}>
+                      ${finalTPV}M
+                    </p>
+                    <p className={`text-xs mt-0.5 ${reachTarget ? (dark ? 'text-green-400/60' : 'text-green-500') : (dark ? 'text-orange-400/60' : 'text-orange-500')}`}>
+                      {reachTarget ? '✅ hits $100M target' : '⚠️ below $100M target'}
+                    </p>
+                  </div>
+                </div>
+
+                {monthlyGrowth === 0 ? (
+                  <p className={`text-center py-8 text-sm ${dark ? 'text-white/20' : 'text-gray-300'}`}>Set conversion rates above to see projection</p>
+                ) : (
+                  <ResponsiveContainer width="100%" height={220}>
+                    <LineChart data={points} margin={{ top: 4, right: 4, bottom: 0, left: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke={dark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.06)'} />
+                      <XAxis dataKey="month" tick={{ fontSize: 11, fill: dark ? 'rgba(255,255,255,0.3)' : '#9ca3af' }} axisLine={false} tickLine={false} />
+                      <YAxis tickFormatter={v => `$${v}M`} tick={{ fontSize: 11, fill: dark ? 'rgba(255,255,255,0.3)' : '#9ca3af' }} axisLine={false} tickLine={false} width={55} />
+                      <Tooltip
+                        formatter={(v) => [`$${v}M`, 'Monthly TPV']}
+                        contentStyle={{ background: dark ? '#1a1a1a' : '#fff', border: `1px solid ${dark ? 'rgba(255,255,255,0.1)' : '#e5e7eb'}`, borderRadius: 8, fontSize: 12 }}
+                        labelStyle={{ color: dark ? 'rgba(255,255,255,0.5)' : '#6b7280' }}
+                        itemStyle={{ color: dark ? '#818cf8' : '#4f46e5' }}
+                      />
+                      <Line type="monotone" dataKey="tpv" stroke={reachTarget ? '#34d399' : '#f97316'} strokeWidth={2.5} dot={false} activeDot={{ r: 4 }} />
+                      {/* $100M target line */}
+                      <Line type="monotone" data={points.map(p => ({ ...p, target: 100 }))} dataKey="target" stroke={dark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)'} strokeWidth={1} strokeDasharray="4 4" dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                )}
+              </div>
+            );
+          })()}
 
         </div>
       )}
