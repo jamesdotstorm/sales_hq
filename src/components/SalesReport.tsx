@@ -75,7 +75,7 @@ export default function SalesReport({ dark }: Props) {
     <div className="p-6 max-w-4xl mx-auto">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className={`text-2xl font-bold ${dark ? 'text-white' : 'text-gray-800'}`}>📊 Sales Report</h1>
+          <h1 className={`text-2xl font-bold ${dark ? 'text-white' : 'text-gray-800'}`}>📊 Sales Overview</h1>
           <p className={`text-sm mt-1 ${dark ? 'text-white/40' : 'text-gray-400'}`}>
             Live from Attio CRM{data ? ` · ${new Date(data.generatedAt).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}` : ''}
           </p>
@@ -96,6 +96,23 @@ export default function SalesReport({ dark }: Props) {
 
       {data && (
         <div className="space-y-8">
+          {/* The Big Picture */}
+          <div className={`rounded-2xl border px-6 py-5 mb-2 ${dark ? 'bg-indigo-950/40 border-indigo-500/20' : 'bg-indigo-50 border-indigo-100'}`}>
+            <p className={`text-xs font-semibold uppercase tracking-wider mb-1 ${dark ? 'text-indigo-400' : 'text-indigo-500'}`}>The Big Picture</p>
+            <p className={`text-lg font-semibold mb-4 ${dark ? 'text-white' : 'text-gray-900'}`}>Are we actually tracking toward meaningful growth?</p>
+            <div className="flex items-center justify-between gap-6">
+              <div className={`rounded-xl px-5 py-3 flex-shrink-0 ${dark ? 'bg-white/5' : 'bg-white shadow-sm'}`}>
+                <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Monthly TPV Estimate</p>
+                <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>$10M</p>
+                <p className={`text-xs mt-0.5 ${dark ? 'text-white/20' : 'text-gray-400'}`}>= $120M ÷ 12</p>
+              </div>
+              <div className="text-right">
+                <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>Customer Annual TPV Target</p>
+                <p className={`text-3xl font-bold mt-1 ${dark ? 'text-white' : 'text-gray-900'}`}>$120M</p>
+              </div>
+            </div>
+          </div>
+
           {/* Summary — 3 clean sections */}
           <div className={`rounded-2xl border divide-y ${dark ? 'bg-[#1a1a1a] border-white/8 divide-white/5' : 'bg-white border-gray-100 divide-gray-100 shadow-sm'}`}>
             {/* Targets */}

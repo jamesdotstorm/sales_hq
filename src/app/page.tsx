@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import DailyQuote from '@/components/DailyQuote';
 import SalesReport from '@/components/SalesReport';
+import LeadsView from '@/components/LeadsView';
+import DealsView from '@/components/DealsView';
 
 type View = 'sales' | 'leads' | 'deals' | 'customers';
 
 const NAV: { id: View; label: string; icon: string }[] = [
-  { id: 'sales', label: 'Sales Report', icon: '📊' },
+  { id: 'sales', label: 'Sales Overview', icon: '📊' },
   { id: 'leads', label: 'Leads', icon: '🎯' },
   { id: 'deals', label: 'Deals', icon: '💼' },
   { id: 'customers', label: 'Customers', icon: '✅' },
@@ -94,8 +96,8 @@ export default function Home() {
       {/* Main content */}
       <div className={`flex-1 overflow-auto pb-16 pt-12 md:pt-0 md:pb-0 ${dark ? 'bg-[#0f0f0f]' : 'bg-gray-50'}`}>
         {view === 'sales' && <SalesReport dark={dark} />}
-        {view === 'leads' && <ComingSoon icon="🎯" label="Leads" desc="Full lead pipeline view coming soon" dark={dark} />}
-        {view === 'deals' && <ComingSoon icon="💼" label="Deals" desc="Deal pipeline and stage tracking coming soon" dark={dark} />}
+        {view === 'leads' && <LeadsView dark={dark} />}
+        {view === 'deals' && <DealsView dark={dark} />}
         {view === 'customers' && <ComingSoon icon="✅" label="Customers" desc="Customer health and activity coming soon" dark={dark} />}
       </div>
 
