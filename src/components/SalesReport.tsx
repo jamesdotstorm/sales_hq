@@ -121,9 +121,15 @@ export default function SalesReport({ dark }: Props) {
                 <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>Total Targets in CRM</p>
                 <p className={`text-3xl font-bold mt-1 ${dark ? 'text-white' : 'text-gray-900'}`}>{data.leads.total.toLocaleString()}</p>
               </div>
-              <div className={`text-right rounded-xl px-5 py-3 flex-shrink-0 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
-                <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Est. Annual TPV</p>
-                <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>{fmt(data.leads.totalTPV)}</p>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <div className={`text-right rounded-xl px-4 py-3 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
+                  <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Est. Monthly TPV</p>
+                  <p className={`text-xl font-bold mt-0.5 ${dark ? 'text-indigo-300' : 'text-indigo-400'}`}>{fmt(data.leads.totalTPV / 12)}</p>
+                </div>
+                <div className={`text-right rounded-xl px-4 py-3 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
+                  <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Est. Annual TPV</p>
+                  <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>{fmt(data.leads.totalTPV)}</p>
+                </div>
               </div>
             </div>
 
@@ -133,9 +139,15 @@ export default function SalesReport({ dark }: Props) {
                 <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>Total Deals in the CRM</p>
                 <p className={`text-3xl font-bold mt-1 ${dark ? 'text-white' : 'text-gray-900'}`}>{data.deals.total.toLocaleString()}</p>
               </div>
-              <div className={`text-right rounded-xl px-5 py-3 flex-shrink-0 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
-                <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Pipeline ARR</p>
-                <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-orange-400' : 'text-orange-600'}`}>{fmt(data.deals.activeARR)}</p>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <div className={`text-right rounded-xl px-4 py-3 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
+                  <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Monthly ARR</p>
+                  <p className={`text-xl font-bold mt-0.5 ${dark ? 'text-orange-300' : 'text-orange-400'}`}>{fmt(data.deals.activeARR / 12)}</p>
+                </div>
+                <div className={`text-right rounded-xl px-4 py-3 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
+                  <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Pipeline ARR</p>
+                  <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-orange-400' : 'text-orange-600'}`}>{fmt(data.deals.activeARR)}</p>
+                </div>
               </div>
             </div>
 
@@ -145,9 +157,15 @@ export default function SalesReport({ dark }: Props) {
                 <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>Total Customers in CRM</p>
                 <p className={`text-3xl font-bold mt-1 ${dark ? 'text-white' : 'text-gray-900'}`}>{data.customers.total.toLocaleString()}</p>
               </div>
-              <div className={`text-right rounded-xl px-5 py-3 flex-shrink-0 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
-                <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Cumulative TPV</p>
-                <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-green-400' : 'text-green-600'}`}>$120M</p>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <div className={`text-right rounded-xl px-4 py-3 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
+                  <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Monthly TPV</p>
+                  <p className={`text-xl font-bold mt-0.5 ${dark ? 'text-green-300' : 'text-green-500'}`}>$10M</p>
+                </div>
+                <div className={`text-right rounded-xl px-4 py-3 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
+                  <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Cumulative TPV</p>
+                  <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-green-400' : 'text-green-600'}`}>$120M</p>
+                </div>
               </div>
             </div>
           </div>
