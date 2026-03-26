@@ -69,8 +69,11 @@ export async function GET() {
   }
 
   // CUSTOMERS
+  let lastMonthTPV = 0;
   const customerList = customers.map((c: Record<string, unknown>) => {
     const vals = c.values as Record<string, Array<Record<string, unknown>>> || {};
+    const lm = (vals.last_months_tpv?.[0] as Record<string, number>)?.value || 0;
+    lastMonthTPV += lm;
     return {
       name: (vals.merchant_name?.[0] as Record<string, string>)?.value || 'Unknown',
       stage: (vals.stage?.[0] as Record<string, Record<string, string>>)?.status?.title || 'Unknown',
@@ -98,6 +101,8 @@ export async function GET() {
     },
     customers: {
       total: customers.length,
+      lastMonthTPV,
+      annualisedTPV: lastMonthTPV * 12,
       list: customerList,
     },
     generatedAt: new Date().toISOString(),

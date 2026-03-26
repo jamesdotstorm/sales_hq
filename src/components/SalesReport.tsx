@@ -19,6 +19,8 @@ interface SalesData {
   };
   customers: {
     total: number;
+    lastMonthTPV: number;
+    annualisedTPV: number;
     list: { name: string; stage: string }[];
   };
   generatedAt: string;
@@ -129,13 +131,13 @@ export default function SalesReport({ dark }: Props) {
             <p className={`text-lg font-semibold mb-4 ${dark ? 'text-white' : 'text-gray-900'}`}>Are we actually tracking toward meaningful growth?</p>
             <div className="flex items-center justify-between gap-6">
               <div className={`rounded-xl px-5 py-3 flex-shrink-0 ${dark ? 'bg-white/5' : 'bg-white shadow-sm'}`}>
-                <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Monthly TPV Estimate</p>
-                <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>$10M</p>
-                <p className={`text-xs mt-0.5 ${dark ? 'text-white/20' : 'text-gray-400'}`}>= $120M ÷ 12</p>
+                <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Last Month TPV</p>
+                <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>{fmt(data.customers.lastMonthTPV)}</p>
+                <p className={`text-xs mt-0.5 ${dark ? 'text-white/20' : 'text-gray-400'}`}>from {data.customers.total} customers</p>
               </div>
               <div className="text-right">
-                <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>Customer Annual TPV Target</p>
-                <p className={`text-3xl font-bold mt-1 ${dark ? 'text-white' : 'text-gray-900'}`}>$120M</p>
+                <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>Annualised TPV (× 12)</p>
+                <p className={`text-3xl font-bold mt-1 ${dark ? 'text-white' : 'text-gray-900'}`}>{fmt(data.customers.annualisedTPV)}</p>
               </div>
             </div>
           </div>
@@ -187,11 +189,11 @@ export default function SalesReport({ dark }: Props) {
               <div className="flex items-center gap-2 flex-shrink-0">
                 <div className={`text-right rounded-xl px-4 py-3 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
                   <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Monthly TPV</p>
-                  <p className={`text-xl font-bold mt-0.5 ${dark ? 'text-green-300' : 'text-green-500'}`}>$10M</p>
+                  <p className={`text-xl font-bold mt-0.5 ${dark ? 'text-green-300' : 'text-green-500'}`}>{fmt(data.customers.lastMonthTPV)}</p>
                 </div>
                 <div className={`text-right rounded-xl px-4 py-3 ${dark ? 'bg-white/5' : 'bg-gray-50'}`}>
-                  <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Cumulative TPV</p>
-                  <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-green-400' : 'text-green-600'}`}>$120M</p>
+                  <p className={`text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>Annualised TPV</p>
+                  <p className={`text-2xl font-bold mt-0.5 ${dark ? 'text-green-400' : 'text-green-600'}`}>{fmt(data.customers.annualisedTPV)}</p>
                 </div>
               </div>
             </div>
