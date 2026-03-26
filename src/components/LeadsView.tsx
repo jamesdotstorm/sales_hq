@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from 'react';
 
-interface ByIndustry { label: string; count: number; tpv: number }
+interface Row { label: string; count: number; tpv: number }
+interface StageRow { stage: string; count: number; tpv: number }
 interface LeadsData {
   total: number;
-  byIndustry: ByIndustry[];
+  byIndustry: Row[];
+  byStage: StageRow[];
+  byContactedStatus: Row[];
 }
 
 interface Props { dark: boolean }
@@ -15,6 +18,48 @@ function fmt(n: number) {
   if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
   if (n >= 1_000) return `$${(n / 1_000).toFixed(0)}K`;
   return `$${n.toFixed(0)}`;
+}
+
+function BreakdownTable({ title, rows, totalTPV, dark }: {
+  title: string;
+  rows: { label: string; count: number; tpv: number }[];
+  totalTPV: number;
+  dark: boolean;
+}) {
+  const known = rows.filter(r => r.label !== 'Unknown' && r.label !== 'Not Set');
+  const unknown = rows.filter(r => r.label === 'Unknown' || r.label === 'Not Set');
+  const all = [...known, ...unknown];
+
+  return (
+    <div>
+      <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>{title}</h2>
+      <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
+        <div className={`grid grid-cols-3 px-4 py-2 text-xs font-semibold uppercase tracking-wider border-b ${dark ? 'bg-white/3 border-white/5 text-white/30' : 'bg-gray-50 border-gray-100 text-gray-400'}`}>
+          <span>Name</span>
+          <span className="text-center">Count</span>
+          <span className="text-right">Est. Annual TPV</span>
+        </div>
+        {all.map(({ label, count, tpv }) => {
+          const pct = totalTPV > 0 ? (tpv / totalTPV) * 100 : 0;
+          const isUnknown = label === 'Unknown' || label === 'Not Set';
+          return (
+            <div key={label} className={`px-4 py-3 border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
+              <div className="grid grid-cols-3 items-center mb-1.5">
+                <span className={`text-sm font-medium ${isUnknown ? (dark ? 'text-white/25' : 'text-gray-300') : (dark ? 'text-white' : 'text-gray-800')}`}>{label}</span>
+                <span className={`text-sm text-center ${isUnknown ? (dark ? 'text-white/25' : 'text-gray-300') : (dark ? 'text-white/60' : 'text-gray-500')}`}>{count.toLocaleString()}</span>
+                <span className={`text-sm font-semibold text-right ${isUnknown ? (dark ? 'text-white/25' : 'text-gray-300') : (dark ? 'text-indigo-400' : 'text-indigo-600')}`}>{fmt(tpv)}</span>
+              </div>
+              {!isUnknown && (
+                <div className={`h-1 rounded-full overflow-hidden ${dark ? 'bg-white/5' : 'bg-gray-100'}`}>
+                  <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${pct}%` }} />
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default function LeadsView({ dark }: Props) {
@@ -45,42 +90,26 @@ export default function LeadsView({ dark }: Props) {
       )}
 
       {data && (
-        <div>
-          <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>By Company Type</h2>
-          <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
-            {/* Header */}
-            <div className={`grid grid-cols-3 px-4 py-2 text-xs font-semibold uppercase tracking-wider border-b ${dark ? 'bg-white/3 border-white/5 text-white/30' : 'bg-gray-50 border-gray-100 text-gray-400'}`}>
-              <span>Type</span>
-              <span className="text-center">Count</span>
-              <span className="text-right">Est. Annual TPV</span>
-            </div>
-            {data.byIndustry.filter(r => r.label !== 'Unknown').map(({ label, count, tpv }) => {
-              const pct = totalTPV > 0 ? (tpv / totalTPV) * 100 : 0;
-              return (
-                <div key={label} className={`px-4 py-3 border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
-                  <div className="grid grid-cols-3 items-center mb-1.5">
-                    <span className={`text-sm font-medium ${dark ? 'text-white' : 'text-gray-800'}`}>{label}</span>
-                    <span className={`text-sm text-center ${dark ? 'text-white/50' : 'text-gray-500'}`}>{count.toLocaleString()}</span>
-                    <span className={`text-sm font-semibold text-right ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>{fmt(tpv)}</span>
-                  </div>
-                  <div className={`h-1 rounded-full overflow-hidden ${dark ? 'bg-white/5' : 'bg-gray-100'}`}>
-                    <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${pct}%` }} />
-                  </div>
-                </div>
-              );
-            })}
-            {/* Unknown row at the bottom */}
-            {data.byIndustry.filter(r => r.label === 'Unknown').map(({ label, count, tpv }) => (
-              <div key={label} className={`px-4 py-3 ${dark ? 'bg-[#1a1a1a]' : 'bg-white'}`}>
-                <div className="grid grid-cols-3 items-center">
-                  <span className={`text-sm ${dark ? 'text-white/20' : 'text-gray-300'}`}>Unknown type</span>
-                  <span className={`text-sm text-center ${dark ? 'text-white/20' : 'text-gray-300'}`}>{count.toLocaleString()}</span>
-                  <span className={`text-sm text-right ${dark ? 'text-white/20' : 'text-gray-300'}`}>{fmt(tpv)}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <>
+          <BreakdownTable
+            title="By Company Type"
+            rows={data.byIndustry}
+            totalTPV={totalTPV}
+            dark={dark}
+          />
+          <BreakdownTable
+            title="By Stage"
+            rows={data.byStage.map(r => ({ label: r.stage, count: r.count, tpv: r.tpv }))}
+            totalTPV={totalTPV}
+            dark={dark}
+          />
+          <BreakdownTable
+            title="By Contacted Status"
+            rows={data.byContactedStatus}
+            totalTPV={totalTPV}
+            dark={dark}
+          />
+        </>
       )}
     </div>
   );

@@ -41,6 +41,7 @@ export async function GET() {
 
   const byCompanyType: Record<string, { count: number; tpv: number }> = {};
   const byStage: Record<string, { count: number; tpv: number }> = {};
+  const byContactedStatus: Record<string, { count: number; tpv: number }> = {};
   const withTPV: { name: string; tpv: number; stage: string; industry: string }[] = [];
 
   for (const lead of leads) {
@@ -48,6 +49,7 @@ export async function GET() {
     const name = vals.lead_name?.[0]?.value || 'Unknown';
     const tpv = vals.annual_tpv_est?.[0]?.value || 0;
     const stage = vals.stages?.[0]?.status?.title || 'Unknown';
+    const contactedStatus = vals.contacted_status?.[0]?.option?.title || 'Not Set';
 
     // Get company type from the linked company record
     const companyId = vals.company?.[0]?.target_record_id;
@@ -63,6 +65,11 @@ export async function GET() {
     byStage[stage].count++;
     byStage[stage].tpv += tpv;
 
+    // by contacted status
+    if (!byContactedStatus[contactedStatus]) byContactedStatus[contactedStatus] = { count: 0, tpv: 0 };
+    byContactedStatus[contactedStatus].count++;
+    byContactedStatus[contactedStatus].tpv += tpv;
+
     if (tpv > 0) withTPV.push({ name, tpv, stage, industry: companyType });
   }
 
@@ -73,5 +80,6 @@ export async function GET() {
     top10,
     byIndustry: Object.entries(byCompanyType).sort((a, b) => b[1].tpv - a[1].tpv).map(([k, v]) => ({ label: k, count: v.count, tpv: v.tpv })),
     byStage: Object.entries(byStage).sort((a, b) => b[1].tpv - a[1].tpv).map(([k, v]) => ({ stage: k, ...v })),
+    byContactedStatus: Object.entries(byContactedStatus).sort((a, b) => b[1].count - a[1].count).map(([k, v]) => ({ label: k, count: v.count, tpv: v.tpv })),
   });
 }
