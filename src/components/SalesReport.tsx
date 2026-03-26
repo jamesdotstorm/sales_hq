@@ -139,7 +139,7 @@ export default function SalesReport({ dark }: Props) {
             </div>
           </div>
 
-          {/* Summary — 3 clean sections */}
+          {/* Summary + Conversion Rates — one card */}
           <div className={`rounded-2xl border divide-y ${dark ? 'bg-[#1a1a1a] border-white/8 divide-white/5' : 'bg-white border-gray-100 divide-gray-100 shadow-sm'}`}>
             {/* Targets */}
             <div className="px-6 py-5 flex items-center justify-between gap-6">
@@ -194,10 +194,8 @@ export default function SalesReport({ dark }: Props) {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Conversion Rates */}
-          <div className={`rounded-2xl border divide-y ${dark ? 'bg-[#1a1a1a] border-white/8 divide-white/5' : 'bg-white border-gray-100 divide-gray-100 shadow-sm'}`}>
+            {/* Conversion Rates */}
             {([
               { key: 'targetToCustomer' as const, label: 'Target to Customer Monthly Conversion Rate', color: dark ? 'text-indigo-400' : 'text-indigo-600' },
               { key: 'dealToCustomer' as const, label: 'Deal to Customer Monthly Conversion Rate', color: dark ? 'text-orange-400' : 'text-orange-600' },
@@ -221,7 +219,7 @@ export default function SalesReport({ dark }: Props) {
                     <button onClick={() => setEditing(null)} className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${dark ? 'border-white/10 text-white/40 hover:text-white' : 'border-gray-200 text-gray-400 hover:text-gray-700'}`}>Cancel</button>
                   </div>
                 ) : (
-                  <button onClick={() => startEdit(key)} className={`flex items-center gap-1.5 flex-shrink-0 group`}>
+                  <button onClick={() => startEdit(key)} className="flex items-center gap-1.5 flex-shrink-0 group">
                     <span className={`text-2xl font-bold ${rates[key] ? color : (dark ? 'text-white/20' : 'text-gray-300')}`}>
                       {rates[key] ? `${rates[key]}%` : '—'}
                     </span>
