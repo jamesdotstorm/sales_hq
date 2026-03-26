@@ -51,7 +51,7 @@ export async function GET() {
 
     // Get company type from the linked company record
     const companyId = vals.company?.[0]?.target_record_id;
-    const companyType = (companyId && companyTypeMap[companyId]) || vals.industry?.[0]?.option?.title || 'Unknown';
+    const companyType = (companyId && companyTypeMap[companyId]) || 'Unknown';
 
     // by company type
     if (!byCompanyType[companyType]) byCompanyType[companyType] = { count: 0, tpv: 0 };
