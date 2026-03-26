@@ -61,7 +61,10 @@ export default function SalesReport({ dark }: Props) {
   const [data, setData] = useState<SalesData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [rates, setRates] = useState<{ targetToCustomer: string; dealToCustomer: string }>({ targetToCustomer: '', dealToCustomer: '' });
+  const [rates, setRates] = useState<{ targetToCustomer: string; dealToCustomer: string }>(() => {
+    if (typeof window === 'undefined') return { targetToCustomer: '', dealToCustomer: '' };
+    return loadRates();
+  });
   const [editing, setEditing] = useState<'targetToCustomer' | 'dealToCustomer' | null>(null);
   const [draft, setDraft] = useState('');
 
@@ -74,7 +77,7 @@ export default function SalesReport({ dark }: Props) {
       .catch(() => { setError('Failed to load data'); setLoading(false); });
   };
 
-  useEffect(() => { load(); setRates(loadRates()); }, []);
+  useEffect(() => { load(); }, []);
 
   const saveRate = (key: 'targetToCustomer' | 'dealToCustomer', value: string) => {
     const cleaned = value.replace(/[^0-9.]/g, '');
