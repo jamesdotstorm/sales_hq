@@ -10,7 +10,7 @@ type View = 'sales' | 'leads' | 'deals' | 'customers';
 
 const NAV: { id: View; label: string; icon: string }[] = [
   { id: 'sales', label: 'Sales Overview', icon: '📊' },
-  { id: 'leads', label: 'Leads', icon: '🎯' },
+  { id: 'leads', label: 'Targets', icon: '🎯' },
   { id: 'deals', label: 'Deals', icon: '💼' },
   { id: 'customers', label: 'Customers', icon: '✅' },
 ];

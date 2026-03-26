@@ -45,13 +45,13 @@ export default function LeadsView({ dark }: Props) {
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-8">
       <div>
-        <h1 className={`text-2xl font-bold ${dark ? 'text-white' : 'text-gray-800'}`}>🎯 Leads</h1>
+        <h1 className={`text-2xl font-bold ${dark ? 'text-white' : 'text-gray-800'}`}>🎯 Targets</h1>
         <p className={`text-sm mt-1 ${dark ? 'text-white/40' : 'text-gray-400'}`}>{data.total.toLocaleString()} total targets in CRM</p>
       </div>
 
       {/* Top 10 by TPV */}
       <div>
-        <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>⭐ Top 10 Leads by TPV</h2>
+        <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>⭐ Top 10 Targets by TPV</h2>
         <div className="space-y-2">
           {data.top10.map((lead, i) => (
             <div key={lead.name} className={`rounded-xl px-4 py-3 flex items-center gap-3 ${dark ? 'bg-[#1a1a1a]' : 'bg-white border border-gray-100 shadow-sm'}`}>
