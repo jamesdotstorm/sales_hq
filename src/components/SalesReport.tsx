@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, ReferenceLine } from 'recharts';
 
 interface SalesData {
   leads: {
@@ -237,10 +237,11 @@ export default function SalesReport({ dark }: Props) {
           {(() => {
             const targetRate = parseFloat(rates.targetToCustomer) / 100 || 0;
             const dealRate = parseFloat(rates.dealToCustomer) / 100 || 0;
-            const targetTPV = 3_800_000_000; // $3.8B total target TPV
+            const targetTPV = 3_800_000_000;
+            const startingTPV = data.customers.lastMonthTPV || 10_000_000;
             const monthlyGrowth = (targetTPV * targetRate) + (data.deals.activeARR * dealRate);
             const points = [];
-            let tpv = 10_000_000;
+            let tpv = startingTPV;
             for (let m = 0; m <= 12; m++) {
               points.push({ month: m === 0 ? 'Now' : `M${m}`, tpv: Math.round(tpv / 1_000_000 * 10) / 10 });
               tpv += monthlyGrowth;
@@ -254,7 +255,7 @@ export default function SalesReport({ dark }: Props) {
                   <div>
                     <p className={`text-xs font-semibold uppercase tracking-wider mb-1 ${dark ? 'text-white/40' : 'text-gray-400'}`}>12-Month TPV Projection</p>
                     <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>
-                      Starting $10M · +{fmt(monthlyGrowth)}/mo growth
+                      Starting {fmt(startingTPV)} · +{fmt(monthlyGrowth)}/mo growth
                     </p>
                   </div>
                   <div className="text-right flex-shrink-0">
@@ -282,9 +283,8 @@ export default function SalesReport({ dark }: Props) {
                         labelStyle={{ color: dark ? 'rgba(255,255,255,0.5)' : '#6b7280' }}
                         itemStyle={{ color: dark ? '#818cf8' : '#4f46e5' }}
                       />
+                      <ReferenceLine y={100} stroke={dark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)'} strokeDasharray="4 4" strokeWidth={1} />
                       <Line type="monotone" dataKey="tpv" stroke={reachTarget ? '#34d399' : '#f97316'} strokeWidth={2.5} dot={false} activeDot={{ r: 4 }} />
-                      {/* $100M target line */}
-                      <Line type="monotone" data={points.map(p => ({ ...p, target: 100 }))} dataKey="target" stroke={dark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)'} strokeWidth={1} strokeDasharray="4 4" dot={false} />
                     </LineChart>
                   </ResponsiveContainer>
                 )}
