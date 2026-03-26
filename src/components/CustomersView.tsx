@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 interface CustomersData {
   total: number;
-  top10: { name: string; tpv: number; stage: string; type: string }[];
+  top10: { name: string; tpv: number; lastMonthTpv: number; stage: string; type: string }[];
   byType: { label: string; count: number }[];
   byStage: { stage: string; count: number; tpv: number }[];
 }
@@ -51,7 +51,7 @@ export default function CustomersView({ dark }: Props) {
 
       {/* Top 10 by TPV */}
       <div>
-        <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>⭐ Top 10 Customers by TPV</h2>
+        <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>⭐ Top 10 Customers by Last Month TPV</h2>
         <div className="space-y-2">
           {data.top10.map((c, i) => (
             <div key={c.name} className={`rounded-xl px-4 py-3 flex items-center gap-3 ${dark ? 'bg-[#1a1a1a]' : 'bg-white border border-gray-100 shadow-sm'}`}>
@@ -61,7 +61,10 @@ export default function CustomersView({ dark }: Props) {
                 <p className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>{c.type}</p>
               </div>
               <span className={`text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${STAGE_COLORS[c.stage] || (dark ? 'bg-white/5 text-white/40' : 'bg-gray-100 text-gray-500')}`}>{c.stage}</span>
-              <span className={`text-sm font-semibold flex-shrink-0 ${dark ? 'text-green-400' : 'text-green-600'}`}>{c.tpv > 0 ? fmt(c.tpv) : '—'}</span>
+              <div className="flex-shrink-0 text-right">
+                <p className={`text-sm font-semibold ${dark ? 'text-green-400' : 'text-green-600'}`}>{c.lastMonthTpv > 0 ? fmt(c.lastMonthTpv) : '—'}</p>
+                <p className={`text-xs ${dark ? 'text-white/20' : 'text-gray-400'}`}>{c.tpv > 0 ? fmt(c.tpv) + ' total' : ''}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -91,7 +94,10 @@ export default function CustomersView({ dark }: Props) {
                   <span className={`text-xs px-2 py-0.5 rounded-full ${STAGE_COLORS[stage] || (dark ? 'bg-white/5 text-white/40' : 'bg-gray-100 text-gray-500')}`}>{stage}</span>
                   <span className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>{count}</span>
                 </div>
-                <span className={`text-sm font-semibold ${dark ? 'text-green-400' : 'text-green-600'}`}>{tpv > 0 ? fmt(tpv) : '—'}</span>
+                <div className="text-right">
+                  <span className={`text-sm font-semibold ${dark ? 'text-green-400' : 'text-green-600'}`}>{tpv > 0 ? fmt(tpv) : '—'}</span>
+                  <p className={`text-xs ${dark ? 'text-white/20' : 'text-gray-400'}`}>last month</p>
+                </div>
               </div>
             ))}
           </div>

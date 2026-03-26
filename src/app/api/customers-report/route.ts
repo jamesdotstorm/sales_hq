@@ -29,12 +29,13 @@ export async function GET() {
 
   const byType: Record<string, number> = {};
   const byStage: Record<string, { count: number; tpv: number }> = {};
-  const withTPV: { name: string; tpv: number; stage: string; type: string }[] = [];
+  const withTPV: { name: string; tpv: number; lastMonthTpv: number; stage: string; type: string }[] = [];
 
   for (const c of customers) {
     const vals = c.values || {};
     const name = vals.merchant_name?.[0]?.value || vals.name?.[0]?.value || 'Unknown';
-    const tpv = vals.annual_tpv_est?.[0]?.value || vals.tpv?.[0]?.value || 0;
+    const tpv = vals.cumulative_volume?.[0]?.value || 0;
+    const lastMonthTpv = vals.last_months_tpv?.[0]?.value || 0;
     const stage = vals.stage?.[0]?.status?.title || 'Unknown';
     const type = vals.type?.[0]?.option?.title || vals.industry?.[0]?.option?.title || vals.industry?.[0]?.value || 'Unknown';
 
@@ -42,12 +43,12 @@ export async function GET() {
 
     if (!byStage[stage]) byStage[stage] = { count: 0, tpv: 0 };
     byStage[stage].count++;
-    byStage[stage].tpv += tpv;
+    byStage[stage].tpv += lastMonthTpv;
 
-    withTPV.push({ name, tpv, stage, type });
+    withTPV.push({ name, tpv, lastMonthTpv, stage, type });
   }
 
-  const top10 = withTPV.sort((a, b) => b.tpv - a.tpv).slice(0, 10);
+  const top10 = withTPV.sort((a, b) => b.lastMonthTpv - a.lastMonthTpv).slice(0, 10);
 
   return NextResponse.json({
     total: customers.length,
