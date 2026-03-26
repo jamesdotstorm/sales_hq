@@ -170,57 +170,7 @@ export default function SalesReport({ dark }: Props) {
             </div>
           </div>
 
-          {/* Deals by stage */}
-          <div>
-            <h2 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${dark ? 'text-white/40' : 'text-gray-400'}`}>📊 Deals by Stage</h2>
-            <div className="space-y-2">
-              {data.deals.byStage.map(({ stage, count, arr }) => {
-                const colorClass = STAGE_COLORS[stage] || (dark ? 'bg-white/5 text-white/40' : 'bg-gray-100 text-gray-500');
-                const pct = data.deals.totalARR > 0 ? (arr / data.deals.totalARR) * 100 : 0;
-                return (
-                  <div key={stage} className={`rounded-xl px-4 py-3 flex items-center gap-3 ${dark ? 'bg-[#1a1a1a]' : 'bg-white border border-gray-100'}`}>
-                    <span className={`text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${colorClass}`}>{stage}</span>
-                    <div className="flex-1">
-                      <div className={`h-1.5 rounded-full overflow-hidden ${dark ? 'bg-white/5' : 'bg-gray-100'}`}>
-                        <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${pct}%` }} />
-                      </div>
-                    </div>
-                    <span className={`text-xs font-medium w-8 text-right flex-shrink-0 ${dark ? 'text-white/50' : 'text-gray-500'}`}>{count}</span>
-                    <span className={`text-xs w-20 text-right flex-shrink-0 ${dark ? 'text-white/70' : 'text-gray-700'}`}>{fmt(arr)}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
 
-          {/* Lead funnel */}
-          <div>
-            <h2 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${dark ? 'text-white/40' : 'text-gray-400'}`}>🎯 Leads by Stage</h2>
-            <div className="space-y-2">
-              {data.leads.byStage.map(({ stage, count, tpv }) => (
-                <div key={stage} className={`rounded-xl px-4 py-3 flex items-center justify-between ${dark ? 'bg-[#1a1a1a]' : 'bg-white border border-gray-100'}`}>
-                  <span className={`text-sm ${dark ? 'text-white/70' : 'text-gray-700'}`}>{stage}</span>
-                  <div className="flex items-center gap-4">
-                    <span className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>{fmt(tpv)} TPV</span>
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${dark ? 'bg-white/5 text-white/50' : 'bg-gray-100 text-gray-500'}`}>{count}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Customers */}
-          <div>
-            <h2 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${dark ? 'text-white/40' : 'text-gray-400'}`}>✅ Live Customers ({data.customers.total})</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              {data.customers.list.map(({ name, stage }) => (
-                <div key={name} className={`rounded-xl px-4 py-3 flex items-center justify-between ${dark ? 'bg-[#1a1a1a]' : 'bg-white border border-gray-100'}`}>
-                  <span className={`text-sm font-medium ${dark ? 'text-white' : 'text-gray-800'}`}>{name}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${dark ? 'bg-green-500/20 text-green-400' : 'bg-green-50 text-green-600'}`}>{stage}</span>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       )}
     </div>
