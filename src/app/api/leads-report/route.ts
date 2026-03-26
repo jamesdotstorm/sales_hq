@@ -27,7 +27,7 @@ async function fetchAll(endpoint: string) {
 export async function GET() {
   const leads = await fetchAll('/objects/leads/records/query');
 
-  const byIndustry: Record<string, number> = {};
+  const byIndustry: Record<string, { count: number; tpv: number }> = {};
   const byStage: Record<string, { count: number; tpv: number }> = {};
   const withTPV: { name: string; tpv: number; stage: string; industry: string }[] = [];
 
@@ -39,7 +39,9 @@ export async function GET() {
     const industry = vals.industry?.[0]?.option?.title || vals.industry?.[0]?.value || 'Unknown';
 
     // by industry
-    byIndustry[industry] = (byIndustry[industry] || 0) + 1;
+    if (!byIndustry[industry]) byIndustry[industry] = { count: 0, tpv: 0 };
+    byIndustry[industry].count++;
+    byIndustry[industry].tpv += tpv;
 
     // by stage
     if (!byStage[stage]) byStage[stage] = { count: 0, tpv: 0 };
@@ -54,7 +56,7 @@ export async function GET() {
   return NextResponse.json({
     total: leads.length,
     top10,
-    byIndustry: Object.entries(byIndustry).sort((a, b) => b[1] - a[1]).map(([k, v]) => ({ label: k, count: v })),
+    byIndustry: Object.entries(byIndustry).sort((a, b) => b[1].tpv - a[1].tpv).map(([k, v]) => ({ label: k, count: v.count, tpv: v.tpv })),
     byStage: Object.entries(byStage).sort((a, b) => b[1].tpv - a[1].tpv).map(([k, v]) => ({ stage: k, ...v })),
   });
 }
