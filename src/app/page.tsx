@@ -5,6 +5,7 @@ import DailyQuote from '@/components/DailyQuote';
 import SalesReport from '@/components/SalesReport';
 import LeadsView from '@/components/LeadsView';
 import DealsView from '@/components/DealsView';
+import CustomersView from '@/components/CustomersView';
 
 type View = 'sales' | 'leads' | 'deals' | 'customers';
 
@@ -98,7 +99,7 @@ export default function Home() {
         {view === 'sales' && <SalesReport dark={dark} />}
         {view === 'leads' && <LeadsView dark={dark} />}
         {view === 'deals' && <DealsView dark={dark} />}
-        {view === 'customers' && <ComingSoon icon="✅" label="Customers" desc="Customer health and activity coming soon" dark={dark} />}
+        {view === 'customers' && <CustomersView dark={dark} />}
       </div>
 
       {/* Bottom nav — mobile only */}

@@ -36,7 +36,7 @@ export default function LeadsView({ dark }: Props) {
 
   if (loading) return (
     <div className={`text-center py-20 ${dark ? 'text-white/20' : 'text-gray-300'}`}>
-      <div className="text-4xl mb-3 animate-pulse">🎯</div><p>Loading leads...</p>
+      <div className="text-4xl mb-3 animate-pulse">🎯</div><p>Loading targets...</p>
     </div>
   );
 
@@ -68,9 +68,9 @@ export default function LeadsView({ dark }: Props) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* By Industry/Type */}
+        {/* By Type */}
         <div>
-          <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>📋 By Lead Type (Industry)</h2>
+          <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>📋 By Target Type</h2>
           <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
             {data.byIndustry.slice(0, 10).map(({ label, count }) => (
               <div key={label} className={`px-4 py-3 flex items-center justify-between border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
@@ -83,13 +83,13 @@ export default function LeadsView({ dark }: Props) {
 
         {/* By Stage */}
         <div>
-          <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>🔄 By Lead Stage</h2>
+          <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>🔄 By Target Stage</h2>
           <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
             {data.byStage.map(({ stage, count, tpv }) => (
               <div key={stage} className={`px-4 py-3 flex items-center justify-between border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
                 <div>
                   <span className={`text-sm ${dark ? 'text-white/70' : 'text-gray-700'}`}>{stage}</span>
-                  <span className={`text-xs ml-2 ${dark ? 'text-white/30' : 'text-gray-400'}`}>{count} leads</span>
+                  <span className={`text-xs ml-2 ${dark ? 'text-white/30' : 'text-gray-400'}`}>{count} targets</span>
                 </div>
                 <span className={`text-sm font-semibold ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>{fmt(tpv)}</span>
               </div>
