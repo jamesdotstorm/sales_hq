@@ -35,6 +35,24 @@ async function attioGet(endpoint: string) {
   return res.json();
 }
 
+// Normalise industry labels so variants map to a single canonical name
+function normaliseIndustry(raw: string): string {
+  const s = raw.trim();
+  if (!s || s === 'Untagged') return 'Untagged';
+  const lower = s.toLowerCase();
+  if (lower.includes('hotel') || lower.includes('lodge')) return 'Hotel';
+  if (lower.includes('safari organiser') || lower.includes('safari organizer')) return 'Safari Organiser';
+  if (lower.includes('tour operator')) return 'Tour Operator';
+  if (lower.includes('travel booking') || lower.includes('travel agency') || lower.includes('travel agent')) return 'Travel Booking Co.';
+  if (lower.includes('pms') || lower.includes('property management')) return 'PMS';
+  if (lower.includes('dmc') || lower.includes('destination management')) return 'DMC';
+  if (lower.includes('payment')) return 'Payment Processor';
+  if (lower.includes('airline')) return 'Airline';
+  if (lower.includes('booking engine')) return 'Booking Engine';
+  if (lower.includes('crm')) return 'CRM';
+  return s;
+}
+
 export async function GET() {
   const [leads, deals, customers] = await Promise.all([
     fetchAll('/objects/leads/records/query'),
@@ -54,7 +72,7 @@ export async function GET() {
     if (!leadsByStage[stage]) leadsByStage[stage] = { count: 0, tpv: 0 };
     leadsByStage[stage].count++;
     leadsByStage[stage].tpv += tpv;
-    const industry = vals.industry?.[0]?.option?.title || vals.industry?.[0]?.value || 'Untagged';
+    const industry = normaliseIndustry(vals.industry?.[0]?.option?.title || vals.industry?.[0]?.value || '');
     if (!leadsByIndustry[industry]) leadsByIndustry[industry] = { count: 0, tpv: 0 };
     leadsByIndustry[industry].count++;
     leadsByIndustry[industry].tpv += tpv;
@@ -86,8 +104,9 @@ export async function GET() {
   const companyTypeMap: Record<string, string> = {};
   for (const co of companies) {
     const rid = co.id?.record_id;
-    const type = co.values?.type?.[0]?.option?.title || '';
-    if (rid && type) companyTypeMap[rid] = type;
+    const rawType = co.values?.type?.[0]?.option?.title || '';
+    const type = normaliseIndustry(rawType);
+    if (rid && type && type !== 'Untagged') companyTypeMap[rid] = type;
   }
 
   // CUSTOMERS
@@ -103,8 +122,8 @@ export async function GET() {
 
     // Resolve type via linked company record
     const linkedCompanyId = (vals.account_name?.[0] as Record<string, string>)?.target_record_id || '';
-    const industry = (linkedCompanyId && companyTypeMap[linkedCompanyId])
-      || 'Untagged';
+    const rawIndustry = (linkedCompanyId && companyTypeMap[linkedCompanyId]) || '';
+    const industry = normaliseIndustry(rawIndustry);
 
     if (!customersByIndustry[industry]) customersByIndustry[industry] = { count: 0, tpv: 0 };
     customersByIndustry[industry].count++;
