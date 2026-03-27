@@ -27,6 +27,14 @@ async function fetchAll(endpoint: string) {
   return all;
 }
 
+async function attioGet(endpoint: string) {
+  const res = await fetch(`https://api.attio.com/v2${endpoint}`, {
+    method: 'GET',
+    headers: { 'Authorization': `Bearer ${ATTIO_TOKEN}`, 'Accept': 'application/json' },
+  });
+  return res.json();
+}
+
 export async function GET() {
   const [leads, deals, customers] = await Promise.all([
     fetchAll('/objects/leads/records/query'),
@@ -73,6 +81,15 @@ export async function GET() {
     if (['Hunting', 'Hot Lead', 'Onboarding', 'Activation'].includes(stage)) activeARR += arr;
   }
 
+  // Fetch all companies to build id → type map
+  const companies = await fetchAll('/objects/companies/records/query');
+  const companyTypeMap: Record<string, string> = {};
+  for (const co of companies) {
+    const rid = co.id?.record_id;
+    const type = co.values?.type?.[0]?.option?.title || '';
+    if (rid && type) companyTypeMap[rid] = type;
+  }
+
   // CUSTOMERS
   let lastMonthTPV = 0;
   let totalCumulativeTPV = 0;
@@ -83,10 +100,12 @@ export async function GET() {
     const cumulative = (vals.cumulative_volume?.[0] as Record<string, number>)?.value || 0;
     lastMonthTPV += lm;
     totalCumulativeTPV += cumulative;
-    const industry = (vals.type?.[0] as Record<string, Record<string, string>>)?.option?.title
-      || (vals.industry?.[0] as Record<string, Record<string, string>>)?.option?.title
-      || (vals.industry?.[0] as Record<string, string>)?.value
+
+    // Resolve type via linked company record
+    const linkedCompanyId = (vals.account_name?.[0] as Record<string, string>)?.target_record_id || '';
+    const industry = (linkedCompanyId && companyTypeMap[linkedCompanyId])
       || 'Untagged';
+
     if (!customersByIndustry[industry]) customersByIndustry[industry] = { count: 0, tpv: 0 };
     customersByIndustry[industry].count++;
     customersByIndustry[industry].tpv += cumulative;
