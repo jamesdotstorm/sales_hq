@@ -37,6 +37,7 @@ export async function GET() {
   // LEADS
   let totalTPV = 0;
   const leadsByStage: Record<string, { count: number; tpv: number }> = {};
+  const leadsByIndustry: Record<string, { count: number; tpv: number }> = {};
   for (const lead of leads) {
     const vals = lead.values || {};
     const tpv = vals.annual_tpv_est?.[0]?.value || 0;
@@ -45,6 +46,10 @@ export async function GET() {
     if (!leadsByStage[stage]) leadsByStage[stage] = { count: 0, tpv: 0 };
     leadsByStage[stage].count++;
     leadsByStage[stage].tpv += tpv;
+    const industry = vals.industry?.[0]?.option?.title || vals.industry?.[0]?.value || 'Untagged';
+    if (!leadsByIndustry[industry]) leadsByIndustry[industry] = { count: 0, tpv: 0 };
+    leadsByIndustry[industry].count++;
+    leadsByIndustry[industry].tpv += tpv;
   }
 
   // DEALS
@@ -70,15 +75,46 @@ export async function GET() {
 
   // CUSTOMERS
   let lastMonthTPV = 0;
+  let totalCumulativeTPV = 0;
+  const customersByIndustry: Record<string, { count: number; tpv: number }> = {};
   const customerList = customers.map((c: Record<string, unknown>) => {
     const vals = c.values as Record<string, Array<Record<string, unknown>>> || {};
     const lm = (vals.last_months_tpv?.[0] as Record<string, number>)?.value || 0;
+    const cumulative = (vals.cumulative_volume?.[0] as Record<string, number>)?.value || 0;
     lastMonthTPV += lm;
+    totalCumulativeTPV += cumulative;
+    const industry = (vals.type?.[0] as Record<string, Record<string, string>>)?.option?.title
+      || (vals.industry?.[0] as Record<string, Record<string, string>>)?.option?.title
+      || (vals.industry?.[0] as Record<string, string>)?.value
+      || 'Untagged';
+    if (!customersByIndustry[industry]) customersByIndustry[industry] = { count: 0, tpv: 0 };
+    customersByIndustry[industry].count++;
+    customersByIndustry[industry].tpv += cumulative;
     return {
       name: (vals.merchant_name?.[0] as Record<string, string>)?.value || 'Unknown',
       stage: (vals.stage?.[0] as Record<string, Record<string, string>>)?.status?.title || 'Unknown',
+      industry,
     };
   });
+
+  // MARKET PENETRATION — merge leads + customers by industry
+  const allIndustries = new Set([...Object.keys(leadsByIndustry), ...Object.keys(customersByIndustry)]);
+  const marketPenetration = Array.from(allIndustries).map(industry => {
+    const targets = leadsByIndustry[industry] || { count: 0, tpv: 0 };
+    const cust = customersByIndustry[industry] || { count: 0, tpv: 0 };
+    const clientCount = cust.count;
+    const targetCount = targets.count;
+    const total = targetCount + clientCount;
+    const convRate = total > 0 ? (clientCount / total) * 100 : 0;
+    return {
+      industry,
+      targets: targetCount,
+      clients: clientCount,
+      conversionRate: Math.round(convRate * 10) / 10,
+      estMarketTPV: targets.tpv, // annual TPV estimate of targets
+      customerTPV: cust.tpv,     // cumulative TPV from customers in this industry
+    };
+  }).sort((a, b) => b.estMarketTPV - a.estMarketTPV);
 
   return NextResponse.json({
     leads: {
@@ -103,8 +139,10 @@ export async function GET() {
       total: customers.length,
       lastMonthTPV,
       annualisedTPV: lastMonthTPV * 12,
+      totalCumulativeTPV,
       list: customerList,
     },
+    marketPenetration,
     generatedAt: new Date().toISOString(),
   });
 }

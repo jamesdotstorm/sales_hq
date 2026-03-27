@@ -3,6 +3,15 @@
 import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, ReferenceLine } from 'recharts';
 
+interface MarketRow {
+  industry: string;
+  targets: number;
+  clients: number;
+  conversionRate: number;
+  estMarketTPV: number;
+  customerTPV: number;
+}
+
 interface SalesData {
   leads: {
     total: number;
@@ -21,8 +30,10 @@ interface SalesData {
     total: number;
     lastMonthTPV: number;
     annualisedTPV: number;
+    totalCumulativeTPV: number;
     list: { name: string; stage: string }[];
   };
+  marketPenetration: MarketRow[];
   generatedAt: string;
 }
 
@@ -290,6 +301,85 @@ export default function SalesReport({ dark }: Props) {
                       <Line type="monotone" dataKey="tpv" stroke={reachTarget ? '#34d399' : '#f97316'} strokeWidth={2.5} dot={false} activeDot={{ r: 4 }} />
                     </LineChart>
                   </ResponsiveContainer>
+                )}
+              </div>
+            );
+          })()}
+
+          {/* Market Penetration by Company Type */}
+          {data.marketPenetration && data.marketPenetration.length > 0 && (() => {
+            const rows = data.marketPenetration.filter(r => r.industry !== 'Untagged');
+            const untagged = data.marketPenetration.find(r => r.industry === 'Untagged');
+            const totalTargets = data.marketPenetration.reduce((s, r) => s + r.targets, 0);
+            const totalClients = data.marketPenetration.reduce((s, r) => s + r.clients, 0);
+            const totalEstTPV = data.marketPenetration.reduce((s, r) => s + r.estMarketTPV, 0);
+            const totalCustTPV = data.marketPenetration.reduce((s, r) => s + r.customerTPV, 0);
+
+            const INDUSTRY_EMOJI: Record<string, string> = {
+              'Safari Organiser': '🧭',
+              'Hotel': '🏨',
+              'Travel Booking Co.': '✈️',
+              'Tour Operator': '🌍',
+              'PMS': '🔧',
+              'Lodge': '🏕️',
+              'DMC': '🗺️',
+            };
+
+            return (
+              <div className={`rounded-2xl border px-6 py-5 ${dark ? 'bg-[#1a1a1a] border-white/8' : 'bg-white border-gray-100 shadow-sm'}`}>
+                <div className="mb-5">
+                  <p className={`text-xs font-semibold uppercase tracking-wider mb-1 ${dark ? 'text-white/40' : 'text-gray-400'}`}>Market Penetration by Company Type</p>
+                  <p className={`text-sm ${dark ? 'text-white/50' : 'text-gray-500'}`}>
+                    {(totalTargets + totalClients).toLocaleString()} targets · {fmt(totalEstTPV)} est. market · {fmt(totalCustTPV)} TurnStay all-time TPV
+                  </p>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className={`border-b ${dark ? 'border-white/5' : 'border-gray-100'}`}>
+                        {['Type', 'Targets', 'Clients', 'Conv. %', 'Est. Mkt TPV', 'TS TPV', '% of Mkt'].map(h => (
+                          <th key={h} className={`pb-2 text-left text-xs font-semibold uppercase tracking-wider ${dark ? 'text-white/30' : 'text-gray-400'}`}>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rows.map(row => {
+                        const pct = row.estMarketTPV > 0 ? (row.customerTPV / row.estMarketTPV) * 100 : 0;
+                        const emoji = INDUSTRY_EMOJI[row.industry] || '📋';
+                        return (
+                          <tr key={row.industry} className={`border-b last:border-0 ${dark ? 'border-white/5' : 'border-gray-50'}`}>
+                            <td className={`py-3 font-medium ${dark ? 'text-white' : 'text-gray-800'}`}>{emoji} {row.industry}</td>
+                            <td className={`py-3 ${dark ? 'text-white/60' : 'text-gray-600'}`}>{row.targets.toLocaleString()}</td>
+                            <td className={`py-3 font-semibold ${dark ? 'text-green-400' : 'text-green-600'}`}>{row.clients}</td>
+                            <td className={`py-3 ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>{row.conversionRate.toFixed(1)}%</td>
+                            <td className={`py-3 ${dark ? 'text-white/60' : 'text-gray-600'}`}>{fmt(row.estMarketTPV)}</td>
+                            <td className={`py-3 ${dark ? 'text-white/60' : 'text-gray-600'}`}>{fmt(row.customerTPV)}</td>
+                            <td className={`py-3 font-semibold ${pct < 0.01 ? (dark ? 'text-red-400' : 'text-red-500') : pct < 1 ? (dark ? 'text-orange-400' : 'text-orange-500') : (dark ? 'text-green-400' : 'text-green-600')}`}>
+                              {pct < 0.001 ? '<0.001%' : pct.toFixed(2) + '%'}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                    <tfoot>
+                      <tr className={`border-t ${dark ? 'border-white/10' : 'border-gray-200'}`}>
+                        <td className={`pt-3 font-semibold text-xs ${dark ? 'text-white/40' : 'text-gray-400'}`}>TOTAL</td>
+                        <td className={`pt-3 font-semibold ${dark ? 'text-white/60' : 'text-gray-700'}`}>{totalTargets.toLocaleString()}</td>
+                        <td className={`pt-3 font-semibold ${dark ? 'text-green-400' : 'text-green-600'}`}>{totalClients}</td>
+                        <td className={`pt-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>—</td>
+                        <td className={`pt-3 font-semibold ${dark ? 'text-white/60' : 'text-gray-700'}`}>{fmt(totalEstTPV)}</td>
+                        <td className={`pt-3 font-semibold ${dark ? 'text-white/60' : 'text-gray-700'}`}>{fmt(totalCustTPV)}</td>
+                        <td className={`pt-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>—</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                {untagged && (
+                  <p className={`mt-4 text-xs ${dark ? 'text-white/25' : 'text-gray-400'}`}>
+                    ⚠️ {untagged.clients} customers ({fmt(untagged.customerTPV)} TPV) + {untagged.targets} targets are untagged — tagging them will improve these numbers.
+                  </p>
                 )}
               </div>
             );
