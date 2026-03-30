@@ -6,14 +6,16 @@ import SalesReport from '@/components/SalesReport';
 import LeadsView from '@/components/LeadsView';
 import DealsView from '@/components/DealsView';
 import CustomersView from '@/components/CustomersView';
+import MarketResearchView from '@/components/MarketResearchView';
 
-type View = 'sales' | 'leads' | 'deals' | 'customers';
+type View = 'sales' | 'leads' | 'deals' | 'customers' | 'market';
 
 const NAV: { id: View; label: string; icon: string }[] = [
   { id: 'sales', label: 'Sales Overview', icon: '📊' },
   { id: 'leads', label: 'Targets', icon: '🎯' },
   { id: 'deals', label: 'Deals', icon: '💼' },
   { id: 'customers', label: 'Customers', icon: '✅' },
+  { id: 'market', label: 'Market Research', icon: '🌍' },
 ];
 
 function ComingSoon({ icon, label, desc, dark }: { icon: string; label: string; desc: string; dark: boolean }) {
@@ -100,6 +102,7 @@ export default function Home() {
         {view === 'leads' && <LeadsView dark={dark} />}
         {view === 'deals' && <DealsView dark={dark} />}
         {view === 'customers' && <CustomersView dark={dark} />}
+        {view === 'market' && <MarketResearchView dark={dark} />}
       </div>
 
       {/* Bottom nav — mobile only */}
