@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 
 interface CustomersData {
   total: number;
-  top10: { name: string; tpv: number; lastMonthTpv: number; stage: string; type: string }[];
-  byType: { label: string; count: number }[];
+  top10: { name: string; tpv: number; lastMonthTpv: number; stage: string; category: string }[];
+  byType: { label: string; count: number; lastMonthTpv: number; allTimeTpv: number }[];
   byStage: { stage: string; count: number; tpv: number }[];
 }
 
@@ -58,7 +58,7 @@ export default function CustomersView({ dark }: Props) {
               <span className={`text-sm font-bold w-6 flex-shrink-0 ${dark ? 'text-white/20' : 'text-gray-300'}`}>{i + 1}</span>
               <div className="flex-1 min-w-0">
                 <p className={`text-sm font-medium truncate ${dark ? 'text-white' : 'text-gray-800'}`}>{c.name}</p>
-                <p className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>{c.type}</p>
+                <p className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>{c.category}</p>
               </div>
               <span className={`text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${STAGE_COLORS[c.stage] || (dark ? 'bg-white/5 text-white/40' : 'bg-gray-100 text-gray-500')}`}>{c.stage}</span>
               <div className="flex-shrink-0 text-right">
@@ -72,13 +72,21 @@ export default function CustomersView({ dark }: Props) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* By Type */}
-        <div>
+        <div className="md:col-span-2">
           <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>📋 By Customer Type</h2>
           <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
-            {data.byType.map(({ label, count }) => (
-              <div key={label} className={`px-4 py-3 flex items-center justify-between border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
-                <span className={`text-sm ${dark ? 'text-white/70' : 'text-gray-700'}`}>{label}</span>
-                <span className={`text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>{count}</span>
+            <div className={`grid grid-cols-4 px-4 py-2 text-xs font-semibold uppercase tracking-wider border-b ${dark ? 'bg-white/3 border-white/5 text-white/30' : 'bg-gray-50 border-gray-100 text-gray-400'}`}>
+              <span>Category</span>
+              <span className="text-center">Clients</span>
+              <span className="text-right">Last Month TPV</span>
+              <span className="text-right">All-Time TPV</span>
+            </div>
+            {data.byType.map(({ label, count, lastMonthTpv, allTimeTpv }) => (
+              <div key={label} className={`grid grid-cols-4 px-4 py-3 items-center border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
+                <span className={`text-sm font-medium ${dark ? 'text-white/80' : 'text-gray-700'}`}>{label}</span>
+                <span className={`text-sm text-center ${dark ? 'text-white/50' : 'text-gray-500'}`}>{count}</span>
+                <span className={`text-sm font-semibold text-right ${dark ? 'text-green-400' : 'text-green-600'}`}>{lastMonthTpv > 0 ? fmt(lastMonthTpv) : '—'}</span>
+                <span className={`text-sm font-semibold text-right ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>{allTimeTpv > 0 ? fmt(allTimeTpv) : '—'}</span>
               </div>
             ))}
           </div>
