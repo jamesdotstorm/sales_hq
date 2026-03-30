@@ -91,26 +91,7 @@ export default function CustomersView({ dark }: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* By Stage */}
-        <div>
-          <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>🔄 By Customer Stage</h2>
-          <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
-            {data.byStage.map(({ stage, count, tpv }) => (
-              <div key={stage} className={`px-4 py-3 flex items-center justify-between border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
-                <div className="flex items-center gap-2">
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${STAGE_COLORS[stage] || (dark ? 'bg-white/5 text-white/40' : 'bg-gray-100 text-gray-500')}`}>{stage}</span>
-                  <span className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>{count}</span>
-                </div>
-                <div className="text-right">
-                  <span className={`text-sm font-semibold ${dark ? 'text-green-400' : 'text-green-600'}`}>{tpv > 0 ? fmt(tpv) : '—'}</span>
-                  <p className={`text-xs ${dark ? 'text-white/20' : 'text-gray-400'}`}>last month</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+
     </div>
   );
 }
