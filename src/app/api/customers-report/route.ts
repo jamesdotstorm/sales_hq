@@ -1,59 +1,48 @@
 import { NextResponse } from 'next/server';
+import clientsData from '@/data/clients.json';
 
-const ATTIO_TOKEN = process.env.ATTIO_API_TOKEN || '';
-
-async function attioQuery(endpoint: string, payload = {}) {
-  const res = await fetch(`https://api.attio.com/v2${endpoint}`, {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${ATTIO_TOKEN}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-  return res.json();
-}
-
-async function fetchAll(endpoint: string) {
-  const all = [];
-  let offset = 0;
-  while (true) {
-    const r = await attioQuery(endpoint, { limit: 500, offset });
-    const batch = r.data || [];
-    all.push(...batch);
-    if (batch.length < 500) break;
-    offset += 500;
-  }
-  return all;
+interface Client {
+  id: string;
+  name: string;
+  status: string;
+  stage: string;
+  category: string;
+  accountManager: string;
+  lastMonthTpv: number;
+  monthlyAvgTpv: number;
+  cumulativeTpv: number;
+  accountName: string;
+  type: string;
 }
 
 export async function GET() {
-  const customers = await fetchAll('/objects/customers/records/query');
+  const clients = clientsData as Client[];
 
-  const byType: Record<string, number> = {};
+  const byCategory: Record<string, number> = {};
   const byStage: Record<string, { count: number; tpv: number }> = {};
-  const withTPV: { name: string; tpv: number; lastMonthTpv: number; stage: string; type: string }[] = [];
+  const withTPV: { name: string; tpv: number; lastMonthTpv: number; stage: string; category: string }[] = [];
 
-  for (const c of customers) {
-    const vals = c.values || {};
-    const name = vals.merchant_name?.[0]?.value || vals.name?.[0]?.value || 'Unknown';
-    const tpv = vals.cumulative_volume?.[0]?.value || 0;
-    const lastMonthTpv = vals.last_months_tpv?.[0]?.value || 0;
-    const stage = vals.stage?.[0]?.status?.title || 'Unknown';
-    const type = vals.type?.[0]?.option?.title || vals.industry?.[0]?.option?.title || vals.industry?.[0]?.value || 'Unknown';
+  for (const c of clients) {
+    const category = c.category || 'Unknown';
+    const stage = c.stage || 'Unknown';
+    const tpv = c.cumulativeTpv || 0;
+    const lastMonthTpv = c.lastMonthTpv || 0;
 
-    byType[type] = (byType[type] || 0) + 1;
+    byCategory[category] = (byCategory[category] || 0) + 1;
 
     if (!byStage[stage]) byStage[stage] = { count: 0, tpv: 0 };
     byStage[stage].count++;
     byStage[stage].tpv += lastMonthTpv;
 
-    withTPV.push({ name, tpv, lastMonthTpv, stage, type });
+    withTPV.push({ name: c.name, tpv, lastMonthTpv, stage, category });
   }
 
   const top10 = withTPV.sort((a, b) => b.lastMonthTpv - a.lastMonthTpv).slice(0, 10);
 
   return NextResponse.json({
-    total: customers.length,
+    total: clients.length,
     top10,
-    byType: Object.entries(byType).sort((a, b) => b[1] - a[1]).map(([k, v]) => ({ label: k, count: v })),
+    byType: Object.entries(byCategory).sort((a, b) => b[1] - a[1]).map(([k, v]) => ({ label: k, count: v })),
     byStage: Object.entries(byStage).sort((a, b) => b[1].count - a[1].count).map(([k, v]) => ({ stage: k, ...v })),
   });
 }
