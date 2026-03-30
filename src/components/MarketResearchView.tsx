@@ -11,6 +11,7 @@ interface Category {
   sourceUrl: string;
   notes: string;
   examples: string;
+  excludes: string | null;
 }
 
 interface TopStats {
@@ -145,10 +146,10 @@ export default function MarketResearchView({ dark }: Props) {
                         <p className={`text-xs uppercase tracking-wider mb-1 ${dark ? 'text-white/30' : 'text-gray-400'}`}>TurnStay Notes</p>
                         <p className={dark ? 'text-white/70' : 'text-gray-600'}>{cat.notes}</p>
                       </div>
-                      {cat.projectedSize2029 && (
+                      {cat.excludes && (
                         <div>
-                          <p className={`text-xs uppercase tracking-wider mb-1 ${dark ? 'text-white/30' : 'text-gray-400'}`}>Projected 2029</p>
-                          <p className={`font-semibold ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>{fmt(cat.projectedSize2029)}</p>
+                          <p className={`text-xs uppercase tracking-wider mb-1 ${dark ? 'text-white/30' : 'text-gray-400'}`}>Excludes</p>
+                          <p className={`text-xs ${dark ? 'text-yellow-400/70' : 'text-yellow-600'}`}>⚠️ {cat.excludes}</p>
                         </div>
                       )}
                       <div>
@@ -167,13 +168,13 @@ export default function MarketResearchView({ dark }: Props) {
           })}
           {/* Totals row */}
           <div className={`grid grid-cols-12 px-4 py-3 items-center border-t ${dark ? 'bg-white/3 border-white/10' : 'bg-gray-50 border-gray-200'}`}>
-            <span className={`col-span-4 text-sm font-bold ${dark ? 'text-white' : 'text-gray-800'}`}>Total (sum of verticals)</span>
+            <span className={`col-span-4 text-sm font-bold ${dark ? 'text-white' : 'text-gray-800'}`}>Total Addressable Market</span>
             <span className={`col-span-2 text-sm font-bold text-right ${dark ? 'text-white' : 'text-gray-800'}`}>{fmt(totalForBar)}</span>
             <span className="col-span-6" />
           </div>
         </div>
         <p className={`text-xs mt-2 ${dark ? 'text-white/20' : 'text-gray-400'}`}>
-          ⚠️ Note: Categories overlap (e.g. a safari lodge appears in both Hotels and Safari). Total is sum of verticals, not deduped TAM.
+          ✅ Categories are mutually exclusive — no double counting. Click any row to see what is excluded.
         </p>
       </div>
 
