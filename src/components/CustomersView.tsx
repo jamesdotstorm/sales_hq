@@ -49,6 +49,27 @@ export default function CustomersView({ dark }: Props) {
         <p className={`text-sm mt-1 ${dark ? 'text-white/40' : 'text-gray-400'}`}>{data.total.toLocaleString()} customers in CRM</p>
       </div>
 
+      {/* By Type — moved to top */}
+      <div>
+        <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>📋 By Category</h2>
+        <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
+          <div className={`grid grid-cols-4 px-4 py-2 text-xs font-semibold uppercase tracking-wider border-b ${dark ? 'bg-white/3 border-white/5 text-white/30' : 'bg-gray-50 border-gray-100 text-gray-400'}`}>
+            <span>Category</span>
+            <span className="text-center">Clients</span>
+            <span className="text-right">Last Month TPV</span>
+            <span className="text-right">All-Time TPV</span>
+          </div>
+          {data.byType.map(({ label, count, lastMonthTpv, allTimeTpv }) => (
+            <div key={label} className={`grid grid-cols-4 px-4 py-3 items-center border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
+              <span className={`text-sm font-medium ${dark ? 'text-white/80' : 'text-gray-700'}`}>{label}</span>
+              <span className={`text-sm text-center ${dark ? 'text-white/50' : 'text-gray-500'}`}>{count}</span>
+              <span className={`text-sm font-semibold text-right ${dark ? 'text-green-400' : 'text-green-600'}`}>{lastMonthTpv > 0 ? fmt(lastMonthTpv) : '—'}</span>
+              <span className={`text-sm font-semibold text-right ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>{allTimeTpv > 0 ? fmt(allTimeTpv) : '—'}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Top 10 by TPV */}
       <div>
         <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>⭐ Top 10 Customers by Last Month TPV</h2>
@@ -71,27 +92,6 @@ export default function CustomersView({ dark }: Props) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* By Type */}
-        <div className="md:col-span-2">
-          <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>📋 By Customer Type</h2>
-          <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
-            <div className={`grid grid-cols-4 px-4 py-2 text-xs font-semibold uppercase tracking-wider border-b ${dark ? 'bg-white/3 border-white/5 text-white/30' : 'bg-gray-50 border-gray-100 text-gray-400'}`}>
-              <span>Category</span>
-              <span className="text-center">Clients</span>
-              <span className="text-right">Last Month TPV</span>
-              <span className="text-right">All-Time TPV</span>
-            </div>
-            {data.byType.map(({ label, count, lastMonthTpv, allTimeTpv }) => (
-              <div key={label} className={`grid grid-cols-4 px-4 py-3 items-center border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
-                <span className={`text-sm font-medium ${dark ? 'text-white/80' : 'text-gray-700'}`}>{label}</span>
-                <span className={`text-sm text-center ${dark ? 'text-white/50' : 'text-gray-500'}`}>{count}</span>
-                <span className={`text-sm font-semibold text-right ${dark ? 'text-green-400' : 'text-green-600'}`}>{lastMonthTpv > 0 ? fmt(lastMonthTpv) : '—'}</span>
-                <span className={`text-sm font-semibold text-right ${dark ? 'text-indigo-400' : 'text-indigo-600'}`}>{allTimeTpv > 0 ? fmt(allTimeTpv) : '—'}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* By Stage */}
         <div>
           <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>🔄 By Customer Stage</h2>
