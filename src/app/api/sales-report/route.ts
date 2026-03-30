@@ -1,81 +1,44 @@
 import { NextResponse } from 'next/server';
+import leadsData from '@/data/leads.json';
+import dealsData from '@/data/deals.json';
+import clientsData from '@/data/clients.json';
 
-const ATTIO_TOKEN = process.env.ATTIO_API_TOKEN || '';
-
-async function attioQuery(endpoint: string, payload = {}) {
-  const res = await fetch(`https://api.attio.com/v2${endpoint}`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${ATTIO_TOKEN}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  });
-  return res.json();
+interface Lead {
+  id: string; name: string; industry: string; category: string;
+  contactedStatus: string; stage: string; company: string;
+  country: string; annualTpv: number; paymentProvider: string; bookingSoftware: string;
 }
-
-async function fetchAll(endpoint: string) {
-  const all = [];
-  let offset = 0;
-  while (true) {
-    const r = await attioQuery(endpoint, { limit: 500, offset });
-    const batch = r.data || [];
-    all.push(...batch);
-    if (batch.length < 500) break;
-    offset += 500;
-  }
-  return all;
+interface Deal {
+  id: string; name: string; stage: string; type: string; category: string;
+  campaign: string; dealOwner: string; status: string; huntingStatus: string;
+  leadMilestone: string; arr: number; dealValue: number;
 }
-
-async function attioGet(endpoint: string) {
-  const res = await fetch(`https://api.attio.com/v2${endpoint}`, {
-    method: 'GET',
-    headers: { 'Authorization': `Bearer ${ATTIO_TOKEN}`, 'Accept': 'application/json' },
-  });
-  return res.json();
-}
-
-// Normalise industry labels so variants map to a single canonical name
-function normaliseIndustry(raw: string): string {
-  const s = raw.trim();
-  if (!s || s === 'Untagged') return 'Untagged';
-  const lower = s.toLowerCase();
-  if (lower.includes('hotel') || lower.includes('lodge')) return 'Hotel';
-  if (lower.includes('safari organiser') || lower.includes('safari organizer')) return 'Safari Organiser';
-  if (lower.includes('tour operator')) return 'Tour Operator';
-  if (lower.includes('travel booking') || lower.includes('travel agency') || lower.includes('travel agent')) return 'Travel Booking Co.';
-  if (lower.includes('pms') || lower.includes('property management')) return 'PMS';
-  if (lower.includes('dmc') || lower.includes('destination management')) return 'DMC';
-  if (lower.includes('payment')) return 'Payment Processor';
-  if (lower.includes('airline')) return 'Airline';
-  if (lower.includes('booking engine')) return 'Booking Engine';
-  if (lower.includes('crm')) return 'CRM';
-  return s;
+interface Client {
+  id: string; name: string; status: string; stage: string; category: string;
+  accountManager: string; lastMonthTpv: number; monthlyAvgTpv: number;
+  cumulativeTpv: number; accountName: string; type: string;
 }
 
 export async function GET() {
-  const [leads, deals, customers] = await Promise.all([
-    fetchAll('/objects/leads/records/query'),
-    fetchAll('/objects/deals/records/query'),
-    fetchAll('/objects/customers/records/query'),
-  ]);
+  const leads = leadsData as Lead[];
+  const deals = dealsData as Deal[];
+  const clients = clientsData as Client[];
 
   // LEADS
   let totalTPV = 0;
   const leadsByStage: Record<string, { count: number; tpv: number }> = {};
-  const leadsByIndustry: Record<string, { count: number; tpv: number }> = {};
+  const leadsByCategory: Record<string, { count: number; tpv: number }> = {};
   for (const lead of leads) {
-    const vals = lead.values || {};
-    const tpv = vals.annual_tpv_est?.[0]?.value || 0;
+    const tpv = lead.annualTpv || 0;
     totalTPV += tpv;
-    const stage = vals.stages?.[0]?.status?.title || 'Unknown';
+    const stage = lead.stage || 'Unknown';
+    const category = lead.category || 'Unknown';
     if (!leadsByStage[stage]) leadsByStage[stage] = { count: 0, tpv: 0 };
     leadsByStage[stage].count++;
     leadsByStage[stage].tpv += tpv;
-    const industry = normaliseIndustry(vals.industry?.[0]?.option?.title || vals.industry?.[0]?.value || '');
-    if (!leadsByIndustry[industry]) leadsByIndustry[industry] = { count: 0, tpv: 0 };
-    leadsByIndustry[industry].count++;
-    leadsByIndustry[industry].tpv += tpv;
+    if (!leadsByCategory[category]) leadsByCategory[category] = { count: 0, tpv: 0 };
+    leadsByCategory[category].count++;
+    leadsByCategory[category].tpv += tpv;
   }
 
   // DEALS
@@ -86,10 +49,8 @@ export async function GET() {
   let activeDeals = 0;
   const dealsByStage: Record<string, { count: number; arr: number }> = {};
   for (const deal of deals) {
-    const vals = deal.values || {};
-    const arr = vals.arr?.[0]?.value || 0;
-    const stage = vals.stage?.[0]?.status?.title || 'Unknown';
-    // Won deals become customers — exclude from active deal counts
+    const arr = deal.arr || 0;
+    const stage = deal.stage || 'Unknown';
     if (stage === 'Won 🎉') { wonARR += arr; wonCount++; continue; }
     totalARR += arr;
     activeDeals++;
@@ -99,58 +60,36 @@ export async function GET() {
     if (['Hunting', 'Hot Lead', 'Onboarding', 'Activation'].includes(stage)) activeARR += arr;
   }
 
-  // Fetch all companies to build id → type map
-  const companies = await fetchAll('/objects/companies/records/query');
-  const companyTypeMap: Record<string, string> = {};
-  for (const co of companies) {
-    const rid = co.id?.record_id;
-    const rawType = co.values?.type?.[0]?.option?.title || '';
-    const type = normaliseIndustry(rawType);
-    if (rid && type && type !== 'Untagged') companyTypeMap[rid] = type;
-  }
-
   // CUSTOMERS
   let lastMonthTPV = 0;
   let totalCumulativeTPV = 0;
-  const customersByIndustry: Record<string, { count: number; tpv: number }> = {};
-  const customerList = customers.map((c: Record<string, unknown>) => {
-    const vals = c.values as Record<string, Array<Record<string, unknown>>> || {};
-    const lm = (vals.last_months_tpv?.[0] as Record<string, number>)?.value || 0;
-    const cumulative = (vals.cumulative_volume?.[0] as Record<string, number>)?.value || 0;
+  const customersByCategory: Record<string, { count: number; tpv: number }> = {};
+  const customerList = clients.map(c => {
+    const lm = c.lastMonthTpv || 0;
+    const cumulative = c.cumulativeTpv || 0;
     lastMonthTPV += lm;
     totalCumulativeTPV += cumulative;
-
-    // Resolve type via linked company record
-    const linkedCompanyId = (vals.account_name?.[0] as Record<string, string>)?.target_record_id || '';
-    const rawIndustry = (linkedCompanyId && companyTypeMap[linkedCompanyId]) || '';
-    const industry = normaliseIndustry(rawIndustry);
-
-    if (!customersByIndustry[industry]) customersByIndustry[industry] = { count: 0, tpv: 0 };
-    customersByIndustry[industry].count++;
-    customersByIndustry[industry].tpv += cumulative;
-    return {
-      name: (vals.merchant_name?.[0] as Record<string, string>)?.value || 'Unknown',
-      stage: (vals.stage?.[0] as Record<string, Record<string, string>>)?.status?.title || 'Unknown',
-      industry,
-    };
+    const category = c.category || 'Unknown';
+    if (!customersByCategory[category]) customersByCategory[category] = { count: 0, tpv: 0 };
+    customersByCategory[category].count++;
+    customersByCategory[category].tpv += cumulative;
+    return { name: c.name, stage: c.stage, category };
   });
 
-  // MARKET PENETRATION — merge leads + customers by industry
-  const allIndustries = new Set([...Object.keys(leadsByIndustry), ...Object.keys(customersByIndustry)]);
-  const marketPenetration = Array.from(allIndustries).map(industry => {
-    const targets = leadsByIndustry[industry] || { count: 0, tpv: 0 };
-    const cust = customersByIndustry[industry] || { count: 0, tpv: 0 };
-    const clientCount = cust.count;
-    const targetCount = targets.count;
-    const total = targetCount + clientCount;
-    const convRate = total > 0 ? (clientCount / total) * 100 : 0;
+  // MARKET PENETRATION — merge leads + customers by category
+  const allCategories = new Set([...Object.keys(leadsByCategory), ...Object.keys(customersByCategory)]);
+  const marketPenetration = Array.from(allCategories).map(category => {
+    const targets = leadsByCategory[category] || { count: 0, tpv: 0 };
+    const cust = customersByCategory[category] || { count: 0, tpv: 0 };
+    const total = targets.count + cust.count;
+    const convRate = total > 0 ? (cust.count / total) * 100 : 0;
     return {
-      industry,
-      targets: targetCount,
-      clients: clientCount,
+      industry: category,
+      targets: targets.count,
+      clients: cust.count,
       conversionRate: Math.round(convRate * 10) / 10,
-      estMarketTPV: targets.tpv, // annual TPV estimate of targets
-      customerTPV: cust.tpv,     // cumulative TPV from customers in this industry
+      estMarketTPV: targets.tpv,
+      customerTPV: cust.tpv,
     };
   }).sort((a, b) => b.estMarketTPV - a.estMarketTPV);
 
@@ -174,7 +113,7 @@ export async function GET() {
         .map(([stage, data]) => ({ stage, ...data })),
     },
     customers: {
-      total: customers.length,
+      total: clients.length,
       lastMonthTPV,
       annualisedTPV: lastMonthTPV * 12,
       totalCumulativeTPV,
