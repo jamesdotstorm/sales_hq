@@ -19,7 +19,7 @@ interface Deal {
 export async function GET() {
   const deals = dealsData as Deal[];
 
-  const byCategory: Record<string, number> = {};
+  const byCategory: Record<string, { count: number; arr: number }> = {};
   const byStage: Record<string, { count: number; arr: number }> = {};
   const active: { name: string; arr: number; stage: string; category: string }[] = [];
 
@@ -30,7 +30,9 @@ export async function GET() {
     const stage = deal.stage || 'Unknown';
     const arr = deal.arr || 0;
 
-    byCategory[category] = (byCategory[category] || 0) + 1;
+    if (!byCategory[category]) byCategory[category] = { count: 0, arr: 0 };
+    byCategory[category].count++;
+    byCategory[category].arr += arr;
 
     if (!byStage[stage]) byStage[stage] = { count: 0, arr: 0 };
     byStage[stage].count++;
@@ -44,7 +46,7 @@ export async function GET() {
   return NextResponse.json({
     total: active.length,
     top10,
-    byType: Object.entries(byCategory).sort((a, b) => b[1] - a[1]).map(([k, v]) => ({ label: k, count: v })),
+    byType: Object.entries(byCategory).sort((a, b) => b[1].count - a[1].count).map(([k, v]) => ({ label: k, count: v.count, arr: v.arr })),
     byStage: Object.entries(byStage).sort((a, b) => b[1].arr - a[1].arr).map(([k, v]) => ({ stage: k, ...v })),
   });
 }

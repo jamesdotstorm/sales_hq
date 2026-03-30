@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 
 interface DealsData {
   total: number;
-  top10: { name: string; arr: number; stage: string; type: string }[];
-  byType: { label: string; count: number }[];
+  top10: { name: string; arr: number; stage: string; category: string }[];
+  byType: { label: string; count: number; arr: number }[];
   byStage: { stage: string; count: number; arr: number }[];
 }
 
@@ -51,6 +51,25 @@ export default function DealsView({ dark }: Props) {
         <p className={`text-sm mt-1 ${dark ? 'text-white/40' : 'text-gray-400'}`}>{data.total.toLocaleString()} active deals in pipeline</p>
       </div>
 
+      {/* By Category — at the top */}
+      <div>
+        <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>📋 By Category</h2>
+        <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
+          <div className={`grid grid-cols-3 px-4 py-2 text-xs font-semibold uppercase tracking-wider border-b ${dark ? 'bg-white/3 border-white/5 text-white/30' : 'bg-gray-50 border-gray-100 text-gray-400'}`}>
+            <span>Category</span>
+            <span className="text-center">Deals</span>
+            <span className="text-right">Est. TPV</span>
+          </div>
+          {data.byType.map(({ label, count, arr }) => (
+            <div key={label} className={`grid grid-cols-3 px-4 py-3 items-center border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
+              <span className={`text-sm font-medium ${dark ? 'text-white/80' : 'text-gray-700'}`}>{label}</span>
+              <span className={`text-sm text-center ${dark ? 'text-white/50' : 'text-gray-500'}`}>{count}</span>
+              <span className={`text-sm font-semibold text-right ${dark ? 'text-orange-400' : 'text-orange-600'}`}>{arr > 0 ? fmt(arr) : '—'}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Top 10 by ARR */}
       <div>
         <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>⭐ Top 10 Deals by ARR</h2>
@@ -60,7 +79,7 @@ export default function DealsView({ dark }: Props) {
               <span className={`text-sm font-bold w-6 flex-shrink-0 ${dark ? 'text-white/20' : 'text-gray-300'}`}>{i + 1}</span>
               <div className="flex-1 min-w-0">
                 <p className={`text-sm font-medium truncate ${dark ? 'text-white' : 'text-gray-800'}`}>{deal.name}</p>
-                <p className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>{deal.type}</p>
+                <p className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>{deal.category}</p>
               </div>
               <span className={`text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${STAGE_COLORS[deal.stage] || (dark ? 'bg-white/5 text-white/40' : 'bg-gray-100 text-gray-500')}`}>{deal.stage}</span>
               <span className={`text-sm font-semibold flex-shrink-0 ${dark ? 'text-orange-400' : 'text-orange-600'}`}>{fmt(deal.arr)}</span>
@@ -69,34 +88,19 @@ export default function DealsView({ dark }: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* By Type */}
-        <div>
-          <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>📋 By Deal Type</h2>
-          <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
-            {data.byType.map(({ label, count }) => (
-              <div key={label} className={`px-4 py-3 flex items-center justify-between border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
-                <span className={`text-sm ${dark ? 'text-white/70' : 'text-gray-700'}`}>{label}</span>
-                <span className={`text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>{count}</span>
+      {/* By Stage */}
+      <div>
+        <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>🔄 By Deal Stage</h2>
+        <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
+          {data.byStage.map(({ stage, count, arr }) => (
+            <div key={stage} className={`px-4 py-3 flex items-center justify-between border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
+              <div className="flex items-center gap-2">
+                <span className={`text-xs px-2 py-0.5 rounded-full ${STAGE_COLORS[stage] || (dark ? 'bg-white/5 text-white/40' : 'bg-gray-100 text-gray-500')}`}>{stage}</span>
+                <span className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>{count}</span>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* By Stage */}
-        <div>
-          <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/40' : 'text-gray-400'}`}>🔄 By Deal Stage</h2>
-          <div className={`rounded-2xl border overflow-hidden ${dark ? 'border-white/5' : 'border-gray-100'}`}>
-            {data.byStage.map(({ stage, count, arr }) => (
-              <div key={stage} className={`px-4 py-3 flex items-center justify-between border-b last:border-0 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-50'}`}>
-                <div className="flex items-center gap-2">
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${STAGE_COLORS[stage] || (dark ? 'bg-white/5 text-white/40' : 'bg-gray-100 text-gray-500')}`}>{stage}</span>
-                  <span className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>{count}</span>
-                </div>
-                <span className={`text-sm font-semibold ${dark ? 'text-orange-400' : 'text-orange-600'}`}>{fmt(arr)}</span>
-              </div>
-            ))}
-          </div>
+              <span className={`text-sm font-semibold ${dark ? 'text-orange-400' : 'text-orange-600'}`}>{fmt(arr)}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
