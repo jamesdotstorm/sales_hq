@@ -72,12 +72,17 @@ export default function SalesReport({ dark }: Props) {
   const [data, setData] = useState<SalesData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [rates, setRates] = useState<{ targetToCustomer: string; dealToCustomer: string }>(() => {
-    if (typeof window === 'undefined') return { targetToCustomer: '', dealToCustomer: '' };
-    return loadRates();
-  });
+  const [rates, setRates] = useState<{ targetToCustomer: string; dealToCustomer: string }>({ targetToCustomer: '', dealToCustomer: '' });
   const [editing, setEditing] = useState<'targetToCustomer' | 'dealToCustomer' | null>(null);
   const [draft, setDraft] = useState('');
+
+  // Load saved rates from localStorage after mount (avoids SSR hydration mismatch)
+  useEffect(() => {
+    const saved = loadRates();
+    if (saved.targetToCustomer || saved.dealToCustomer) {
+      setRates(saved);
+    }
+  }, []);
 
   const load = () => {
     setLoading(true);
