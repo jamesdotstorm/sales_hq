@@ -58,16 +58,6 @@ function StatCard({ label, value, sub, dark, color }: { label: string; value: st
   );
 }
 
-const CONVERSION_KEY = 'salesHQ_conversionRates';
-
-function loadRates() {
-  try {
-    const saved = localStorage.getItem(CONVERSION_KEY);
-    if (saved) return JSON.parse(saved);
-  } catch {}
-  return { targetToCustomer: '', dealToCustomer: '' };
-}
-
 export default function SalesReport({ dark }: Props) {
   const [data, setData] = useState<SalesData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -76,12 +66,12 @@ export default function SalesReport({ dark }: Props) {
   const [editing, setEditing] = useState<'targetToCustomer' | 'dealToCustomer' | null>(null);
   const [draft, setDraft] = useState('');
 
-  // Load saved rates from localStorage after mount (avoids SSR hydration mismatch)
+  // Load saved rates from server on mount
   useEffect(() => {
-    const saved = loadRates();
-    if (saved.targetToCustomer || saved.dealToCustomer) {
-      setRates(saved);
-    }
+    fetch('/api/settings')
+      .then(r => r.json())
+      .then(d => { if (d.targetToCustomer || d.dealToCustomer) setRates(d); })
+      .catch(() => {});
   }, []);
 
   const load = () => {
@@ -99,7 +89,12 @@ export default function SalesReport({ dark }: Props) {
     const cleaned = value.replace(/[^0-9.]/g, '');
     const updated = { ...rates, [key]: cleaned };
     setRates(updated);
-    localStorage.setItem(CONVERSION_KEY, JSON.stringify(updated));
+    // Save to server so all users see the same values
+    fetch('/api/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updated),
+    }).catch(() => {});
     setEditing(null);
   };
 
