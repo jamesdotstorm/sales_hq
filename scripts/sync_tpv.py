@@ -33,14 +33,17 @@ def get_token():
     return r.json()["id"]
 
 def get_tpv_for_month(token: str, start: str, end: str) -> dict[str, float]:
-    """Returns {company_name_lower: tpv_usd} for the given date range."""
+    """Returns {company_name_lower: tpv_usd} for the given date range.
+    Uses the same query as Metabase card 323 — includes segment 1 (successful txns only)
+    plus an explicit date range filter for the target month.
+    """
     payload = {
         "database": 2,
         "type": "query",
         "query": {
             "source-table": 54,
             "expressions": {
-                "usd": ["/", ["*",
+                "All transactions converted to USD ": ["/", ["*",
                     ["field", 655, {"base-type": "type/Integer"}],
                     ["field", 648, {"base-type": "type/Decimal"}]
                 ], 100]
@@ -49,10 +52,16 @@ def get_tpv_for_month(token: str, start: str, end: str) -> dict[str, float]:
                 ["field", 412, {"base-type": "type/Text", "source-field": 651}],
                 ["field", 651, {"base-type": "type/Integer"}]
             ],
-            "aggregation": [["sum", ["expression", "usd", {"base-type": "type/Float"}]]],
-            "filter": ["between",
-                ["field", 642, {"base-type": "type/DateTimeWithLocalTZ"}],
-                f"{start}T00:00:00", f"{end}T23:59:59"
+            "aggregation": [["sum", ["expression", "All transactions converted to USD ",
+                                     {"base-type": "type/Float"}]]],
+            # Same filter as card 323: segment 1 (successful txns) + date range
+            "filter": [
+                "and",
+                ["segment", 1],
+                ["between",
+                    ["field", 642, {"base-type": "type/DateTimeWithLocalTZ"}],
+                    f"{start}T00:00:00", f"{end}T23:59:59"
+                ]
             ],
             "order-by": [["desc", ["aggregation", 0]]]
         }
@@ -67,21 +76,22 @@ def get_tpv_for_month(token: str, start: str, end: str) -> dict[str, float]:
         raise RuntimeError(f"Metabase error: {data['error']}")
     result = {}
     for row in data["data"]["rows"]:
-        name = (row[0] or "").strip().lower()
+        name = (row[0] or "").strip()
+        cid = int(row[1]) if row[1] else None
         tpv = float(row[2]) if row[2] else 0.0
-        if name:
-            result[name] = round(tpv, 2)
-    return result
+        if cid:
+            result[cid] = round(tpv, 2)
+    return result  # {company_id: tpv_usd}
 
 def fuzzy_match(client_name: str, mb_data: dict):
     """Try to match a client name to a Metabase company name."""
     cn = client_name.lower().strip()
     if cn in mb_data:
         return mb_data[cn]
-    # Strip common suffixes for comparison
     def clean(s):
         for suffix in [' travel', ' safaris', ' safari', ' tours', ' tour', ' lodge',
-                       ' (pty)', ' pty ltd', ' ltd', ' inc', ' &', ' and']:
+                       ' apartments and hotel', ' (pty)', ' pty ltd', ' ltd', ' inc',
+                       ' guest house', ' hotel & spa', ' game reserve', ' boutique hotel']:
             s = s.replace(suffix, '')
         return s.strip()
     cn_c = clean(cn)
@@ -141,10 +151,10 @@ def main():
 
     matched_last = 0
     matched_prev = 0
+    assigned_ids_last = set()
 
     # Internal/non-client names to skip
-    skip_names = {'turnstay salaries', 'ternstay uk invoices', 'rabia waggie',
-                  'turnstay production company 1b'}
+    skip_names = {'turnstay salaries', 'ternstay uk invoices', 'rabia waggie'}
 
     for client in clients:
         name = client.get('name', '')
@@ -155,17 +165,32 @@ def main():
             client['prevMonthTpv'] = 0
             continue
 
-        # Last month
-        val = fuzzy_match(name, last_data) or fuzzy_match(acct, last_data)
-        if val is not None:
-            client['lastMonthTpv'] = val
-            matched_last += 1
+        # Prefer ID-based matching (exact, no duplicates)
+        mb_id = client.get('metabaseCompanyId')
 
-        # Prev month
-        val2 = fuzzy_match(name, prev_data) or fuzzy_match(acct, prev_data)
-        if val2 is not None:
-            client['prevMonthTpv'] = val2
+        # Last month — by ID first, then fuzzy (first match wins per ID)
+        if mb_id and mb_id in last_data and mb_id not in assigned_ids_last:
+            client['lastMonthTpv'] = last_data[mb_id]
+            assigned_ids_last.add(mb_id)
+            matched_last += 1
+        elif mb_id and mb_id in assigned_ids_last:
+            client['lastMonthTpv'] = 0  # duplicate — zero out
+        else:
+            # Fallback fuzzy (for new clients not yet ID-mapped)
+            val = fuzzy_match(name, {v['name'].lower(): v['tpv'] for v in last_data.values() if isinstance(v, dict)}) \
+                  or fuzzy_match(acct, {v['name'].lower(): v['tpv'] for v in last_data.values() if isinstance(v, dict)})
+            if val is not None:
+                client['lastMonthTpv'] = val
+                matched_last += 1
+            else:
+                client['lastMonthTpv'] = 0
+
+        # Prev month — by ID (no dedup needed, just informational)
+        if mb_id and mb_id in prev_data:
+            client['prevMonthTpv'] = prev_data[mb_id]
             matched_prev += 1
+        else:
+            client['prevMonthTpv'] = 0
 
     print(f"  Matched {matched_last} clients for {last_label}")
     print(f"  Matched {matched_prev} clients for {prev_label}")
