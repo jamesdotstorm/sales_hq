@@ -8,8 +8,9 @@ import DealsView from '@/components/DealsView';
 import CustomersView from '@/components/CustomersView';
 import MarketResearchView from '@/components/MarketResearchView';
 import MonthlyPerformanceView from '@/components/MonthlyPerformanceView';
+import OutreachView from '@/components/OutreachView';
 
-type View = 'sales' | 'leads' | 'deals' | 'customers' | 'market' | 'monthly';
+type View = 'sales' | 'leads' | 'deals' | 'customers' | 'market' | 'monthly' | 'outreach';
 
 const NAV: { id: View; label: string; icon: string }[] = [
   { id: 'sales', label: 'Sales Overview', icon: '📊' },
@@ -17,6 +18,7 @@ const NAV: { id: View; label: string; icon: string }[] = [
   { id: 'deals', label: 'Deals', icon: '💼' },
   { id: 'customers', label: 'Customers', icon: '✅' },
   { id: 'monthly', label: 'Monthly Performance', icon: '📈' },
+  { id: 'outreach', label: 'Outreach', icon: '📧' },
   { id: 'market', label: 'Market Research', icon: '🌍' },
 ];
 
@@ -105,6 +107,7 @@ export default function Home() {
         {view === 'deals' && <DealsView dark={dark} />}
         {view === 'customers' && <CustomersView dark={dark} />}
         {view === 'monthly' && <MonthlyPerformanceView dark={dark} />}
+        {view === 'outreach' && <OutreachView dark={dark} />}
         {view === 'market' && <MarketResearchView dark={dark} />}
       </div>
 
