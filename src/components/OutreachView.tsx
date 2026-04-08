@@ -2,6 +2,22 @@
 
 import { useEffect, useState } from 'react';
 
+type TimeRange = 'today' | 'week' | 'month' | 'all';
+
+interface LiveStats {
+  tableExists: boolean;
+  range: string;
+  summary: {
+    sent: number;
+    opened: number;
+    replied: number;
+    bounced: number;
+    replyRate: string;
+    openRate: string;
+  };
+  totalEvents: number;
+}
+
 interface SequenceStat {
   id: string;
   name: string;
@@ -60,6 +76,8 @@ export default function OutreachView({ dark }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'active' | 'completed' | 'draft'>('all');
+  const [timeRange, setTimeRange] = useState<TimeRange>('month');
+  const [liveStats, setLiveStats] = useState<LiveStats | null>(null);
 
   useEffect(() => {
     fetch('/api/salesforge')
@@ -67,6 +85,13 @@ export default function OutreachView({ dark }: Props) {
       .then(d => { setData(d); setLoading(false); })
       .catch(e => { setError(String(e)); setLoading(false); });
   }, []);
+
+  useEffect(() => {
+    fetch(`/api/salesforge-stats?range=${timeRange}`)
+      .then(r => r.json())
+      .then(d => setLiveStats(d))
+      .catch(() => setLiveStats(null));
+  }, [timeRange]);
 
   if (loading) return (
     <div className={`flex items-center justify-center h-64 ${dark ? 'text-white/30' : 'text-gray-400'}`}>
@@ -116,7 +141,54 @@ export default function OutreachView({ dark }: Props) {
 
       </div>
 
-      {/* Summary KPIs */}
+      {/* Live date-filtered stats (from webhooks) */}
+      <div className={`rounded-2xl border p-5 mb-6 ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-100 shadow-sm'}`}>
+        <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+          <div>
+            <p className={`text-sm font-semibold ${dark ? 'text-white' : 'text-gray-800'}`}>📅 Live Activity</p>
+            <p className={`text-xs mt-0.5 ${dark ? 'text-white/30' : 'text-gray-400'}`}>
+              {liveStats?.tableExists ? 'Real-time from webhooks' : 'Webhooks not yet set up — see below'}
+            </p>
+          </div>
+          <div className={`inline-flex rounded-xl p-1 gap-1 ${dark ? 'bg-white/5' : 'bg-gray-100'}`}>
+            {(['today', 'week', 'month', 'all'] as TimeRange[]).map(val => (
+              <button key={val} onClick={() => setTimeRange(val)}
+                className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-all ${
+                  timeRange === val
+                    ? dark ? 'bg-indigo-600 text-white' : 'bg-white text-indigo-600 shadow-sm'
+                    : dark ? 'text-white/40 hover:text-white' : 'text-gray-500 hover:text-gray-700'
+                }`}>
+                {val === 'today' ? 'Today' : val === 'week' ? 'This Week' : val === 'month' ? 'This Month' : 'All Time'}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {liveStats?.tableExists ? (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { label: 'Sent', value: liveStats.summary.sent, color: dark ? 'text-white' : 'text-gray-900' },
+              { label: 'Opened', value: liveStats.summary.opened, sub: `${liveStats.summary.openRate}%`, color: 'text-blue-400' },
+              { label: 'Replied', value: liveStats.summary.replied, sub: `${liveStats.summary.replyRate}%`, color: 'text-green-400' },
+              { label: 'Bounced', value: liveStats.summary.bounced, color: 'text-red-400' },
+            ].map(({ label, value, sub, color }) => (
+              <div key={label}>
+                <p className={`text-xs uppercase tracking-wider mb-1 ${dark ? 'text-white/30' : 'text-gray-400'}`}>{label}</p>
+                <p className={`text-xl font-bold ${color}`}>{value.toLocaleString()}</p>
+                {sub && <p className={`text-xs ${dark ? 'text-white/30' : 'text-gray-400'}`}>{sub} rate</p>}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className={`text-sm ${dark ? 'text-white/40' : 'text-gray-500'}`}>
+            <p>Webhooks need to be configured in Salesforge to start tracking activity by date.</p>
+            <p className="mt-1">Webhook URL: <code className={`text-xs px-1.5 py-0.5 rounded ${dark ? 'bg-white/10 text-indigo-300' : 'bg-gray-100 text-indigo-600'}`}>https://turnstay-sales-hq.vercel.app/api/salesforge-webhook</code></p>
+          </div>
+        )}
+      </div>
+
+      {/* All-time Summary KPIs */}
+      <p className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? 'text-white/30' : 'text-gray-400'}`}>All-Time Totals</p>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {[
           { label: 'Total Leads', value: visibleLeads.toLocaleString(), sub: `${visibleActiveCount} active sequences` },
