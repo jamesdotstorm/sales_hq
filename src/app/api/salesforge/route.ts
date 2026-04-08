@@ -5,18 +5,31 @@ const WS_ID = 'wks_fygolivqs29tm57j05j1r';
 const BASE = `https://api.salesforge.ai/public/v2/workspaces/${WS_ID}`;
 const HDR = { authorization: API_KEY };
 
-async function fetchAllSequences() {
-  const r = await fetch(`${BASE}/sequences?limit=50`, { headers: HDR, next: { revalidate: 300 } });
-  if (!r.ok) throw new Error('Failed to fetch sequences');
-  const data = await r.json();
+async function sfFetch(url: string) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const r = await fetch(url, { headers: HDR, signal: controller.signal, cache: 'no-store' });
+    clearTimeout(timeout);
+    if (!r.ok) return null;
+    return r.json();
+  } catch {
+    clearTimeout(timeout);
+    return null;
+  }
+}
 
-  // Enrich new-style IDs with full stats
+async function fetchAllSequences() {
+  const data = await sfFetch(`${BASE}/sequences?limit=50`);
+  if (!data) throw new Error('Failed to fetch sequences from Salesforge');
+
+  // Enrich new-style IDs (seq_...) with full stats — they have more detail
   const sequences = await Promise.all(
     data.data.map(async (s: Record<string, unknown>) => {
       const sid = s.id as string;
       if (sid.startsWith('seq_')) {
-        const r2 = await fetch(`${BASE}/sequences/${sid}`, { headers: HDR, next: { revalidate: 300 } });
-        if (r2.ok) return r2.json();
+        const full = await sfFetch(`${BASE}/sequences/${sid}`);
+        if (full) return full;
       }
       return s;
     })
@@ -25,10 +38,8 @@ async function fetchAllSequences() {
 }
 
 async function fetchMailboxes() {
-  const r = await fetch(`${BASE}/mailboxes?limit=20`, { headers: HDR, next: { revalidate: 300 } });
-  if (!r.ok) return [];
-  const data = await r.json();
-  return data.data || [];
+  const data = await sfFetch(`${BASE}/mailboxes?limit=20`);
+  return data?.data || [];
 }
 
 export async function GET() {
