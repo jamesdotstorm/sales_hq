@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-type TimeRange = 'today' | 'week' | 'month' | 'all';
-
 interface SequenceStat {
   id: string;
   name: string;
@@ -62,7 +60,6 @@ export default function OutreachView({ dark }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'active' | 'completed' | 'draft'>('all');
-  const [timeRange, setTimeRange] = useState<TimeRange>('all');
 
   useEffect(() => {
     fetch('/api/salesforge')
@@ -85,34 +82,17 @@ export default function OutreachView({ dark }: Props) {
   );
 
   const { summary, sequences } = data;
-  // Time range: Salesforge API only has all-time stats (no timestamps on sequences).
-  // For today/week/month we show only active sequences (currently sending).
-  // All time shows everything.
-  const timeFiltered = (() => {
-    if (timeRange === 'all') return sequences;
-    // today / week / month → only active sequences make sense
-    return sequences.filter(s => s.status === 'active');
-  })();
-
-  const filtered = filter === 'all' ? timeFiltered : timeFiltered.filter(s => s.status === filter);
+  const filtered = filter === 'all' ? sequences : sequences.filter(s => s.status === filter);
   const sorted = [...filtered].sort((a, b) => b.contactedCount - a.contactedCount);
 
-  const timeLabel: Record<TimeRange, string> = {
-    today: 'Today',
-    week: 'This Week',
-    month: 'This Month',
-    all: 'All Time',
-  };
-  const isFiltered = timeRange !== 'all';
-
-  // Recompute KPIs from the filtered sequence set so the cards react to time range
-  const visibleLeads = timeFiltered.reduce((n, s) => n + s.leadCount, 0);
-  const visibleContacted = timeFiltered.reduce((n, s) => n + s.contactedCount, 0);
-  const visibleReplied = timeFiltered.reduce((n, s) => n + s.repliedCount, 0);
-  const visibleOpened = timeFiltered.reduce((n, s) => n + s.openedCount, 0);
+  // KPIs from visible sequences
+  const visibleLeads = filtered.reduce((n, s) => n + s.leadCount, 0);
+  const visibleContacted = filtered.reduce((n, s) => n + s.contactedCount, 0);
+  const visibleReplied = filtered.reduce((n, s) => n + s.repliedCount, 0);
+  const visibleOpened = filtered.reduce((n, s) => n + s.openedCount, 0);
   const visibleReplyRate = visibleContacted > 0 ? ((visibleReplied / visibleContacted) * 100).toFixed(1) : '0';
   const visibleOpenRate = visibleContacted > 0 ? ((visibleOpened / visibleContacted) * 100).toFixed(1) : '0';
-  const visibleActiveCount = timeFiltered.filter(s => s.status === 'active').length;
+  const visibleActiveCount = filtered.filter(s => s.status === 'active').length;
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
@@ -133,27 +113,7 @@ export default function OutreachView({ dark }: Props) {
           </button>
         </div>
 
-        {/* Time range selector */}
-        <div className={`inline-flex rounded-xl p-1 gap-1 ${dark ? 'bg-white/5' : 'bg-gray-100'}`}>
-          {([['today', 'Today'], ['week', 'This Week'], ['month', 'This Month'], ['all', 'All Time']] as [TimeRange, string][]).map(([val, label]) => (
-            <button
-              key={val}
-              onClick={() => setTimeRange(val)}
-              className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-all ${
-                timeRange === val
-                  ? dark ? 'bg-indigo-600 text-white shadow' : 'bg-white text-indigo-600 shadow-sm'
-                  : dark ? 'text-white/40 hover:text-white' : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-        {isFiltered && (
-          <p className={`text-xs mt-2 ${dark ? 'text-white/25' : 'text-gray-400'}`}>
-            Showing active sequences · stats are all-time totals
-          </p>
-        )}
+
       </div>
 
       {/* Summary KPIs */}
@@ -179,10 +139,10 @@ export default function OutreachView({ dark }: Props) {
       {/* Filter tabs */}
       <div className="flex gap-2 mb-5 flex-wrap">
         {([
-          ['all', 'All', timeFiltered.length],
-          ['active', 'Active', timeFiltered.filter(s => s.status === 'active').length],
-          ['completed', 'Completed', timeFiltered.filter(s => s.status === 'completed').length],
-          ['draft', 'Drafts', timeFiltered.filter(s => s.status === 'draft').length],
+          ['all', 'All', sequences.length],
+          ['active', 'Active', sequences.filter(s => s.status === 'active').length],
+          ['completed', 'Completed', sequences.filter(s => s.status === 'completed').length],
+          ['draft', 'Drafts', sequences.filter(s => s.status === 'draft').length],
         ] as ['all' | 'active' | 'completed' | 'draft', string, number][]).map(([val, label, count]) => (
           <button
             key={val}
