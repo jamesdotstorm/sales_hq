@@ -188,7 +188,7 @@
     "stage": "Small Volume",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 1016,
+    "lastMonthTpv": 0.0,
     "monthlyAvgTpv": 3009.2,
     "cumulativeTpv": 36110.39,
     "accountName": "Undiscovered Africa",
@@ -515,7 +515,7 @@
     "cumulativeTpv": 5.88,
     "accountName": "KJP Travel",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 0
+    "prevMonthTpv": 0.0
   },
   {
     "id": "778b77f5-d6a6-410e-9413-28321ab353aa",
@@ -613,7 +613,7 @@
     "cumulativeTpv": 35698.45,
     "accountName": "Destination Africa",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 0
+    "prevMonthTpv": 3654.0
   },
   {
     "id": "8a5e3151-d87b-4555-8f1d-022580c46c21",
@@ -627,7 +627,7 @@
     "cumulativeTpv": 407.46,
     "accountName": "Ates Africa",
     "type": "Safari Organiser",
-    "prevMonthTpv": 0
+    "prevMonthTpv": 0.0
   },
   {
     "id": "8a80af11-8b4f-4b18-a3de-349564949d97",
@@ -641,7 +641,7 @@
     "cumulativeTpv": 2513.35,
     "accountName": "OKOA",
     "type": "Other",
-    "prevMonthTpv": 0
+    "prevMonthTpv": 0.0
   },
   {
     "id": "8c9a0434-2adc-4932-9a55-61fc186068f5",
@@ -972,12 +972,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 198188,
+    "lastMonthTpv": 198921.44,
     "monthlyAvgTpv": 71940.84,
     "cumulativeTpv": 863290.05,
     "accountName": "Madikwe Game Reserve",
     "type": "Hotel",
-    "prevMonthTpv": 0
+    "prevMonthTpv": 158069.55
   },
   {
     "id": "d6ec051c-94c4-41c5-9fda-58b0ede34894",
@@ -991,7 +991,7 @@
     "cumulativeTpv": 13850.9,
     "accountName": "Mosetlha Bush Camp & Eco Lodge",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 0
+    "prevMonthTpv": 0.0
   },
   {
     "id": "d72a3a68-1e35-4988-9974-41e5a464278d",
@@ -1000,7 +1000,7 @@
     "stage": "Small Volume",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 0,
+    "lastMonthTpv": 0.0,
     "monthlyAvgTpv": 1007.74,
     "cumulativeTpv": 12092.9,
     "accountName": "Connect Away",
@@ -1075,7 +1075,7 @@
     "cumulativeTpv": 4300,
     "accountName": "Panthera Photo Safaris",
     "type": "Safari Organiser",
-    "prevMonthTpv": 0
+    "prevMonthTpv": 0.0
   },
   {
     "id": "ec08e5e1-ae16-4dcc-b25c-c7c1a8c5f34d",
@@ -1098,12 +1098,12 @@
     "stage": "Unicorn",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 196.69,
+    "lastMonthTpv": 0,
     "monthlyAvgTpv": 40.08,
     "cumulativeTpv": 480.96,
     "accountName": "",
     "type": "",
-    "prevMonthTpv": 30.62
+    "prevMonthTpv": 0
   },
   {
     "id": "eeaf12d8-5934-4bf4-80d8-e8d5b56d7414",
