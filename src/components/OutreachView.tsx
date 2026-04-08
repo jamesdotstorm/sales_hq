@@ -105,6 +105,15 @@ export default function OutreachView({ dark }: Props) {
   };
   const isFiltered = timeRange !== 'all';
 
+  // Recompute KPIs from the filtered sequence set so the cards react to time range
+  const visibleLeads = timeFiltered.reduce((n, s) => n + s.leadCount, 0);
+  const visibleContacted = timeFiltered.reduce((n, s) => n + s.contactedCount, 0);
+  const visibleReplied = timeFiltered.reduce((n, s) => n + s.repliedCount, 0);
+  const visibleOpened = timeFiltered.reduce((n, s) => n + s.openedCount, 0);
+  const visibleReplyRate = visibleContacted > 0 ? ((visibleReplied / visibleContacted) * 100).toFixed(1) : '0';
+  const visibleOpenRate = visibleContacted > 0 ? ((visibleOpened / visibleContacted) * 100).toFixed(1) : '0';
+  const visibleActiveCount = timeFiltered.filter(s => s.status === 'active').length;
+
   return (
     <div className="p-6 max-w-5xl mx-auto">
       {/* Header */}
@@ -150,10 +159,10 @@ export default function OutreachView({ dark }: Props) {
       {/* Summary KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'Total Leads', value: summary.totalLeads.toLocaleString(), sub: `${summary.activeSequences} active sequences` },
-          { label: 'Contacted', value: summary.totalContacted.toLocaleString(), sub: 'emails sent' },
-          { label: 'Reply Rate', value: `${summary.overallReplyRate}%`, sub: `${summary.totalReplied} replies`, highlight: parseFloat(summary.overallReplyRate) >= 3 ? 'green' : 'amber' },
-          { label: 'Open Rate', value: `${summary.overallOpenRate}%`, sub: `${summary.totalOpened} opens`, highlight: parseFloat(summary.overallOpenRate) >= 30 ? 'green' : undefined },
+          { label: 'Total Leads', value: visibleLeads.toLocaleString(), sub: `${visibleActiveCount} active sequences` },
+          { label: 'Contacted', value: visibleContacted.toLocaleString(), sub: 'emails sent' },
+          { label: 'Reply Rate', value: `${visibleReplyRate}%`, sub: `${visibleReplied} replies`, highlight: parseFloat(visibleReplyRate) >= 3 ? 'green' : 'amber' },
+          { label: 'Open Rate', value: `${visibleOpenRate}%`, sub: `${visibleOpened} opens`, highlight: parseFloat(visibleOpenRate) >= 30 ? 'green' : undefined },
         ].map(({ label, value, sub, highlight }) => (
           <div key={label} className={`rounded-xl p-4 border ${dark ? 'bg-[#1a1a1a] border-white/5' : 'bg-white border-gray-100 shadow-sm'}`}>
             <p className={`text-xs uppercase tracking-wider mb-1 ${dark ? 'text-white/30' : 'text-gray-400'}`}>{label}</p>
@@ -169,7 +178,12 @@ export default function OutreachView({ dark }: Props) {
 
       {/* Filter tabs */}
       <div className="flex gap-2 mb-5 flex-wrap">
-        {([['all', 'All', summary.totalSequences], ['active', 'Active', summary.activeSequences], ['completed', 'Completed', summary.completedSequences], ['draft', 'Drafts', summary.draftSequences]] as const).map(([val, label, count]) => (
+        {([
+          ['all', 'All', timeFiltered.length],
+          ['active', 'Active', timeFiltered.filter(s => s.status === 'active').length],
+          ['completed', 'Completed', timeFiltered.filter(s => s.status === 'completed').length],
+          ['draft', 'Drafts', timeFiltered.filter(s => s.status === 'draft').length],
+        ] as ['all' | 'active' | 'completed' | 'draft', string, number][]).map(([val, label, count]) => (
           <button
             key={val}
             onClick={() => setFilter(val)}
