@@ -141,8 +141,8 @@ export default function OutreachView({ dark }: Props) {
           ))}
         </div>
         {isFiltered && (
-          <p className={`text-xs mt-2 ${dark ? 'text-amber-400/60' : 'text-amber-600'}`}>
-            ⚠ Salesforge API provides all-time cumulative stats only — showing active sequences for {timeLabel[timeRange].toLowerCase()}
+          <p className={`text-xs mt-2 ${dark ? 'text-white/25' : 'text-gray-400'}`}>
+            Showing active sequences · stats are all-time totals
           </p>
         )}
       </div>
