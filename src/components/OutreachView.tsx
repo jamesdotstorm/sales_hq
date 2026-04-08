@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+type TimeRange = 'today' | 'week' | 'month' | 'all';
+
 interface SequenceStat {
   id: string;
   name: string;
@@ -60,6 +62,7 @@ export default function OutreachView({ dark }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'active' | 'completed' | 'draft'>('all');
+  const [timeRange, setTimeRange] = useState<TimeRange>('all');
 
   useEffect(() => {
     fetch('/api/salesforge')
@@ -82,25 +85,66 @@ export default function OutreachView({ dark }: Props) {
   );
 
   const { summary, sequences } = data;
-  const filtered = filter === 'all' ? sequences : sequences.filter(s => s.status === filter);
+  // Time range: Salesforge API only has all-time stats (no timestamps on sequences).
+  // For today/week/month we show only active sequences (currently sending).
+  // All time shows everything.
+  const timeFiltered = (() => {
+    if (timeRange === 'all') return sequences;
+    // today / week / month → only active sequences make sense
+    return sequences.filter(s => s.status === 'active');
+  })();
+
+  const filtered = filter === 'all' ? timeFiltered : timeFiltered.filter(s => s.status === filter);
   const sorted = [...filtered].sort((a, b) => b.contactedCount - a.contactedCount);
+
+  const timeLabel: Record<TimeRange, string> = {
+    today: 'Today',
+    week: 'This Week',
+    month: 'This Month',
+    all: 'All Time',
+  };
+  const isFiltered = timeRange !== 'all';
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
       {/* Header */}
-      <div className="mb-6 flex items-start justify-between">
-        <div>
-          <h1 className={`text-2xl font-bold ${dark ? 'text-white' : 'text-gray-800'}`}>📧 Outreach</h1>
-          <p className={`text-sm mt-1 ${dark ? 'text-white/40' : 'text-gray-400'}`}>
-            Salesforge · {summary.totalMailboxes} mailboxes · live data
-          </p>
+      <div className="mb-6">
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <h1 className={`text-2xl font-bold ${dark ? 'text-white' : 'text-gray-800'}`}>📧 Outreach</h1>
+            <p className={`text-sm mt-1 ${dark ? 'text-white/40' : 'text-gray-400'}`}>
+              Salesforge · {summary.totalMailboxes} mailboxes · live data
+            </p>
+          </div>
+          <button
+            onClick={() => { setLoading(true); fetch('/api/salesforge').then(r => r.json()).then(d => { setData(d); setLoading(false); }); }}
+            className={`text-xs px-3 py-1.5 rounded-lg transition-colors ${dark ? 'bg-white/5 text-white/40 hover:text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}
+          >
+            ↻ Refresh
+          </button>
         </div>
-        <button
-          onClick={() => { setLoading(true); fetch('/api/salesforge').then(r => r.json()).then(d => { setData(d); setLoading(false); }); }}
-          className={`text-xs px-3 py-1.5 rounded-lg transition-colors ${dark ? 'bg-white/5 text-white/40 hover:text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}
-        >
-          ↻ Refresh
-        </button>
+
+        {/* Time range selector */}
+        <div className={`inline-flex rounded-xl p-1 gap-1 ${dark ? 'bg-white/5' : 'bg-gray-100'}`}>
+          {([['today', 'Today'], ['week', 'This Week'], ['month', 'This Month'], ['all', 'All Time']] as [TimeRange, string][]).map(([val, label]) => (
+            <button
+              key={val}
+              onClick={() => setTimeRange(val)}
+              className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-all ${
+                timeRange === val
+                  ? dark ? 'bg-indigo-600 text-white shadow' : 'bg-white text-indigo-600 shadow-sm'
+                  : dark ? 'text-white/40 hover:text-white' : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        {isFiltered && (
+          <p className={`text-xs mt-2 ${dark ? 'text-amber-400/60' : 'text-amber-600'}`}>
+            ⚠ Salesforge API provides all-time cumulative stats only — showing active sequences for {timeLabel[timeRange].toLowerCase()}
+          </p>
+        )}
       </div>
 
       {/* Summary KPIs */}
