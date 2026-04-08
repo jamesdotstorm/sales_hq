@@ -10,7 +10,8 @@
     "monthlyAvgTpv": 215.56,
     "cumulativeTpv": 2586.68,
     "accountName": "Doringbos",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 2586.68
   },
   {
     "id": "031da909-e679-49d4-821b-66fbb7f1a0d2",
@@ -23,7 +24,8 @@
     "monthlyAvgTpv": 2138.5,
     "cumulativeTpv": 25662.03,
     "accountName": "Captivating Africa",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 0
   },
   {
     "id": "035d5e2d-3143-4252-a9c9-637b1c706a24",
@@ -36,7 +38,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 6542.87
   },
   {
     "id": "0770d840-80db-4082-9397-7ecc04b41902",
@@ -49,7 +52,8 @@
     "monthlyAvgTpv": 999.7,
     "cumulativeTpv": 11996.34,
     "accountName": "Liquid Giraffe Travel",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 9553.44
   },
   {
     "id": "0783aa0b-ebcf-4d1b-a269-536cdfa2b390",
@@ -62,7 +66,8 @@
     "monthlyAvgTpv": 6.67,
     "cumulativeTpv": 80,
     "accountName": "Wilderness",
-    "type": "Other"
+    "type": "Other",
+    "prevMonthTpv": 0
   },
   {
     "id": "07afbccc-fe60-4458-b414-e64dac54cadc",
@@ -75,7 +80,8 @@
     "monthlyAvgTpv": 24400.02,
     "cumulativeTpv": 292800.26,
     "accountName": "",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 7818.96
   },
   {
     "id": "0d099fdd-30b8-4f38-a93f-dd5f305e8003",
@@ -88,7 +94,8 @@
     "monthlyAvgTpv": 458.57,
     "cumulativeTpv": 5502.88,
     "accountName": "Nieuwe Sion",
-    "type": "Other"
+    "type": "Other",
+    "prevMonthTpv": 5502.88
   },
   {
     "id": "0f22d158-4e7d-4b6f-a6aa-758be1ea3649",
@@ -101,7 +108,8 @@
     "monthlyAvgTpv": 1.54,
     "cumulativeTpv": 18.5,
     "accountName": "Untether",
-    "type": "Payment Processor"
+    "type": "Payment Processor",
+    "prevMonthTpv": 0
   },
   {
     "id": "0ff547a6-b6cf-4adf-92f2-0759fbd69c98",
@@ -114,7 +122,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "Famba Famba Tour Design Specialists",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 7818.96
   },
   {
     "id": "114628dd-5b9c-49d1-b42f-5a6732562587",
@@ -127,7 +136,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "Lemax",
-    "type": "Booking Engine"
+    "type": "Booking Engine",
+    "prevMonthTpv": 0
   },
   {
     "id": "116a9e1a-c1dd-4ab9-b5da-d6f3cad64e2d",
@@ -140,7 +150,8 @@
     "monthlyAvgTpv": 35735.31,
     "cumulativeTpv": 428823.74,
     "accountName": "African Lynx Travel",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 16609.36
   },
   {
     "id": "132f06ef-4bac-45d1-8ed3-fc87eeea6a34",
@@ -153,7 +164,8 @@
     "monthlyAvgTpv": 7342.64,
     "cumulativeTpv": 88111.72,
     "accountName": "Mark Fanner Guitar Works",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 2647.52
   },
   {
     "id": "13a32e7f-99ca-4d5b-a1a2-bd91b6c67edb",
@@ -166,7 +178,8 @@
     "monthlyAvgTpv": 1106.28,
     "cumulativeTpv": 13275.33,
     "accountName": "Villa Michaela",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 13275.33
   },
   {
     "id": "153bddd5-9684-4a6d-8ed2-7f67b4adcbbe",
@@ -179,7 +192,8 @@
     "monthlyAvgTpv": 3009.2,
     "cumulativeTpv": 36110.39,
     "accountName": "Undiscovered Africa",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 810.55
   },
   {
     "id": "164a4506-66d7-450a-80cb-d1e04dfa25da",
@@ -192,7 +206,8 @@
     "monthlyAvgTpv": 81312.75,
     "cumulativeTpv": 975752.96,
     "accountName": "Peech Hotel",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 62605.56
   },
   {
     "id": "17787c5f-ec85-43d5-912b-06c7436f53ec",
@@ -205,7 +220,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "The Capital Apartments and Hotel",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 2288021.04
   },
   {
     "id": "1a3e3661-9985-4d0a-bb75-80a072a125cf",
@@ -218,7 +234,8 @@
     "monthlyAvgTpv": 691368.01,
     "cumulativeTpv": 8296416.15,
     "accountName": "African Safari Group",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 1270455.43
   },
   {
     "id": "1c7e2497-771b-4589-a400-2dec783a5291",
@@ -231,7 +248,8 @@
     "monthlyAvgTpv": 1664.51,
     "cumulativeTpv": 19974.14,
     "accountName": "African Sensations",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 18498.68
   },
   {
     "id": "1d2c230e-1f04-4a0f-ab68-0a21b2592ab0",
@@ -244,7 +262,8 @@
     "monthlyAvgTpv": 1415.82,
     "cumulativeTpv": 16989.9,
     "accountName": "Marrian George",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 895.37
   },
   {
     "id": "2162f788-2c9f-489f-a6c2-abb12e1f234a",
@@ -257,7 +276,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "The White Camel",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "24d992b2-d525-436e-8f33-86210e0befec",
@@ -270,7 +290,8 @@
     "monthlyAvgTpv": 98.85,
     "cumulativeTpv": 1186.23,
     "accountName": "Benson Software",
-    "type": "PMS"
+    "type": "PMS",
+    "prevMonthTpv": 0
   },
   {
     "id": "2a745f34-adee-4ff6-af9b-b09a8851e576",
@@ -283,7 +304,8 @@
     "monthlyAvgTpv": 206487.05,
     "cumulativeTpv": 2477844.59,
     "accountName": "Londolozi",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 604077.74
   },
   {
     "id": "2d362b9e-f3b6-491c-b8e8-fdd44c0c0f12",
@@ -296,7 +318,8 @@
     "monthlyAvgTpv": 2088.63,
     "cumulativeTpv": 25063.53,
     "accountName": "Savage & Strong",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 0
   },
   {
     "id": "35742985-c2f9-4646-82df-0194664639ec",
@@ -309,7 +332,8 @@
     "monthlyAvgTpv": 21881.13,
     "cumulativeTpv": 262573.54,
     "accountName": "",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 0
   },
   {
     "id": "37d76198-dc3e-4ba3-aa44-7393113247ff",
@@ -322,7 +346,8 @@
     "monthlyAvgTpv": 1108.16,
     "cumulativeTpv": 13297.92,
     "accountName": "",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 6542.87
   },
   {
     "id": "3fcbbd5b-4d60-46f4-b4a4-0fbe90de9a7b",
@@ -335,7 +360,8 @@
     "monthlyAvgTpv": 0.47,
     "cumulativeTpv": 5.6,
     "accountName": "Philip Brink Architects",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 0
   },
   {
     "id": "41620d3f-2da5-411d-ac3d-dafe137edaa3",
@@ -348,7 +374,8 @@
     "monthlyAvgTpv": 226.47,
     "cumulativeTpv": 2717.62,
     "accountName": "",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 0
   },
   {
     "id": "432f363e-44c0-47d1-80cb-9dc5e07facdf",
@@ -361,7 +388,8 @@
     "monthlyAvgTpv": 321.2,
     "cumulativeTpv": 3854.43,
     "accountName": "Go African Adventures",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "434e6f2f-5ae7-4804-928d-23270eea6c7d",
@@ -374,7 +402,8 @@
     "monthlyAvgTpv": 4504.35,
     "cumulativeTpv": 54052.25,
     "accountName": "Blacksheep",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 41574.34
   },
   {
     "id": "49d0b358-d470-4cfa-b975-2e3e11ec229b",
@@ -387,7 +416,8 @@
     "monthlyAvgTpv": 8679.6,
     "cumulativeTpv": 104155.17,
     "accountName": "African Xplora",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 8210.91
   },
   {
     "id": "4dd2f3df-8163-41c7-808e-9bb586a09ce5",
@@ -400,7 +430,8 @@
     "monthlyAvgTpv": 804.62,
     "cumulativeTpv": 9655.46,
     "accountName": "Base13",
-    "type": "Other"
+    "type": "Other",
+    "prevMonthTpv": 13.2
   },
   {
     "id": "4ec3f2ea-10a1-4ee0-966d-777e9e455201",
@@ -413,7 +444,8 @@
     "monthlyAvgTpv": 11262.06,
     "cumulativeTpv": 135144.71,
     "accountName": "Bushtracks Africa",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 44320.89
   },
   {
     "id": "4ef08a8e-e9f2-4697-853a-37ea68ffbca1",
@@ -426,7 +458,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "Voaara Madagascar",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 45900.33
   },
   {
     "id": "4f6f164d-9ed9-4c96-a114-cc7dc63d8a6e",
@@ -439,7 +472,8 @@
     "monthlyAvgTpv": 177631.78,
     "cumulativeTpv": 2131581.33,
     "accountName": "Arathusa",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 210816.7
   },
   {
     "id": "55c85582-7465-4bb2-8ded-63bf0a2fc9e4",
@@ -452,7 +486,8 @@
     "monthlyAvgTpv": 5935.76,
     "cumulativeTpv": 71229.13,
     "accountName": "Hout & About Guest House",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 3258.56
   },
   {
     "id": "65772a77-db00-4288-9970-14a66ca966ff",
@@ -465,7 +500,8 @@
     "monthlyAvgTpv": 980.79,
     "cumulativeTpv": 11769.47,
     "accountName": "MaTakaTaka Tours & Safaris",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 4152.14
   },
   {
     "id": "74f973b0-8777-41cb-b55e-6ca894a3cbee",
@@ -478,7 +514,8 @@
     "monthlyAvgTpv": 0.49,
     "cumulativeTpv": 5.88,
     "accountName": "KJP Travel",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "778b77f5-d6a6-410e-9413-28321ab353aa",
@@ -491,7 +528,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "Volunteer Adventure Corps",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "78caa928-0ccc-40cd-9adf-b53af967320f",
@@ -504,7 +542,8 @@
     "monthlyAvgTpv": 1413014.48,
     "cumulativeTpv": 16956173.72,
     "accountName": "Safari.com",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 1061109.27
   },
   {
     "id": "78d3d9ba-9e25-4029-80ba-c63e05b2c9ab",
@@ -517,7 +556,8 @@
     "monthlyAvgTpv": 19971.52,
     "cumulativeTpv": 239658.28,
     "accountName": "Essential Travel Consultants",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 1218.12
   },
   {
     "id": "7c10e115-1e6b-4c16-a069-68291d89c414",
@@ -530,7 +570,8 @@
     "monthlyAvgTpv": 28221.26,
     "cumulativeTpv": 338655.12,
     "accountName": "Ibis House",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 17877.9
   },
   {
     "id": "7c266cd4-3b84-4e2f-a5bb-0fbcdb6f6fb7",
@@ -543,7 +584,8 @@
     "monthlyAvgTpv": 0.11,
     "cumulativeTpv": 1.3,
     "accountName": "Biggest Leaf",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "7de865a7-4ad9-4656-9b50-f4d96a287479",
@@ -556,7 +598,8 @@
     "monthlyAvgTpv": 41175.67,
     "cumulativeTpv": 494108.06,
     "accountName": "",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 20000.0
   },
   {
     "id": "86271d87-70a1-40da-a339-4b8864aac9e3",
@@ -569,7 +612,8 @@
     "monthlyAvgTpv": 2974.87,
     "cumulativeTpv": 35698.45,
     "accountName": "Destination Africa",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "8a5e3151-d87b-4555-8f1d-022580c46c21",
@@ -582,7 +626,8 @@
     "monthlyAvgTpv": 33.95,
     "cumulativeTpv": 407.46,
     "accountName": "Ates Africa",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 0
   },
   {
     "id": "8a80af11-8b4f-4b18-a3de-349564949d97",
@@ -595,7 +640,8 @@
     "monthlyAvgTpv": 209.45,
     "cumulativeTpv": 2513.35,
     "accountName": "OKOA",
-    "type": "Other"
+    "type": "Other",
+    "prevMonthTpv": 0
   },
   {
     "id": "8c9a0434-2adc-4932-9a55-61fc186068f5",
@@ -608,7 +654,8 @@
     "monthlyAvgTpv": 2360.62,
     "cumulativeTpv": 28327.41,
     "accountName": "Afrika Lovers",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 6168.88
   },
   {
     "id": "8ff0d558-f14d-454b-b151-6dd5929d47b2",
@@ -621,7 +668,8 @@
     "monthlyAvgTpv": 2152.33,
     "cumulativeTpv": 25828,
     "accountName": "Paw Safaris",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 0
   },
   {
     "id": "90bad70f-5595-4e42-bc00-0ea34fe7af2e",
@@ -634,7 +682,8 @@
     "monthlyAvgTpv": 189112.24,
     "cumulativeTpv": 2269346.91,
     "accountName": "Thornybush",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 339177.91
   },
   {
     "id": "95b160b5-0981-4366-ba2a-ca871ec203bd",
@@ -647,7 +696,8 @@
     "monthlyAvgTpv": 61043.6,
     "cumulativeTpv": 732523.18,
     "accountName": "",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 45900.33
   },
   {
     "id": "975f2f65-59a4-47f5-93d9-b563dbc52c88",
@@ -660,7 +710,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "VAC Logistics",
-    "type": "Other"
+    "type": "Other",
+    "prevMonthTpv": 0
   },
   {
     "id": "9865def7-0f8e-4110-aa9f-1ae856c111bb",
@@ -673,7 +724,8 @@
     "monthlyAvgTpv": 2415.74,
     "cumulativeTpv": 28988.94,
     "accountName": "LivLife Bigger Experiences",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "9ec60b81-0fe3-460a-8cbe-e625a2936d1c",
@@ -686,7 +738,8 @@
     "monthlyAvgTpv": 84384.06,
     "cumulativeTpv": 1012608.76,
     "accountName": "Rent a Room",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "a42b2e36-4566-4885-abc1-77ccc76799b6",
@@ -699,7 +752,8 @@
     "monthlyAvgTpv": 37573.3,
     "cumulativeTpv": 450879.57,
     "accountName": "Kateka",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 72232.98
   },
   {
     "id": "a42e9be7-35b4-4ff7-af84-9c8e169c3e9e",
@@ -712,7 +766,8 @@
     "monthlyAvgTpv": 584510.09,
     "cumulativeTpv": 7014121.09,
     "accountName": "The Capital",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 2288021.04
   },
   {
     "id": "a5501057-4dc1-4673-ae8d-1df975527a50",
@@ -725,7 +780,8 @@
     "monthlyAvgTpv": 357.02,
     "cumulativeTpv": 4284.24,
     "accountName": "The Historical Boutique",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "a8e1ee35-6668-46e8-8690-6876b53ae6d4",
@@ -738,7 +794,8 @@
     "monthlyAvgTpv": 77.77,
     "cumulativeTpv": 933.26,
     "accountName": "Shore",
-    "type": "Other"
+    "type": "Other",
+    "prevMonthTpv": 0
   },
   {
     "id": "aa88a088-b245-45fc-95ff-1a89445d5d98",
@@ -751,7 +808,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "Travelyst Tour Operator Software",
-    "type": "CRM"
+    "type": "CRM",
+    "prevMonthTpv": 0
   },
   {
     "id": "ab234eee-ebdb-4ce3-96b4-1d678be551bf",
@@ -764,7 +822,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "Tides Lodge",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 0
   },
   {
     "id": "ab83fb1e-e9af-4e91-81da-0b30f16760fc",
@@ -777,7 +836,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "The Peech Boutique Hotel Johannesburg",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 0
   },
   {
     "id": "b1db9893-3a03-43df-b900-e9b7c3658277",
@@ -790,7 +850,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "WanderingThru",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "b26756b0-62ed-496d-888c-34db2a650dc4",
@@ -803,7 +864,8 @@
     "monthlyAvgTpv": 10570.48,
     "cumulativeTpv": 126845.71,
     "accountName": "Safaris Down South",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 64132.79
   },
   {
     "id": "b4b1e8d8-3360-4420-b39b-2eec0a0ed227",
@@ -816,7 +878,8 @@
     "monthlyAvgTpv": 18047.86,
     "cumulativeTpv": 216574.37,
     "accountName": "African Wanderer",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 12483.23
   },
   {
     "id": "b83710e6-c721-48e5-b13d-1c21b9693051",
@@ -829,7 +892,8 @@
     "monthlyAvgTpv": 8796.83,
     "cumulativeTpv": 105561.98,
     "accountName": "Safari Flights",
-    "type": "airline"
+    "type": "airline",
+    "prevMonthTpv": 51894.09
   },
   {
     "id": "bb2c28a4-f104-4434-872f-761c2e7c9f0c",
@@ -842,7 +906,8 @@
     "monthlyAvgTpv": 1412584.19,
     "cumulativeTpv": 16951010.3,
     "accountName": "Singita",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 1624643.6
   },
   {
     "id": "c0bbc0eb-1d3c-46aa-acde-ee93c7c7e973",
@@ -855,7 +920,8 @@
     "monthlyAvgTpv": 143716.8,
     "cumulativeTpv": 1724601.64,
     "accountName": "Sterrekopje",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 161817.98
   },
   {
     "id": "c435e810-abb2-44a3-8ceb-756b02b8bd8a",
@@ -868,7 +934,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "Travelyst",
-    "type": "CRM"
+    "type": "CRM",
+    "prevMonthTpv": 0
   },
   {
     "id": "cd927399-a4a3-4cb8-8f70-358bea48f6c1",
@@ -881,7 +948,8 @@
     "monthlyAvgTpv": 8203.61,
     "cumulativeTpv": 98443.33,
     "accountName": "Travel Republic",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "d2c794fa-0d8d-4d1a-8b52-0e9f2c742d25",
@@ -894,7 +962,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "Arathusa Safari Lodge",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 210816.7
   },
   {
     "id": "d2f390cc-30a9-4a85-b904-208fe800fa1c",
@@ -907,7 +976,8 @@
     "monthlyAvgTpv": 71940.84,
     "cumulativeTpv": 863290.05,
     "accountName": "Madikwe Game Reserve",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 0
   },
   {
     "id": "d6ec051c-94c4-41c5-9fda-58b0ede34894",
@@ -920,7 +990,8 @@
     "monthlyAvgTpv": 1154.24,
     "cumulativeTpv": 13850.9,
     "accountName": "Mosetlha Bush Camp & Eco Lodge",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "d72a3a68-1e35-4988-9974-41e5a464278d",
@@ -933,7 +1004,8 @@
     "monthlyAvgTpv": 1007.74,
     "cumulativeTpv": 12092.9,
     "accountName": "Connect Away",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 0
   },
   {
     "id": "d87e8f28-86f8-45c6-ba77-614abe790bd0",
@@ -946,7 +1018,8 @@
     "monthlyAvgTpv": 8.41,
     "cumulativeTpv": 100.96,
     "accountName": "",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 0
   },
   {
     "id": "d8f10660-a4b1-4dd0-ba3a-c73d7ed64e8f",
@@ -959,7 +1032,8 @@
     "monthlyAvgTpv": 1422.73,
     "cumulativeTpv": 17072.71,
     "accountName": "Peech Hospitality",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 381.09
   },
   {
     "id": "df8ff221-e073-49f8-a6a2-7edceae17dfb",
@@ -972,7 +1046,8 @@
     "monthlyAvgTpv": 3143.65,
     "cumulativeTpv": 37723.83,
     "accountName": "Ludus Magnus",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 0
   },
   {
     "id": "e4b35773-8b9e-48d5-afe3-4b89d6b03784",
@@ -985,7 +1060,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "Madikwe Safari Lodge",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 158069.55
   },
   {
     "id": "e6d0e266-f210-4a88-a3c5-e20f247ef6e5",
@@ -998,7 +1074,8 @@
     "monthlyAvgTpv": 358.33,
     "cumulativeTpv": 4300,
     "accountName": "Panthera Photo Safaris",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 0
   },
   {
     "id": "ec08e5e1-ae16-4dcc-b25c-c7c1a8c5f34d",
@@ -1011,7 +1088,8 @@
     "monthlyAvgTpv": 478.7,
     "cumulativeTpv": 5744.39,
     "accountName": "Lance van de Vyver Photographic Safaris",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 5744.39
   },
   {
     "id": "ed1f33e3-f366-46cd-b809-3edf515c65f4",
@@ -1024,7 +1102,8 @@
     "monthlyAvgTpv": 40.08,
     "cumulativeTpv": 480.96,
     "accountName": "",
-    "type": ""
+    "type": "",
+    "prevMonthTpv": 30.62
   },
   {
     "id": "eeaf12d8-5934-4bf4-80d8-e8d5b56d7414",
@@ -1037,7 +1116,8 @@
     "monthlyAvgTpv": 30798.68,
     "cumulativeTpv": 369584.16,
     "accountName": "Omaruru Game Lodge",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 40015.84
   },
   {
     "id": "eef51ffb-959f-4296-8ef5-57aa11b7d505",
@@ -1050,7 +1130,8 @@
     "monthlyAvgTpv": 4.16,
     "cumulativeTpv": 49.91,
     "accountName": "The Book Cove",
-    "type": "Other"
+    "type": "Other",
+    "prevMonthTpv": 0
   },
   {
     "id": "ef1344df-814b-448b-8421-bec709f90eaa",
@@ -1063,7 +1144,8 @@
     "monthlyAvgTpv": 3235.4,
     "cumulativeTpv": 38824.81,
     "accountName": "African Wildlife Plains",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 32399.35
   },
   {
     "id": "f212a2fb-8885-4596-a0c2-f0fdc3890374",
@@ -1076,7 +1158,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "The Other Animals Safaris",
-    "type": "Safari Organiser"
+    "type": "Safari Organiser",
+    "prevMonthTpv": 6542.87
   },
   {
     "id": "f40867e1-d614-4598-88b8-6db8a04b03b9",
@@ -1089,7 +1172,8 @@
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "SleepEasy 365",
-    "type": "Hotel"
+    "type": "Hotel",
+    "prevMonthTpv": 0
   },
   {
     "id": "f9eda35e-8571-4bd2-95c7-5db5595d126a",
@@ -1102,6 +1186,7 @@
     "monthlyAvgTpv": 39995.42,
     "cumulativeTpv": 479945.07,
     "accountName": "Host Agent",
-    "type": "Travel Booking Company"
+    "type": "Travel Booking Company",
+    "prevMonthTpv": 56716.84
   }
 ]

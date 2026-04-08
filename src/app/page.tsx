@@ -7,14 +7,16 @@ import LeadsView from '@/components/LeadsView';
 import DealsView from '@/components/DealsView';
 import CustomersView from '@/components/CustomersView';
 import MarketResearchView from '@/components/MarketResearchView';
+import MonthlyPerformanceView from '@/components/MonthlyPerformanceView';
 
-type View = 'sales' | 'leads' | 'deals' | 'customers' | 'market';
+type View = 'sales' | 'leads' | 'deals' | 'customers' | 'market' | 'monthly';
 
 const NAV: { id: View; label: string; icon: string }[] = [
   { id: 'sales', label: 'Sales Overview', icon: '📊' },
   { id: 'leads', label: 'Targets', icon: '🎯' },
   { id: 'deals', label: 'Deals', icon: '💼' },
   { id: 'customers', label: 'Customers', icon: '✅' },
+  { id: 'monthly', label: 'Monthly Performance', icon: '📈' },
   { id: 'market', label: 'Market Research', icon: '🌍' },
 ];
 
@@ -102,6 +104,7 @@ export default function Home() {
         {view === 'leads' && <LeadsView dark={dark} />}
         {view === 'deals' && <DealsView dark={dark} />}
         {view === 'customers' && <CustomersView dark={dark} />}
+        {view === 'monthly' && <MonthlyPerformanceView dark={dark} />}
         {view === 'market' && <MarketResearchView dark={dark} />}
       </div>
 
