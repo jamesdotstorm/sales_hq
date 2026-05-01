@@ -21,12 +21,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 17268.9,
+    "lastMonthTpv": 0,
     "monthlyAvgTpv": 2138.5,
     "cumulativeTpv": 25662.03,
     "accountName": "Captivating Africa",
     "type": "Safari Organiser",
-    "prevMonthTpv": 0,
+    "prevMonthTpv": 17268.9,
     "metabaseCompanyId": 61
   },
   {
@@ -36,12 +36,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 8543.9,
+    "lastMonthTpv": 569.85,
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "",
     "type": "",
-    "prevMonthTpv": 6542.87,
+    "prevMonthTpv": 8543.9,
     "metabaseCompanyId": 86
   },
   {
@@ -51,12 +51,12 @@
     "stage": "Unicorn",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 994.6,
+    "lastMonthTpv": 3503.0,
     "monthlyAvgTpv": 999.7,
     "cumulativeTpv": 11996.34,
     "accountName": "Liquid Giraffe Travel",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 9553.44,
+    "prevMonthTpv": 994.6,
     "metabaseCompanyId": 80
   },
   {
@@ -81,12 +81,12 @@
     "stage": "Small Volume",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 50413.54,
+    "lastMonthTpv": 0,
     "monthlyAvgTpv": 24400.02,
     "cumulativeTpv": 292800.26,
     "accountName": "",
     "type": "",
-    "prevMonthTpv": 7818.96,
+    "prevMonthTpv": 63550.94,
     "metabaseCompanyId": 31
   },
   {
@@ -131,7 +131,7 @@
     "cumulativeTpv": 0,
     "accountName": "Famba Famba Tour Design Specialists",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 7818.96,
+    "prevMonthTpv": 63550.94,
     "metabaseCompanyId": 31
   },
   {
@@ -156,12 +156,12 @@
     "stage": "Small Volume",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 39063.23,
+    "lastMonthTpv": 37880.77,
     "monthlyAvgTpv": 35735.31,
     "cumulativeTpv": 428823.74,
     "accountName": "African Lynx Travel",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 16609.36,
+    "prevMonthTpv": 39063.23,
     "metabaseCompanyId": 44
   },
   {
@@ -171,12 +171,12 @@
     "stage": "Unicorn",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 5358.11,
+    "lastMonthTpv": 3017.88,
     "monthlyAvgTpv": 7342.64,
     "cumulativeTpv": 88111.72,
     "accountName": "Mark Fanner Guitar Works",
     "type": "",
-    "prevMonthTpv": 2647.52,
+    "prevMonthTpv": 5358.11,
     "metabaseCompanyId": 20
   },
   {
@@ -216,12 +216,12 @@
     "stage": "Unicorn",
     "category": "Hotels & Accommodation",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 74345.61,
+    "lastMonthTpv": 48232.28,
     "monthlyAvgTpv": 81312.75,
     "cumulativeTpv": 975752.96,
     "accountName": "Peech Hotel",
     "type": "Hotel",
-    "prevMonthTpv": 62605.56,
+    "prevMonthTpv": 74345.61,
     "metabaseCompanyId": 4
   },
   {
@@ -231,12 +231,12 @@
     "stage": "Unicorn",
     "category": "Hotels & Accommodation",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 2402638.88,
+    "lastMonthTpv": 2548819.77,
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "The Capital Apartments and Hotel",
     "type": "Hotel",
-    "prevMonthTpv": 2288021.04,
+    "prevMonthTpv": 2402638.88,
     "metabaseCompanyId": 67
   },
   {
@@ -246,12 +246,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 1783028.04,
+    "lastMonthTpv": 1433154.3,
     "monthlyAvgTpv": 691368.01,
     "cumulativeTpv": 8296416.15,
     "accountName": "African Safari Group",
     "type": "Safari Organiser",
-    "prevMonthTpv": 1270455.43,
+    "prevMonthTpv": 1783028.04,
     "metabaseCompanyId": 26
   },
   {
@@ -261,12 +261,12 @@
     "stage": "Unicorn",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 1472.95,
+    "lastMonthTpv": 0,
     "monthlyAvgTpv": 1664.51,
     "cumulativeTpv": 19974.14,
     "accountName": "African Sensations",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 18498.68,
+    "prevMonthTpv": 1472.95,
     "metabaseCompanyId": 88
   },
   {
@@ -276,12 +276,12 @@
     "stage": "Small Volume",
     "category": "Hotels & Accommodation",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 1297.05,
+    "lastMonthTpv": 1937.66,
     "monthlyAvgTpv": 1415.82,
     "cumulativeTpv": 16989.9,
     "accountName": "Marrian George",
     "type": "Hotel",
-    "prevMonthTpv": 895.37,
+    "prevMonthTpv": 1297.05,
     "metabaseCompanyId": 35
   },
   {
@@ -321,12 +321,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 665485.6,
+    "lastMonthTpv": 474121.78,
     "monthlyAvgTpv": 206487.05,
     "cumulativeTpv": 2477844.59,
     "accountName": "Londolozi",
     "type": "Safari Organiser",
-    "prevMonthTpv": 604077.74,
+    "prevMonthTpv": 771719.44,
     "metabaseCompanyId": 72
   },
   {
@@ -371,7 +371,7 @@
     "cumulativeTpv": 13297.92,
     "accountName": "",
     "type": "",
-    "prevMonthTpv": 6542.87,
+    "prevMonthTpv": 8543.9,
     "metabaseCompanyId": 86
   },
   {
@@ -411,12 +411,12 @@
     "stage": "Unicorn",
     "category": "Adventure & Activities",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 3854.43,
+    "lastMonthTpv": 491.67,
     "monthlyAvgTpv": 321.2,
     "cumulativeTpv": 3854.43,
     "accountName": "Go African Adventures",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 0,
+    "prevMonthTpv": 3854.43,
     "metabaseCompanyId": 97
   },
   {
@@ -426,12 +426,12 @@
     "stage": "Unicorn",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 12477.91,
+    "lastMonthTpv": 0,
     "monthlyAvgTpv": 4504.35,
     "cumulativeTpv": 54052.25,
     "accountName": "Blacksheep",
     "type": "",
-    "prevMonthTpv": 41574.34,
+    "prevMonthTpv": 12477.91,
     "metabaseCompanyId": 89
   },
   {
@@ -441,12 +441,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 17381.68,
+    "lastMonthTpv": 9047.53,
     "monthlyAvgTpv": 8679.6,
     "cumulativeTpv": 104155.17,
     "accountName": "African Xplora",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 8210.91,
+    "prevMonthTpv": 17381.68,
     "metabaseCompanyId": 59
   },
   {
@@ -471,12 +471,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 80211.76,
+    "lastMonthTpv": 67766.5,
     "monthlyAvgTpv": 11262.06,
     "cumulativeTpv": 135144.71,
     "accountName": "Bushtracks Africa",
     "type": "Safari Organiser",
-    "prevMonthTpv": 44320.89,
+    "prevMonthTpv": 81361.61,
     "metabaseCompanyId": 81
   },
   {
@@ -486,12 +486,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 59711.69,
+    "lastMonthTpv": 63994.15,
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "Voaara Madagascar",
     "type": "Hotel",
-    "prevMonthTpv": 45900.33,
+    "prevMonthTpv": 59711.69,
     "metabaseCompanyId": 28
   },
   {
@@ -501,12 +501,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 336820.08,
+    "lastMonthTpv": 220081.0,
     "monthlyAvgTpv": 177631.78,
     "cumulativeTpv": 2131581.33,
     "accountName": "Arathusa",
     "type": "Hotel",
-    "prevMonthTpv": 210816.7,
+    "prevMonthTpv": 336820.08,
     "metabaseCompanyId": 29
   },
   {
@@ -516,12 +516,12 @@
     "stage": "Small Volume",
     "category": "Hotels & Accommodation",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 3541.07,
+    "lastMonthTpv": 1939.46,
     "monthlyAvgTpv": 5935.76,
     "cumulativeTpv": 71229.13,
     "accountName": "Hout & About Guest House",
     "type": "Hotel",
-    "prevMonthTpv": 3258.56,
+    "prevMonthTpv": 3541.07,
     "metabaseCompanyId": 5
   },
   {
@@ -531,12 +531,12 @@
     "stage": "Small Volume",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 5141.65,
+    "lastMonthTpv": 0,
     "monthlyAvgTpv": 980.79,
     "cumulativeTpv": 11769.47,
     "accountName": "MaTakaTaka Tours & Safaris",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 4152.14,
+    "prevMonthTpv": 5141.65,
     "metabaseCompanyId": 85
   },
   {
@@ -546,12 +546,12 @@
     "stage": "Unicorn",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 5.88,
+    "lastMonthTpv": 0,
     "monthlyAvgTpv": 0.49,
     "cumulativeTpv": 5.88,
     "accountName": "KJP Travel",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 0,
+    "prevMonthTpv": 5.88,
     "metabaseCompanyId": 90
   },
   {
@@ -576,12 +576,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 1141913.49,
+    "lastMonthTpv": 1257914.6,
     "monthlyAvgTpv": 1413014.48,
     "cumulativeTpv": 16956173.72,
     "accountName": "Safari.com",
     "type": "Safari Organiser",
-    "prevMonthTpv": 1061109.27,
+    "prevMonthTpv": 1146039.87,
     "metabaseCompanyId": 36
   },
   {
@@ -606,12 +606,12 @@
     "stage": "Small Volume",
     "category": "Hotels & Accommodation",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 15241.55,
+    "lastMonthTpv": 3263.67,
     "monthlyAvgTpv": 28221.26,
     "cumulativeTpv": 338655.12,
     "accountName": "Ibis House",
     "type": "Hotel",
-    "prevMonthTpv": 17877.9,
+    "prevMonthTpv": 15241.55,
     "metabaseCompanyId": 2
   },
   {
@@ -636,7 +636,7 @@
     "stage": "Unicorn",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 20000.0,
+    "lastMonthTpv": 45000.0,
     "monthlyAvgTpv": 41175.67,
     "cumulativeTpv": 494108.06,
     "accountName": "",
@@ -666,12 +666,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 407.46,
+    "lastMonthTpv": 0,
     "monthlyAvgTpv": 33.95,
     "cumulativeTpv": 407.46,
     "accountName": "Ates Africa",
     "type": "Safari Organiser",
-    "prevMonthTpv": 0,
+    "prevMonthTpv": 407.46,
     "metabaseCompanyId": 87
   },
   {
@@ -696,12 +696,12 @@
     "stage": "Unicorn",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 1675.9,
+    "lastMonthTpv": 766.71,
     "monthlyAvgTpv": 2360.62,
     "cumulativeTpv": 28327.41,
     "accountName": "Afrika Lovers",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 6168.88,
+    "prevMonthTpv": 1675.9,
     "metabaseCompanyId": 46
   },
   {
@@ -726,12 +726,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 362201.74,
+    "lastMonthTpv": 213052.04,
     "monthlyAvgTpv": 189112.24,
     "cumulativeTpv": 2269346.91,
     "accountName": "Thornybush",
     "type": "Safari Organiser",
-    "prevMonthTpv": 339177.91,
+    "prevMonthTpv": 362201.74,
     "metabaseCompanyId": 69
   },
   {
@@ -746,7 +746,7 @@
     "cumulativeTpv": 732523.18,
     "accountName": "",
     "type": "",
-    "prevMonthTpv": 45900.33,
+    "prevMonthTpv": 59711.69,
     "metabaseCompanyId": 28
   },
   {
@@ -756,12 +756,12 @@
     "stage": "Unicorn",
     "category": "Adventure & Activities",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 20949.46,
+    "lastMonthTpv": 31507.86,
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "VAC Logistics",
     "type": "Other",
-    "prevMonthTpv": 42345.58,
+    "prevMonthTpv": 20949.46,
     "metabaseCompanyId": 23
   },
   {
@@ -801,12 +801,12 @@
     "stage": "Small Volume",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 6712.89,
+    "lastMonthTpv": 48594.72,
     "monthlyAvgTpv": 37573.3,
     "cumulativeTpv": 450879.57,
     "accountName": "Kateka",
     "type": "Safari Organiser",
-    "prevMonthTpv": 72232.98,
+    "prevMonthTpv": 6712.89,
     "metabaseCompanyId": 17
   },
   {
@@ -821,7 +821,7 @@
     "cumulativeTpv": 7014121.09,
     "accountName": "The Capital",
     "type": "Hotel",
-    "prevMonthTpv": 2288021.04,
+    "prevMonthTpv": 2402638.88,
     "metabaseCompanyId": 67
   },
   {
@@ -906,12 +906,12 @@
     "stage": "Unicorn",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 20503.08,
+    "lastMonthTpv": 19204.92,
     "monthlyAvgTpv": 0,
     "cumulativeTpv": 0,
     "accountName": "WanderingThru",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 0,
+    "prevMonthTpv": 24673.08,
     "metabaseCompanyId": 100
   },
   {
@@ -921,12 +921,12 @@
     "stage": "Small Volume",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 45603.11,
+    "lastMonthTpv": 35841.48,
     "monthlyAvgTpv": 10570.48,
     "cumulativeTpv": 126845.71,
     "accountName": "Safaris Down South",
     "type": "Safari Organiser",
-    "prevMonthTpv": 64132.79,
+    "prevMonthTpv": 45603.11,
     "metabaseCompanyId": 83
   },
   {
@@ -936,12 +936,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 17967.89,
+    "lastMonthTpv": 34644.72,
     "monthlyAvgTpv": 18047.86,
     "cumulativeTpv": 216574.37,
     "accountName": "African Wanderer",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 12483.23,
+    "prevMonthTpv": 17967.89,
     "metabaseCompanyId": 32
   },
   {
@@ -951,12 +951,12 @@
     "stage": "Unicorn",
     "category": "Airlines (regional/charter)",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 59551.0,
+    "lastMonthTpv": 34739.1,
     "monthlyAvgTpv": 8796.83,
     "cumulativeTpv": 105561.98,
     "accountName": "Safari Flights",
     "type": "airline",
-    "prevMonthTpv": 51894.09,
+    "prevMonthTpv": 59551.0,
     "metabaseCompanyId": 77
   },
   {
@@ -966,12 +966,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 2856136.17,
+    "lastMonthTpv": 3177454.78,
     "monthlyAvgTpv": 1412584.19,
     "cumulativeTpv": 16951010.3,
     "accountName": "Singita",
     "type": "Safari Organiser",
-    "prevMonthTpv": 1624643.6,
+    "prevMonthTpv": 2862442.39,
     "metabaseCompanyId": 48
   },
   {
@@ -981,12 +981,12 @@
     "stage": "Unicorn",
     "category": "Hotels & Accommodation",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 158126.01,
+    "lastMonthTpv": 50207.89,
     "monthlyAvgTpv": 143716.8,
     "cumulativeTpv": 1724601.64,
     "accountName": "Sterrekopje",
     "type": "Hotel",
-    "prevMonthTpv": 161817.98,
+    "prevMonthTpv": 158126.01,
     "metabaseCompanyId": 19
   },
   {
@@ -1031,7 +1031,7 @@
     "cumulativeTpv": 0,
     "accountName": "Arathusa Safari Lodge",
     "type": "Safari Organiser",
-    "prevMonthTpv": 210816.7,
+    "prevMonthTpv": 336820.08,
     "metabaseCompanyId": 29
   },
   {
@@ -1041,12 +1041,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 198921.44,
+    "lastMonthTpv": 107686.73,
     "monthlyAvgTpv": 71940.84,
     "cumulativeTpv": 863290.05,
     "accountName": "Madikwe Game Reserve",
     "type": "Hotel",
-    "prevMonthTpv": 158069.55,
+    "prevMonthTpv": 198921.44,
     "metabaseCompanyId": 68
   },
   {
@@ -1056,12 +1056,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 20567.57,
+    "lastMonthTpv": 48994.71,
     "monthlyAvgTpv": 1154.24,
     "cumulativeTpv": 13850.9,
     "accountName": "Mosetlha Bush Camp & Eco Lodge",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 0,
+    "prevMonthTpv": 20727.15,
     "metabaseCompanyId": 92
   },
   {
@@ -1136,7 +1136,7 @@
     "cumulativeTpv": 0,
     "accountName": "Madikwe Safari Lodge",
     "type": "Safari Organiser",
-    "prevMonthTpv": 158069.55,
+    "prevMonthTpv": 198921.44,
     "metabaseCompanyId": 68
   },
   {
@@ -1146,12 +1146,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 7550.0,
+    "lastMonthTpv": 22246.05,
     "monthlyAvgTpv": 358.33,
     "cumulativeTpv": 4300,
     "accountName": "Panthera Photo Safaris",
     "type": "Safari Organiser",
-    "prevMonthTpv": 0,
+    "prevMonthTpv": 7550.0,
     "metabaseCompanyId": 91
   },
   {
@@ -1176,12 +1176,12 @@
     "stage": "Unicorn",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 196.69,
+    "lastMonthTpv": 18.65,
     "monthlyAvgTpv": 40.08,
     "cumulativeTpv": 480.96,
     "accountName": "",
     "type": "",
-    "prevMonthTpv": 30.62,
+    "prevMonthTpv": 196.69,
     "metabaseCompanyId": 1
   },
   {
@@ -1191,12 +1191,12 @@
     "stage": "Unicorn",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 41838.56,
+    "lastMonthTpv": 22986.61,
     "monthlyAvgTpv": 30798.68,
     "cumulativeTpv": 369584.16,
     "accountName": "Omaruru Game Lodge",
     "type": "Hotel",
-    "prevMonthTpv": 40015.84,
+    "prevMonthTpv": 42182.35,
     "metabaseCompanyId": 6
   },
   {
@@ -1221,12 +1221,12 @@
     "stage": "Small Volume",
     "category": "Safari & Game Reserves",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 9615.5,
+    "lastMonthTpv": 23294.55,
     "monthlyAvgTpv": 3235.4,
     "cumulativeTpv": 38824.81,
     "accountName": "African Wildlife Plains",
     "type": "Safari Organiser",
-    "prevMonthTpv": 32399.35,
+    "prevMonthTpv": 9615.5,
     "metabaseCompanyId": 84
   },
   {
@@ -1241,7 +1241,7 @@
     "cumulativeTpv": 0,
     "accountName": "The Other Animals Safaris",
     "type": "Safari Organiser",
-    "prevMonthTpv": 6542.87,
+    "prevMonthTpv": 8543.9,
     "metabaseCompanyId": 86
   },
   {
@@ -1266,12 +1266,12 @@
     "stage": "Unicorn",
     "category": "Tour Operators / DMCs",
     "accountManager": "James Hedley - TurnStay",
-    "lastMonthTpv": 30243.92,
+    "lastMonthTpv": 22452.89,
     "monthlyAvgTpv": 39995.42,
     "cumulativeTpv": 479945.07,
     "accountName": "Host Agent",
     "type": "Travel Booking Company",
-    "prevMonthTpv": 56716.84,
+    "prevMonthTpv": 30243.92,
     "metabaseCompanyId": 33
   }
 ]
